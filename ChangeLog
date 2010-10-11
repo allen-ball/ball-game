@@ -1,3 +1,8 @@
+2010-10-11  Allen D. Ball  <ball@10-0-1-2.lan>
+
+	* Added iprotium.game.life package and <life/> build target and
+	Ant Task.
+
 2010-09-05  Allen D. Ball  <ball@10-0-1-2.lan>
 
 	* Initial writing.
