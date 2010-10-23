@@ -1,5 +1,5 @@
 /*
- * $Id: Game.java,v 1.1 2010-10-11 15:11:11 ball Exp $
+ * $Id: Game.java,v 1.2 2010-10-23 22:22:04 ball Exp $
  *
  * Copyright 2010 Allen D. Ball.  All rights reserved.
  */
@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Life {@link Game}.
  *
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class Game extends ArrayList<BigInteger> {
     private static final long serialVersionUID = -1658778825256180346L;
@@ -35,7 +35,7 @@ public class Game extends ArrayList<BigInteger> {
     /**
      * Method to get the {@link Automata} for this {@link Game}.
      *
-     * @return  The {@link Automoata}.
+     * @return  The {@link Automata}.
      */
     public Automata automata() { return automata; }
 
