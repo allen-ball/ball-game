@@ -1,12 +1,12 @@
 /*
- * $Id: LifeTask.java,v 1.1 2010-10-11 15:12:02 ball Exp $
+ * $Id: LifeTask.java,v 1.2 2010-10-23 22:20:12 ball Exp $
  *
  * Copyright 2010 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game.ant.taskdefs;
 
 import iprotium.game.life.Game;
-import iprotium.text.Table;
+import iprotium.text.TextTable;
 import java.math.BigInteger;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
@@ -16,7 +16,7 @@ import org.apache.tools.ant.Task;
  * {@link Game} of Life simulation.
  *
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class LifeTask extends Task {
     private int height = 0;
@@ -72,7 +72,7 @@ public class LifeTask extends Task {
                 log("");
                 log("Generation #" + String.valueOf(game.size() - 1));
 
-                for (String line : new Table(game.board())) {
+                for (String line : new TextTable(game.board())) {
                     log(line);
                 }
 
