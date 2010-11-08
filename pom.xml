@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id: pom.xml,v 1.4 2010-09-13 01:03:40 ball Exp $ -->
+<!-- $Id: pom.xml,v 1.5 2010-11-08 03:06:36 ball Exp $ -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
@@ -78,6 +78,7 @@
           <detectJavaApiLink>true</detectJavaApiLink>
           <detectLinks>true</detectLinks>
           <links>
+            <link>file:///opt/apache-ant-1.8.1/docs/manual/api</link>
             <link>file:///usr/share/ant/docs/javadocs</link>
             <link>http://download-llnw.oracle.com/javaee/6/api</link>
             <link>../iprotium-util</link>
@@ -91,4 +92,7 @@
 </project>
 <!--
     $Log: not supported by cvs2svn $
+    Revision 1.4  2010/09/13 01:03:40  ball
+    Require Apache Ant 1.8.1.
+
   -->
