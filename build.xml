@@ -7,7 +7,7 @@
     -------------------------------
     Game Applications and Utilities
 
-    $Id: build.xml,v 1.4 2010-10-11 15:13:57 ball Exp $
+    $Id: build.xml,v 1.5 2010-11-09 05:40:30 ball Exp $
   </description>
 
   <property name="build.properties.file" location="build.properties"/>
@@ -142,6 +142,24 @@
     <bean-info-for classpathref="build.classpath" type="${type}"/>
   </target>
 
+  <target name="combinations-count"
+          description="--> Invokes &lt;combinations-count/&gt; task."
+          depends="classes">
+    <taskdef classpathref="build.classpath"
+             resource="iprotium/util/ant/defaults.properties"/>
+    <combinations-count classpathref="build.classpath"
+                        type="${type}" count="${count}"/>
+  </target>
+
+  <target name="combinations-of"
+          description="--> Invokes &lt;combinations-of/&gt; task."
+          depends="classes">
+    <taskdef classpathref="build.classpath"
+             resource="iprotium/util/ant/defaults.properties"/>
+    <combinations-of classpathref="build.classpath"
+                     type="${type}" count="${count}"/>
+  </target>
+
   <target name="instance-of"
           description="--> Invokes &lt;instance-of/&gt; task."
           depends="classes">
@@ -163,7 +181,4 @@
 </project>
 <!--
     $Log: not supported by cvs2svn $
-    Revision 1.3  2010/09/13 01:03:14  ball
-    Added iprotium.game.scrabble package.
-
   -->
