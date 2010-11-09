@@ -1,3 +1,8 @@
+2010-11-08  Allen D. Ball  <ball@10-0-1-2.lan>
+
+	* build.xml:
+	Added <combinations-of/> and <combinations-count/> build targets.
+
 2010-10-11  Allen D. Ball  <ball@10-0-1-2.lan>
 
 	* Added iprotium.game.life package and <life/> build target and
