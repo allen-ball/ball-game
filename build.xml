@@ -7,7 +7,7 @@
     -------------------------------
     Game Applications and Utilities
 
-    $Id: build.xml,v 1.5 2010-11-09 05:40:30 ball Exp $
+    $Id: build.xml,v 1.6 2010-11-22 02:10:35 ball Exp $
   </description>
 
   <property name="build.properties.file" location="build.properties"/>
@@ -178,7 +178,26 @@
     </lint>
   </target>
 
+  <target name="permutations-count"
+          description="--> Invokes &lt;permutations-count/&gt; task."
+          depends="classes">
+    <taskdef classpathref="build.classpath"
+             resource="iprotium/util/ant/defaults.properties"/>
+    <permutations-count classpathref="build.classpath" type="${type}"/>
+  </target>
+
+  <target name="permutations-of"
+          description="--> Invokes &lt;permutations-of/&gt; task."
+          depends="classes">
+    <taskdef classpathref="build.classpath"
+             resource="iprotium/util/ant/defaults.properties"/>
+    <permutations-of classpathref="build.classpath" type="${type}"/>
+  </target>
+
 </project>
 <!--
     $Log: not supported by cvs2svn $
+    Revision 1.5  2010/11/09 05:40:30  ball
+    Added <combinations-of/> and <combinations-count/> build targets.
+
   -->
