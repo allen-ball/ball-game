@@ -1,3 +1,8 @@
+2010-11-21  Allen D. Ball  <ball@10-0-1-2.lan>
+
+	* build.xml:
+	Added <permutations-of/> and <permutations-count/> build targets.
+
 2010-11-08  Allen D. Ball  <ball@10-0-1-2.lan>
 
 	* build.xml:
