@@ -1,3 +1,8 @@
+2010-11-27  Allen D. Ball  <ball@10-0-1-2.lan>
+
+	* src/main/java/iprotium/game/scrabble/OWL.java:
+	Use CharSequenceOrder.CASE_INSENSITIVE.
+
 2010-11-23  Allen D. Ball  <ball@10-0-1-2.lan>
 
 	* src/main/java/iprotium/game/scrabble/OWL.java: Initial writing.
