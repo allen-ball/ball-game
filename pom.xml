@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id: pom.xml,v 1.6 2010-11-13 21:48:48 ball Exp $ -->
+<!-- $Id: pom.xml,v 1.7 2010-12-18 06:53:26 ball Exp $ -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
@@ -84,6 +84,7 @@
             </property>
           </javaApiLinks>
           <links>
+            <link>file://${java.home}/docs/api</link>
             <link>file:///opt/apache-ant-1.8.1/docs/manual/api</link>
             <link>file:///usr/share/ant/docs/javadocs</link>
             <link>http://download-llnw.oracle.com/javaee/6/api</link>
@@ -98,6 +99,9 @@
 </project>
 <!--
     $Log: not supported by cvs2svn $
+    Revision 1.6  2010/11/13 21:48:48  ball
+    Specify download.oracle.com in <javaApiLinks/>.
+
     Revision 1.5  2010/11/08 03:06:36  ball
     Added Apache Ant javadoc links.
 
