@@ -1,41 +1,42 @@
 /*
- * $Id: Board.java,v 1.1 2010-10-11 15:11:11 ball Exp $
+ * $Id: Board.java,v 1.2 2010-12-18 17:00:38 ball Exp $
  *
  * Copyright 2010 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game.life;
 
 import iprotium.text.TableModel;
-import java.math.BigInteger;
 
 /**
  * Life {@link Board}.
  *
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class Board extends TableModel {
-    private static final long serialVersionUID = -6927626665409704189L;
+    private static final long serialVersionUID = 1772285347250855101L;
 
-    private final Automata automata;
-    private final BigInteger state;
+    private final Game game;
 
     /**
-     * @param   automata        The {@link Automata}.
+     * @param   game            The {@link Game}.
      */
-    public Board(Automata automata, BigInteger state) {
-        super(automata.getWidth());
+    public Board(Game game) {
+        super(game.automata().getWidth());
 
-        this.automata = automata;
-        this.state = state;
+        this.game = game;
     }
 
+    public Game game() { return game; }
+
     @Override
-    public int getRowCount() { return automata.getHeight(); }
+    public int getRowCount() { return game().automata().getHeight(); }
 
     @Override
     public String getValueAt(int y, int x) {
-        return automata.get(state, y, x) ? "+" : "-";
+        Game game = game();
+
+        return game.automata().get(game.getLast(), y, x) ? "+" : "-";
     }
 }
 /*
