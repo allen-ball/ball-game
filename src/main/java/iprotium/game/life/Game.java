@@ -1,21 +1,21 @@
 /*
- * $Id: Game.java,v 1.2 2010-10-23 22:22:04 ball Exp $
+ * $Id: Game.java,v 1.3 2010-12-18 16:58:40 ball Exp $
  *
  * Copyright 2010 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game.life;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * Life {@link Game}.
  *
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
-public class Game extends ArrayList<BigInteger> {
-    private static final long serialVersionUID = -1658778825256180346L;
+public class Game extends LinkedList<BigInteger> {
+    private static final long serialVersionUID = 8975996797955360618L;
 
     private final Automata automata;
 
@@ -29,7 +29,7 @@ public class Game extends ArrayList<BigInteger> {
 
         automata = new Automata(height, width);
 
-        add(state0);
+        addLast(state0);
     }
 
     /**
@@ -38,21 +38,6 @@ public class Game extends ArrayList<BigInteger> {
      * @return  The {@link Automata}.
      */
     public Automata automata() { return automata; }
-
-    /**
-     * Method to get the {@link Board} representing the current state of
-     * this {@link Game}.
-     *
-     * @return  The {@link Board}.
-     */
-    public Board board() { return new Board(automata(), current()); }
-
-    /**
-     * Method to get the current state of this {@link Game}.
-     *
-     * @return  The current {@code state}.
-     */
-    public BigInteger current() { return get(size() - 1); }
 }
 /*
  * $Log: not supported by cvs2svn $
