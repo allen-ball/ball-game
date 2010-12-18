@@ -1,5 +1,5 @@
 /*
- * $Id: Bag.java,v 1.1 2010-09-13 01:08:04 ball Exp $
+ * $Id: Bag.java,v 1.2 2010-12-18 17:02:31 ball Exp $
  *
  * Copyright 2010 Allen D. Ball.  All rights reserved.
  */
@@ -14,7 +14,7 @@ import java.util.TreeMap;
  * Scrabble {@link Bag}.
  *
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class Bag extends ArrayList<Character> {
     private static final long serialVersionUID = -7674927008118158072L;
@@ -63,9 +63,7 @@ public class Bag extends ArrayList<Character> {
     public Character[] toArray() { return toArray(new Character[] { }); }
 
     @Override
-    public Bag clone() /* throws CloneNotSupportedException */ {
-        return (Bag) super.clone();
-    }
+    public Bag clone() { return (Bag) super.clone(); }
 
     private abstract class TreeMapImpl extends TreeMap<Character,Integer> {
         protected TreeMapImpl() { super(); }
@@ -90,9 +88,7 @@ public class Bag extends ArrayList<Character> {
         }
 
         @Override
-        public Frequencies clone() /* throws CloneNotSupportedException */ {
-            return (Frequencies) super.clone();
-        }
+        public Frequencies clone() { return (Frequencies) super.clone(); }
     }
 
     private class Points extends TreeMapImpl {
@@ -105,9 +101,7 @@ public class Bag extends ArrayList<Character> {
         }
 
         @Override
-        public Points clone() /* throws CloneNotSupportedException */ {
-            return (Points) super.clone();
-        }
+        public Points clone() { return (Points) super.clone(); }
     }
 }
 /*

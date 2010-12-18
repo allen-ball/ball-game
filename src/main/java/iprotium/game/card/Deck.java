@@ -1,5 +1,5 @@
 /*
- * $Id: Deck.java,v 1.3 2010-09-13 01:07:22 ball Exp $
+ * $Id: Deck.java,v 1.4 2010-12-18 17:02:04 ball Exp $
  *
  * Copyright 2010 Allen D. Ball.  All rights reserved.
  */
@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * {@link Card} deck.
  *
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class Deck extends ArrayList<Card> {
     private static final long serialVersionUID = -8837506005707422876L;
@@ -33,9 +33,7 @@ public class Deck extends ArrayList<Card> {
     public Card[] toArray() { return toArray(new Card[] { }); }
 
     @Override
-    public Deck clone() /* throws CloneNotSupportedException */ {
-        return (Deck) super.clone();
-    }
+    public Deck clone() { return (Deck) super.clone(); }
 }
 /*
  * $Log: not supported by cvs2svn $
