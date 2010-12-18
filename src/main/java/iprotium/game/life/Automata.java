@@ -1,17 +1,18 @@
 /*
- * $Id: Automata.java,v 1.1 2010-10-11 15:11:11 ball Exp $
+ * $Id: Automata.java,v 1.2 2010-12-18 16:59:25 ball Exp $
  *
  * Copyright 2010 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game.life;
 
+import java.beans.ConstructorProperties;
 import java.math.BigInteger;
 
 /**
  * Life {@link Automata}.
  *
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class Automata {
     private final int height;
@@ -21,6 +22,7 @@ public class Automata {
      * @param   height          The extent of the y-axis.
      * @param   width           The extent of the x-axis.
      */
+    @ConstructorProperties({ "height", "width" })
     public Automata(int height, int width) {
         if (height > 0) {
             this.height = height;
