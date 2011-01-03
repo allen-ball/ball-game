@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id: pom.xml,v 1.7 2010-12-18 06:53:26 ball Exp $ -->
+<!-- $Id: pom.xml,v 1.8 2011-01-03 06:10:06 ball Exp $ -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
@@ -50,7 +50,7 @@
     <dependency>
       <groupId>org.apache.ant</groupId>
       <artifactId>ant</artifactId>
-      <version>1.8.1</version>
+      <version>1.8.2</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>
@@ -73,7 +73,7 @@
           <reportOutputDirectory>${user.home}/Public</reportOutputDirectory>
           <destDir>${artifactId}</destDir>
           <bottom>
-<![CDATA[Copyright &#169; 2010 Allen D. Ball.  All rights reserved.]]>
+<![CDATA[Copyright &#169; 2010, 2011 Allen D. Ball.  All rights reserved.]]>
           </bottom>
           <detectJavaApiLink>true</detectJavaApiLink>
           <detectLinks>true</detectLinks>
@@ -85,7 +85,7 @@
           </javaApiLinks>
           <links>
             <link>file://${java.home}/docs/api</link>
-            <link>file:///opt/apache-ant-1.8.1/docs/manual/api</link>
+            <link>file:///opt/apache-ant-1.8.2/docs/manual/api</link>
             <link>file:///usr/share/ant/docs/javadocs</link>
             <link>http://download-llnw.oracle.com/javaee/6/api</link>
             <link>../iprotium-util</link>
@@ -99,13 +99,10 @@
 </project>
 <!--
     $Log: not supported by cvs2svn $
+    Revision 1.7  2010/12/18 06:53:26  ball
+    Added file://${java.home}/docs/api to <links/>.
+
     Revision 1.6  2010/11/13 21:48:48  ball
     Specify download.oracle.com in <javaApiLinks/>.
-
-    Revision 1.5  2010/11/08 03:06:36  ball
-    Added Apache Ant javadoc links.
-
-    Revision 1.4  2010/09/13 01:03:40  ball
-    Require Apache Ant 1.8.1.
 
   -->
