@@ -7,7 +7,7 @@
     -------------------------------
     Game Applications and Utilities
 
-    $Id: build.xml,v 1.6 2010-11-22 02:10:35 ball Exp $
+    $Id: build.xml,v 1.7 2011-04-29 02:44:47 ball Exp $
   </description>
 
   <property name="build.properties.file" location="build.properties"/>
@@ -107,6 +107,15 @@
         <section name="iprotium/game/card/">
           <attribute name="Sealed" value="true"/>
         </section>
+        <section name="iprotium/game/checker/">
+          <attribute name="Sealed" value="true"/>
+        </section>
+        <section name="iprotium/game/chess/">
+          <attribute name="Sealed" value="true"/>
+        </section>
+        <section name="iprotium/game/domino/">
+          <attribute name="Sealed" value="true"/>
+        </section>
         <section name="iprotium/game/life/">
           <attribute name="Sealed" value="true"/>
         </section>
@@ -197,6 +206,9 @@
 </project>
 <!--
     $Log: not supported by cvs2svn $
+    Revision 1.6  2010/11/22 02:10:35  ball
+    Added <permutations-of/> and <permutations-count/> build targets.
+
     Revision 1.5  2010/11/09 05:40:30  ball
     Added <combinations-of/> and <combinations-count/> build targets.
 
