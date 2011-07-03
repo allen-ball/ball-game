@@ -1,7 +1,7 @@
 /*
- * $Id: LifeTask.java,v 1.3 2010-12-18 16:57:04 ball Exp $
+ * $Id$
  *
- * Copyright 2010 Allen D. Ball.  All rights reserved.
+ * Copyright 2010, 2011 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game.ant.taskdefs;
 
@@ -17,7 +17,7 @@ import org.apache.tools.ant.Task;
  * {@link Game} of Life simulation.
  *
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class LifeTask extends Task {
     private int height = 0;
@@ -101,6 +101,3 @@ public class LifeTask extends Task {
         }
     }
 }
-/*
- * $Log: not supported by cvs2svn $
- */

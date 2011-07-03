@@ -1,7 +1,7 @@
 /*
- * $Id: Bag.java,v 1.2 2010-12-18 17:02:31 ball Exp $
+ * $Id$
  *
- * Copyright 2010 Allen D. Ball.  All rights reserved.
+ * Copyright 2010, 2011 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game.scrabble;
 
@@ -14,7 +14,7 @@ import java.util.TreeMap;
  * Scrabble {@link Bag}.
  *
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class Bag extends ArrayList<Character> {
     private static final long serialVersionUID = -7674927008118158072L;
@@ -104,6 +104,3 @@ public class Bag extends ArrayList<Character> {
         public Points clone() { return (Points) super.clone(); }
     }
 }
-/*
- * $Log: not supported by cvs2svn $
- */

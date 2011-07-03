@@ -1,7 +1,7 @@
 /*
- * $Id: Deck.java,v 1.4 2010-12-18 17:02:04 ball Exp $
+ * $Id$
  *
- * Copyright 2010 Allen D. Ball.  All rights reserved.
+ * Copyright 2010, 2011 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game.card;
 
@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * {@link Card} deck.
  *
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
- * @version $Revision: 1.4 $
+ * @version $Revision$
  */
 public class Deck extends ArrayList<Card> {
     private static final long serialVersionUID = -8837506005707422876L;
@@ -35,6 +35,3 @@ public class Deck extends ArrayList<Card> {
     @Override
     public Deck clone() { return (Deck) super.clone(); }
 }
-/*
- * $Log: not supported by cvs2svn $
- */

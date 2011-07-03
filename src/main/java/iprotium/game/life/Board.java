@@ -1,7 +1,7 @@
 /*
- * $Id: Board.java,v 1.2 2010-12-18 17:00:38 ball Exp $
+ * $Id$
  *
- * Copyright 2010 Allen D. Ball.  All rights reserved.
+ * Copyright 2010, 2011 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game.life;
 
@@ -11,7 +11,7 @@ import iprotium.text.TableModel;
  * Life {@link Board}.
  *
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class Board extends TableModel {
     private static final long serialVersionUID = 1772285347250855101L;
@@ -39,6 +39,3 @@ public class Board extends TableModel {
         return game.automata().get(game.getLast(), y, x) ? "+" : "-";
     }
 }
-/*
- * $Log: not supported by cvs2svn $
- */

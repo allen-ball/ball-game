@@ -1,7 +1,7 @@
 /*
- * $Id: Suit.java,v 1.1 2010-09-06 06:12:37 ball Exp $
+ * $Id$
  *
- * Copyright 2010 Allen D. Ball.  All rights reserved.
+ * Copyright 2010, 2011 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game.card;
 
@@ -12,7 +12,7 @@ import static iprotium.game.card.Color.RED;
  * {@link Card} suit {@link Enum} type.
  *
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public enum Suit {
     CLUBS(BLACK), DIAMONDS(RED), HEARTS(RED), SPADES(BLACK);
@@ -31,6 +31,3 @@ public enum Suit {
     @Override
     public String toString() { return name().substring(0, 1); }
 }
-/*
- * $Log: not supported by cvs2svn $
- */

@@ -1,7 +1,7 @@
 /*
- * $Id: Game.java,v 1.3 2010-12-18 16:58:40 ball Exp $
+ * $Id$
  *
- * Copyright 2010 Allen D. Ball.  All rights reserved.
+ * Copyright 2010, 2011 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game.life;
 
@@ -12,7 +12,7 @@ import java.util.LinkedList;
  * Life {@link Game}.
  *
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class Game extends LinkedList<BigInteger> {
     private static final long serialVersionUID = 8975996797955360618L;
@@ -39,6 +39,3 @@ public class Game extends LinkedList<BigInteger> {
      */
     public Automata automata() { return automata; }
 }
-/*
- * $Log: not supported by cvs2svn $
- */

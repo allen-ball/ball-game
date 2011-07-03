@@ -1,7 +1,7 @@
 /*
- * $Id: OWL.java,v 1.2 2010-11-28 00:15:52 ball Exp $
+ * $Id$
  *
- * Copyright 2010 Allen D. Ball.  All rights reserved.
+ * Copyright 2010, 2011 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game.scrabble;
 
@@ -14,7 +14,7 @@ import java.util.TreeSet;
  * Scrabble Official Word List ({@link OWL}).
  *
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class OWL extends TreeSet<CharSequence> {
     private static final long serialVersionUID = 8620121775973601775L;
@@ -59,6 +59,3 @@ public class OWL extends TreeSet<CharSequence> {
     @Override
     public OWL clone() { return (OWL) super.clone(); }
 }
-/*
- * $Log: not supported by cvs2svn $
- */

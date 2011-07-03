@@ -1,5 +1,5 @@
 /*
- * $Id: Board.java,v 1.1 2011-04-29 02:43:19 ball Exp $
+ * $Id$
  *
  * Copyright 2011 Allen D. Ball.  All rights reserved.
  */
@@ -9,7 +9,7 @@ package iprotium.game.scrabble;
  * Scrabble {@link Board}.
  *
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class Board {
     private static final int HEIGHT = 15;
@@ -92,6 +92,3 @@ public class Board {
         public TW clone() { return (TW) super.clone(); }
     }
 }
-/*
- * $Log: not supported by cvs2svn $
- */

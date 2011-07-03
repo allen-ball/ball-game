@@ -1,7 +1,7 @@
 /*
- * $Id: Card.java,v 1.3 2010-09-08 07:21:40 ball Exp $
+ * $Id$
  *
- * Copyright 2010 Allen D. Ball.  All rights reserved.
+ * Copyright 2010, 2011 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game.card;
 
@@ -9,7 +9,7 @@ package iprotium.game.card;
  * Playing card.
  *
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
- * @version $Revision: 1.3 $
+ * @version $Revision$
  */
 public class Card implements Comparable<Card> {
     private final Suit suit;
@@ -88,6 +88,3 @@ public class Card implements Comparable<Card> {
         return getRank().toString() + "-" + getSuit().toString();
     }
 }
-/*
- * $Log: not supported by cvs2svn $
- */

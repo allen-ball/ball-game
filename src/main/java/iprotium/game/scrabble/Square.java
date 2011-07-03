@@ -1,5 +1,5 @@
 /*
- * $Id: Square.java,v 1.1 2011-04-29 02:43:19 ball Exp $
+ * $Id$
  *
  * Copyright 2011 Allen D. Ball.  All rights reserved.
  */
@@ -9,7 +9,7 @@ package iprotium.game.scrabble;
  * Scrabble {@link Board} {@link Square}.
  *
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
- * @version $Revision: 1.1 $
+ * @version $Revision$
  */
 public class Square implements Cloneable {
 
@@ -31,6 +31,3 @@ public class Square implements Cloneable {
         return square;
     }
 }
-/*
- * $Log: not supported by cvs2svn $
- */

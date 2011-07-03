@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id: pom.xml,v 1.9 2011-04-29 02:44:11 ball Exp $ -->
+<!-- $Id$ -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
@@ -97,15 +97,3 @@
     </plugins>
   </build>
 </project>
-<!--
-    $Log: not supported by cvs2svn $
-    Revision 1.8  2011/01/03 06:10:06  ball
-    Require Apache Ant 1.8.2.
-
-    Revision 1.7  2010/12/18 06:53:26  ball
-    Added file://${java.home}/docs/api to <links/>.
-
-    Revision 1.6  2010/11/13 21:48:48  ball
-    Specify download.oracle.com in <javaApiLinks/>.
-
-  -->

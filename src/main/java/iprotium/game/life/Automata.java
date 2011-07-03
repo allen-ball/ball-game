@@ -1,7 +1,7 @@
 /*
- * $Id: Automata.java,v 1.2 2010-12-18 16:59:25 ball Exp $
+ * $Id$
  *
- * Copyright 2010 Allen D. Ball.  All rights reserved.
+ * Copyright 2010, 2011 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game.life;
 
@@ -12,7 +12,7 @@ import java.math.BigInteger;
  * Life {@link Automata}.
  *
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
- * @version $Revision: 1.2 $
+ * @version $Revision$
  */
 public class Automata {
     private final int height;
@@ -118,6 +118,3 @@ public class Automata {
                 && state.testBit(y * width + x));
     }
 }
-/*
- * $Log: not supported by cvs2svn $
- */
