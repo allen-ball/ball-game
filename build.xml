@@ -76,8 +76,6 @@
     <javac destdir="${target.classes.dir}">
       <compilerarg compiler="modern" value="-Xlint"/>
       <compilerarg compiler="modern" value="-g:source,lines,vars"/>
-      <compilerarg compiler="modern" value="-XprintProcessorInfo"/>
-      <compilerarg compiler="modern" value="-XprintRounds"/>
       <classpath>
         <path refid="build.classpath"/>
       </classpath>
