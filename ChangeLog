@@ -2,6 +2,12 @@
 
 	* src/main/java/iprotium/game/Grid.java: Initial writing.
 
+	* src/main/java/iprotium/game/scrabble/DL.java,
+	src/main/java/iprotium/game/scrabble/DW.java,
+	src/main/java/iprotium/game/scrabble/TL.java,
+	src/main/java/iprotium/game/scrabble/TW.java:
+	Initial writing.
+
 2010-11-27  Allen D. Ball  <ball@10-0-1-2.lan>
 
 	* src/main/java/iprotium/game/scrabble/OWL.java:
