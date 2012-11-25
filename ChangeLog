@@ -1,5 +1,7 @@
 2012-11-24  Allen D. Ball  <ball@10-0-1-2.lan>
 
+	* Added <sudoku/> build target and Ant Task.
+
 	* Added iprotium.game.sudoku package.
 
 	* src/main/java/iprotium/game/Grid.java:
