@@ -1,5 +1,5 @@
 /*
- * $Id: SudokuTask.java 681 2011-07-03 06:45:19Z ball $
+ * $Id$
  *
  * Copyright 2012 Allen D. Ball.  All rights reserved.
  */
@@ -17,7 +17,7 @@ import org.apache.tools.ant.BuildException;
  * <a href="http://ant.apache.org/">Ant</a> {@link Task} to solve Sudoku.
  *
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
- * @version $Revision: 681 $
+ * @version $Revision$
  */
 public class SudokuTask extends AbstractClasspathTask {
     private final Puzzle puzzle = new Puzzle();
