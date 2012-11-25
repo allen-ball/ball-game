@@ -18,18 +18,22 @@ import java.util.TreeSet;
  * @version $Revision$
  */
 public class Digits extends TreeSet<Integer> {
-    private static final long serialVersionUID = 7009779435461682795L;
+    private static final long serialVersionUID = -759741581447937293L;
 
     protected static final SortedSet<Integer> ALL;
+    protected static final int SUM;
 
     static {
         TreeSet<Integer> digits = new TreeSet<Integer>();
+        int sum = 0;
 
         for (int i = 1; i <= 9; i += 1) {
             digits.add(i);
+            sum += i;
         }
 
         ALL = Collections.unmodifiableSortedSet(digits);
+        SUM = sum;
     }
 
     /**
