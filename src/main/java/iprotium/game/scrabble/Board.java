@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2011 Allen D. Ball.  All rights reserved.
+ * Copyright 2011, 2012 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game.scrabble;
 
@@ -62,33 +62,5 @@ public class Board {
         board[ym][x] = square.clone();
         board[y][xm] = square.clone();
         board[ym][xm] = square.clone();
-    }
-
-    private class DL extends Square {
-        public DL() { super(); }
-
-        @Override
-        public DL clone() { return (DL) super.clone(); }
-    }
-
-    private class DW extends Square {
-        public DW() { super(); }
-
-        @Override
-        public DW clone() { return (DW) super.clone(); }
-    }
-
-    private class TL extends Square {
-        public TL() { super(); }
-
-        @Override
-        public TL clone() { return (TL) super.clone(); }
-    }
-
-    private class TW extends Square {
-        public TW() { super(); }
-
-        @Override
-        public TW clone() { return (TW) super.clone(); }
     }
 }
