@@ -1,5 +1,5 @@
 /*
- * $Id: Puzzle.java 681 2011-07-03 06:45:19Z ball $
+ * $Id$
  *
  * Copyright 2012 Allen D. Ball.  All rights reserved.
  */
@@ -16,13 +16,13 @@ import static java.util.Collections.unmodifiableList;
  * {@link Grid} base class.
  *
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
- * @version $Revision: 681 $
+ * @version $Revision$
  */
 public class Grid<E> extends TableModel implements Iterable<E> {
-    private static final long serialVersionUID = 5251404796948969224L;
+    private static final long serialVersionUID = 6509895045792637390L;
 
-    private final Class<? extends E> type;
-    private final List<List<? extends E>> lists;
+    private final Class<E> type;
+    private final List<List<E>> lists;
     private final List<Grid<E>> rows;
     private final List<Grid<E>> columns;
 
@@ -33,7 +33,7 @@ public class Grid<E> extends TableModel implements Iterable<E> {
      * @param   width           The extent of the X-axis.
      * @param   type            The {@link Class} of grid cell.
      */
-    public Grid(int height, int width, Class<? extends E> type) {
+    public Grid(int height, int width, Class<E> type) {
         this(height, width, type, null, -1, -1);
     }
 
@@ -51,14 +51,13 @@ public class Grid<E> extends TableModel implements Iterable<E> {
      * @param   x0              The X-coordinate of the upper lefthand
      *                          corner of the sub-grid.
      */
-    protected Grid(int height, int width, Class<? extends E> type,
+    protected Grid(int height, int width, Class<E> type,
                    Grid<E> grid, int y0, int x0) {
         super(width);
 
         this.type = (grid != null) ? grid.type : type;
 
-        ArrayList<List<? extends E>> lists =
-            new ArrayList<List<? extends E>>(height);
+        ArrayList<List<E>> lists = new ArrayList<List<E>>(height);
 
         if (grid != null) {
             for (List<? extends E> list :
@@ -145,6 +144,11 @@ public class Grid<E> extends TableModel implements Iterable<E> {
 
     @Override
     public E getValueAt(int y, int x) { return lists.get(y).get(x); }
+
+    @Override
+    public void setValueAt(Object value, int y, int x) {
+        lists.get(y).set(x, type.cast(value));
+    }
 
     @Override
     public Iterator<E> iterator() {
