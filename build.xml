@@ -81,6 +81,11 @@
       </classpath>
       <src path="${src.dir}/main/java"/>
     </javac>
+    <taskdef classpathref="build.classpath"
+             resource="iprotium/util/ant/defaults.properties"/>
+    <provider-file-for classpathref="build.classpath"
+                       basedir="${target.classes.dir}"
+                       service="iprotium.game.sudoku.Rule"/>
   </target>
 
   <target name="jar"
@@ -122,6 +127,9 @@
         <section name="iprotium/game/scrabble/">
           <attribute name="Sealed" value="true"/>
         </section>
+        <section name="iprotium/game/sudoku/">
+          <attribute name="Sealed" value="true"/>
+        </section>
       </manifest>
     </jar>
     <jarlib-display file="${target.dir}/${artifact}"/>
@@ -141,6 +149,14 @@
     <taskdef classpathref="build.classpath"
              resource="iprotium/game/ant/defaults.properties"/>
     <life height="${height}" width="${width}" state0="${state0}"/>
+  </target>
+
+  <target name="sudoku"
+          description="--> Invokes &lt;sudoku/&gt; task."
+          depends="classes">
+    <taskdef classpathref="build.classpath"
+             resource="iprotium/game/ant/defaults.properties"/>
+    <sudoku puzzle="${puzzle}"/>
   </target>
 
   <target name="bean-info-for"
