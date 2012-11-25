@@ -1,3 +1,8 @@
+2012-11-24  Allen D. Ball  <ball@10-0-1-2.lan>
+
+	* src/main/java/iprotium/game/Grid.java:
+	Added setValueAt(Object,int,int) implementation.
+
 2012-11-23  Allen D. Ball  <ball@10-0-1-2.lan>
 
 	* src/main/java/iprotium/game/Grid.java: Initial writing.
