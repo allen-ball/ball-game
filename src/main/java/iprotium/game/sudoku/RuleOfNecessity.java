@@ -13,12 +13,12 @@ import iprotium.game.Grid;
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
  * @version $Revision$
  */
-public class RuleOfOne extends Rule {
+public class RuleOfNecessity extends Rule {
 
     /**
      * Sole constructor.
      */
-    public RuleOfOne() { super(); }
+    public RuleOfNecessity() { super(); }
 
     @Override
     public boolean applyTo(Puzzle puzzle) {
