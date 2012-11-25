@@ -14,7 +14,8 @@ import java.util.ServiceLoader;
 import org.apache.tools.ant.BuildException;
 
 /**
- * <a href="http://ant.apache.org/">Ant</a> {@link Task} to solve Sudoku.
+ * <a href="http://ant.apache.org/">Ant</a>
+ * {@link org.apache.tools.ant.Task} to solve Sudoku.
  *
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
  * @version $Revision$
