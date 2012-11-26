@@ -8,17 +8,20 @@ package iprotium.game.sudoku;
 import iprotium.game.Grid;
 
 /**
- * Sudoku "rule-of-one" {@link Rule} implementation.
+ * Sudoku "rule-of-K" {@link Rule} implementation.  If there are {@code k}
+ * {@link Cell}s contained entirely in a region that contain exactly
+ * {@code k} different possible values, then no other {@link Cell} in that
+ * region can contain any of those {@code k} values.
  *
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
  * @version $Revision$
  */
-public class RuleOfNecessity extends Rule {
+public class RuleOfK extends Rule {
 
     /**
      * Sole constructor.
      */
-    public RuleOfNecessity() { super(); }
+    public RuleOfK() { super(); }
 
     @Override
     public boolean applyTo(Puzzle puzzle) {
