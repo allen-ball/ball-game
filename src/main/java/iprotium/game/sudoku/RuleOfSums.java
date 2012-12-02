@@ -47,7 +47,7 @@ public class RuleOfSums extends Rule {
         return modified;
     }
 
-    private boolean contains(Grid grid, Cell cell) {
+    private boolean contains(Grid<? extends Object> grid, Cell cell) {
         boolean isContained = false;
 
         for (Object object : grid) {
