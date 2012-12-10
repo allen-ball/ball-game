@@ -1,5 +1,9 @@
 2012-12-09  Allen D. Ball  <ball@10-0-1-2.lan>
 
+	* src/main/java/iprotium/game/sudoku/Puzzle.java:
+	Added subgridsOf(Cell) method.  Renamed groups() method to
+	subgrids().  Use Cell.isSolved().
+
 	* src/main/java/iprotium/game/sudoku/Cell.java:
 	Added isSolved(), solution(), min(), max(), and isIn(Iterable<?>)
 	methods.  Changed toString() method to show remaining candidates
