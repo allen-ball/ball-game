@@ -1,3 +1,9 @@
+2012-12-09  Allen D. Ball  <ball@10-0-1-2.lan>
+
+	* src/main/java/iprotium/game/sudoku/Rule.java:
+	Added count(Iterable<Cell>), sum(Iterable<Cell>),
+	used(Iterable<Cell>), and unused(Iterable<Cell>) methods.
+
 2012-11-24  Allen D. Ball  <ball@10-0-1-2.lan>
 
 	* Added <sudoku/> build target and Ant Task.
