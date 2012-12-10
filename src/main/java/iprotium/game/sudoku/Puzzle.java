@@ -18,7 +18,7 @@ import static java.util.Collections.unmodifiableList;
  * @version $Revision$
  */
 public class Puzzle extends Grid<Cell> {
-    private static final long serialVersionUID = -1143850967007549327L;
+    private static final long serialVersionUID = 6358701373909975308L;
 
     private final List<Grid<Cell>> nonets;
 
@@ -42,16 +42,40 @@ public class Puzzle extends Grid<Cell> {
     /**
      * Method to get the sub-{@link Grid}s representing the 9-{@link Cell}
      * groups where the digits 1-9 must appear exactly once.  See
-     *{@link #rows()}, {@link #columns()}, and {@link #nonets()}.
+     * {@link #rows()}, {@link #columns()}, and {@link #nonets()}.
      *
-     * @return  The {@link List} of Sudoku groups ({@link Grid}s).
+     * @return  The {@link List} of Sudoku sub-{@link Grid}s.
      */
-    public List<Grid<Cell>> groups() {
+    public List<Grid<Cell>> subgrids() {
         ArrayList<Grid<Cell>> list = new ArrayList<Grid<Cell>>();
 
         list.addAll(rows());
         list.addAll(columns());
         list.addAll(nonets());
+
+        return unmodifiableList(list);
+    }
+
+    /**
+     * Method to get the sub-{@link Grid}s representing the 9-{@link Cell}
+     * groups including the argument {@link Cell}.  See {@link #rows()},
+     * {@link #columns()}, and {@link #nonets()}.
+     *
+     * @see #subgrids()
+     *
+     * @param   cell            The argument {@link Cell}.
+     *
+     * @return  The {@link List} of Sudoku sub-{@link Grid}s for the
+     *          argument {@link Cell}.
+     */
+    public List<Grid<Cell>> subgridsOf(Cell cell) {
+        ArrayList<Grid<Cell>> list = new ArrayList<Grid<Cell>>();
+
+        for (Grid<Cell> grid : subgrids()) {
+            if (cell.isIn(grid)) {
+                list.add(grid);
+            }
+        }
 
         return unmodifiableList(list);
     }
@@ -66,7 +90,7 @@ public class Puzzle extends Grid<Cell> {
     public boolean isLegal() {
         boolean legal = true;
 
-        for (Grid<Cell> grid : groups()) {
+        for (Grid<Cell> grid : subgrids()) {
             legal &= isLegal(grid);
         }
 
@@ -78,7 +102,7 @@ public class Puzzle extends Grid<Cell> {
         Digits digits = new Digits();
 
         for (Cell cell : grid) {
-            if (cell.size() == 1) {
+            if (cell.isSolved()) {
                 legal &= digits.addAll(cell);
 
                 if (! legal) {
@@ -101,7 +125,7 @@ public class Puzzle extends Grid<Cell> {
         boolean solved = isLegal();
 
         for (Cell cell : this) {
-            solved &= (cell.size() == 1);
+            solved &= cell.isSolved();
 
             if (! solved) {
                 break;
