@@ -29,12 +29,10 @@ public class RuleOfSums extends Rule {
 
         for (Cell cell : puzzle) {
             if (cell.size() > 1) {
-                int max = Digits.ALL.last();
+                int max = cell.last();
 
-                for (Grid<Cell> grid : puzzle.groups()) {
-                    if (contains(grid, cell)) {
-                        max = Math.min(max, max(grid));
-                    }
+                for (Grid<Cell> grid : puzzle.subgridsOf(cell)) {
+                    max = Math.min(max, max(grid));
                 }
 
                 SortedSet<Integer> set = cell.tailSet(max, false);
@@ -47,31 +45,8 @@ public class RuleOfSums extends Rule {
         return modified;
     }
 
-    private boolean contains(Grid<? extends Object> grid, Cell cell) {
-        boolean isContained = false;
-
-        for (Object object : grid) {
-            isContained |= (cell == object);
-
-            if (isContained) {
-                break;
-            }
-        }
-
-        return isContained;
-    }
-
-    private int max(Grid<Cell> grid) {
-        int sum = 0;
-        int count = 0;
-
-        for (Cell cell : grid) {
-            if (cell.size() == 1) {
-                sum += cell.first();
-                count += 1;
-            }
-        }
-
-        return (Digits.SUM - sum) - (Digits.ALL.size() - (count + 1));
+    protected int max(Iterable<Cell> iterable) {
+        return ((Digits.SUM - sum(iterable))
+                - (Digits.ALL.size() - (count(iterable) + 1)));
     }
 }
