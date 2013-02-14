@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2010, 2011 Allen D. Ball.  All rights reserved.
+ * Copyright 2010 - 2013 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game.scrabble;
 
@@ -16,8 +16,8 @@ import java.util.TreeMap;
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
  * @version $Revision$
  */
-public class Bag extends ArrayList<Character> {
-    private static final long serialVersionUID = -7674927008118158072L;
+public class Bag extends ArrayList<Character> implements Cloneable {
+    private static final long serialVersionUID = 2252533622916859957L;
 
     private final Locale locale;
     private final Frequencies frequencies;
@@ -78,8 +78,8 @@ public class Bag extends ArrayList<Character> {
         }
     }
 
-    private class Frequencies extends TreeMapImpl {
-        private static final long serialVersionUID = -2474049450025385200L;
+    private class Frequencies extends TreeMapImpl implements Cloneable {
+        private static final long serialVersionUID = -6272228191306291020L;
 
         public Frequencies() {
             super();
@@ -91,8 +91,8 @@ public class Bag extends ArrayList<Character> {
         public Frequencies clone() { return (Frequencies) super.clone(); }
     }
 
-    private class Points extends TreeMapImpl {
-        private static final long serialVersionUID = 2036149190094452665L;
+    private class Points extends TreeMapImpl implements Cloneable {
+        private static final long serialVersionUID = 1863386374041773980L;
 
         public Points() {
             super();

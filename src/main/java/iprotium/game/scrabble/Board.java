@@ -1,9 +1,11 @@
 /*
  * $Id$
  *
- * Copyright 2011, 2012 Allen D. Ball.  All rights reserved.
+ * Copyright 2011 - 2013 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game.scrabble;
+
+import java.util.ResourceBundle;
 
 /**
  * Scrabble {@link Board}.
@@ -27,6 +29,8 @@ public class Board {
      * Sole constructor.
      */
     public Board() {
+        ResourceBundle bundle = ResourceBundle.getBundle(getClass().getName());
+
         reflect(0, 0, new TW());
         reflect(0, 3, new DL());
         reflect(0, 7, new TW());
@@ -59,8 +63,12 @@ public class Board {
         int ym = (HEIGHT - 1) - y;
         int xm = (WIDTH - 1) - x;
 
-        board[ym][x] = square.clone();
-        board[y][xm] = square.clone();
-        board[ym][xm] = square.clone();
+        try {
+            board[ym][x] = square.clone();
+            board[y][xm] = square.clone();
+            board[ym][xm] = square.clone();
+        } catch (CloneNotSupportedException exception) {
+	    throw new InternalError();
+        }
     }
 }

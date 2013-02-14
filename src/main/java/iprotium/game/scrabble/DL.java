@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2012 Allen D. Ball.  All rights reserved.
+ * Copyright 2012, 2013 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game.scrabble;
 
@@ -11,7 +11,7 @@ package iprotium.game.scrabble;
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
  * @version $Revision$
  */
-public class DL extends Square {
+public class DL extends Square implements Cloneable {
 
     /**
      * Sole constructor.
@@ -19,5 +19,7 @@ public class DL extends Square {
     public DL() { }
 
     @Override
-    public DL clone() { return (DL) super.clone(); }
+    public DL clone() throws CloneNotSupportedException {
+        return (DL) super.clone();
+    }
 }

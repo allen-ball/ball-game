@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2010, 2011 Allen D. Ball.  All rights reserved.
+ * Copyright 2010 - 2013 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game.scrabble;
 
@@ -16,8 +16,8 @@ import java.util.TreeSet;
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
  * @version $Revision$
  */
-public class OWL extends TreeSet<CharSequence> {
-    private static final long serialVersionUID = 8620121775973601775L;
+public class OWL extends TreeSet<CharSequence> implements Cloneable {
+    private static final long serialVersionUID = -7971642348404978151L;
 
     private final Locale locale;
 

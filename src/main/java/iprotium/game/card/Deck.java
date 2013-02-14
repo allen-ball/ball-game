@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2010, 2011 Allen D. Ball.  All rights reserved.
+ * Copyright 2010 - 2013 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game.card;
 
@@ -13,8 +13,8 @@ import java.util.ArrayList;
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
  * @version $Revision$
  */
-public class Deck extends ArrayList<Card> {
-    private static final long serialVersionUID = -8837506005707422876L;
+public class Deck extends ArrayList<Card> implements Cloneable {
+    private static final long serialVersionUID = 5514614397558084003L;
 
     /**
      * Sole constructor.
