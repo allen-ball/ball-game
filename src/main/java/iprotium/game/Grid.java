@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2012 Allen D. Ball.  All rights reserved.
+ * Copyright 2012, 2013 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game;
 
@@ -90,6 +90,27 @@ public class Grid<E> extends TableModel implements Iterable<E> {
     public List<Grid<E>> columns() { return columns; }
 
     /**
+     * Method to get the {@link List} of sub-{@link Grid}s of with specific
+     * dimensions.
+     *
+     * @param   height          The number of rows.
+     * @param   width           The number of columns.
+     *
+     * @return  The {@link List} of sub-{@link Grid}s.
+     */
+    public List<Grid<E>> subGrids(int height, int width) {
+        ArrayList<Grid<E>> list = new ArrayList<Grid<E>>();
+
+        for (int y = 0; y < getRowCount(); y += height) {
+            for (int x = 0; x < getColumnCount(); x += width) {
+                list.add(subGrid(y, y + height, x, x + width));
+            }
+        }
+
+        return unmodifiableList(list);
+    }
+
+    /**
      * Method to create a sub-{@link Grid} backed by {@code this}
      * {@link Grid}.
      *
@@ -113,27 +134,6 @@ public class Grid<E> extends TableModel implements Iterable<E> {
         }
 
         return grid;
-    }
-
-    /**
-     * Method to get the {@link List} of sub-{@link Grid}s of with specific
-     * dimensions.
-     *
-     * @param   height          The number of rows.
-     * @param   width           The number of columns.
-     *
-     * @return  The {@link List} of sub-{@link Grid}s.
-     */
-    public List<Grid<E>> subGrids(int height, int width) {
-        ArrayList<Grid<E>> list = new ArrayList<Grid<E>>();
-
-        for (int y = 0; y < getRowCount(); y += height) {
-            for (int x = 0; x < getColumnCount(); x += width) {
-                list.add(subGrid(y, y + height, x, x + width));
-            }
-        }
-
-        return unmodifiableList(list);
     }
 
     @Override
