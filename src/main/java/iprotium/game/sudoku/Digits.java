@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2012 Allen D. Ball.  All rights reserved.
+ * Copyright 2012, 2013 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game.sudoku;
 
@@ -45,7 +45,7 @@ public class Digits extends TreeSet<Integer> {
      * See {@link #addAll(Collection)}.
      */
     public boolean addAll(Integer... digits) {
-        return addAll(Arrays.asList(digits));
+        return Collections.addAll(this, digits);
     }
 
     /**
