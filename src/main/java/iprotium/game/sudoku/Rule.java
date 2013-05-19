@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2012 Allen D. Ball.  All rights reserved.
+ * Copyright 2012, 2013 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game.sudoku;
 
@@ -72,7 +72,7 @@ public abstract class Rule {
     }
 
     /**
-     * Method to get the used digits not used in a soltuion.
+     * Method to get the {@link SortedSet} of used digits.
      *
      * @param   iterable        The {@link Iterable} of {@link Cell}s.
      *
@@ -91,7 +91,7 @@ public abstract class Rule {
     }
 
     /**
-     * Method to get the unused digits not used in a soltuion.
+     * Method to get the {@link SortedSet} of unused digits.
      *
      * @param   iterable        The {@link Iterable} of {@link Cell}s.
      *
