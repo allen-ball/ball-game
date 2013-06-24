@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2010, 2011 Allen D. Ball.  All rights reserved.
+ * Copyright 2010 - 2013 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game.ant.taskdefs;
 
@@ -100,4 +100,7 @@ public class LifeTask extends Task {
             throw new BuildException(exception);
         }
     }
+
+    @Override
+    public String toString() { return getClass().getSimpleName(); }
 }
