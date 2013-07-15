@@ -15,8 +15,9 @@ import org.apache.tools.ant.BuildException;
 import static iprotium.util.StringUtil.NIL;
 
 /**
- * <a href="http://ant.apache.org/">Ant</a> {@link Task} to start
- * {@link Game} of Life simulation.
+ * <a href="http://ant.apache.org/">Ant</a>
+ * {@link org.apache.tools.ant.Task} to start {@link Game} of Life
+ * simulation.
  *
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
  * @version $Revision$
