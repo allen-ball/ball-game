@@ -8,9 +8,11 @@ package iprotium.game.ant.taskdefs;
 import iprotium.game.life.Board;
 import iprotium.game.life.Game;
 import iprotium.text.TextTable;
+import iprotium.util.ant.taskdefs.AbstractClasspathTask;
 import java.math.BigInteger;
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Task;
+
+import static iprotium.util.StringUtil.NIL;
 
 /**
  * <a href="http://ant.apache.org/">Ant</a> {@link Task} to start
@@ -19,7 +21,7 @@ import org.apache.tools.ant.Task;
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
  * @version $Revision$
  */
-public class LifeTask extends Task {
+public class LifeTask extends AbstractClasspathTask {
     private int height = 0;
     private int width = 0;
     private BigInteger state0 = BigInteger.ZERO;
@@ -47,7 +49,7 @@ public class LifeTask extends Task {
             state = new BigInteger(string);
         } catch (NumberFormatException exception) {
             state = BigInteger.ZERO;
-            string = string.replaceAll("[\\p{Space}]+", "");
+            string = string.replaceAll("[\\p{Space}]+", NIL);
 
             for (int i = 0, n = string.length(); i < n; i += 1) {
                 switch (string.charAt(i)) {
@@ -73,12 +75,9 @@ public class LifeTask extends Task {
             Board board = new Board(game);
 
             for (;;) {
-                log("");
+                log(NIL);
                 log("Generation #" + String.valueOf(game.size() - 1));
-
-                for (String line : new TextTable(board)) {
-                    log(line);
-                }
+                log(new TextTable(board));
 
                 BigInteger state = game.automata().next(game.getLast());
 

@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2012 Allen D. Ball.  All rights reserved.
+ * Copyright 2012, 2013 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game.ant.taskdefs;
 
@@ -12,6 +12,8 @@ import iprotium.text.TextTable;
 import iprotium.util.ant.taskdefs.AbstractClasspathTask;
 import java.util.ServiceLoader;
 import org.apache.tools.ant.BuildException;
+
+import static iprotium.util.StringUtil.NIL;
 
 /**
  * <a href="http://ant.apache.org/">Ant</a>
@@ -34,7 +36,7 @@ public class SudokuTask extends AbstractClasspathTask {
     public void addText(String text) { parse(text); }
 
     private void parse(String string) {
-        string = string.replaceAll("[\\p{Space}]+", "");
+        string = string.replaceAll("[\\p{Space}]+", NIL);
         string = string.replaceAll("[^1-9]", ".");
 
         int i = 0;
@@ -72,7 +74,7 @@ public class SudokuTask extends AbstractClasspathTask {
                     if (rule.applyTo(puzzle)) {
                         modified |= true;
 
-                        log("");
+                        log(NIL);
                         log(rule.getClass().getCanonicalName());
                         log(puzzle);
 
