@@ -112,6 +112,18 @@
         <section name="iprotium/game/card/">
           <attribute name="Sealed" value="true"/>
         </section>
+        <section name="iprotium/game/card/poker/">
+          <attribute name="Sealed" value="true"/>
+        </section>
+        <section name="iprotium/game/card/solitaire/">
+          <attribute name="Sealed" value="true"/>
+        </section>
+        <section name="iprotium/game/card/trick/">
+          <attribute name="Sealed" value="true"/>
+        </section>
+        <section name="iprotium/game/card/trick/bridge/">
+          <attribute name="Sealed" value="true"/>
+        </section>
         <section name="iprotium/game/checker/">
           <attribute name="Sealed" value="true"/>
         </section>

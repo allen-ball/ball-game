@@ -1,5 +1,9 @@
 2013-07-27  Allen D. Ball  <ball@10-0-1-2.lan>
 
+	* iprotium.game.card:
+	Added packages for games.
+	Added a mechanism to define Decks through resources.
+
 	* src/main/java/iprotium/game/checker/Color.java,
 	src/main/java/iprotium/game/chess/Color.java:
 	Initial writing.

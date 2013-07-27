@@ -6,6 +6,11 @@
 package iprotium.game.card;
 
 import java.util.ArrayList;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
+import java.util.regex.Pattern;
+
+import static iprotium.util.StringUtil.isNil;
 
 /**
  * {@link Card} deck.
@@ -13,19 +18,34 @@ import java.util.ArrayList;
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
  * @version $Revision$
  */
-public class Deck extends ArrayList<Card> implements Cloneable {
+public abstract class Deck extends ArrayList<Card> implements Cloneable {
     private static final long serialVersionUID = 5514614397558084003L;
 
     /**
      * Sole constructor.
      */
-    public Deck() {
-        super(52);
+    protected Deck() {
+        super(Suit.values().length * Rank.values().length);
 
-        for (Suit suit : Suit.values()) {
-            for (Rank rank : Rank.values()) {
-                add(new Card(suit, rank));
+        try {
+            ResourceBundle bundle =
+                ResourceBundle.getBundle(getClass().getName());
+
+            for (String key : bundle.keySet()) {
+                String value = bundle.getString(key);
+
+                if (! isNil(value)) {
+                    for (String suit : key.split(Pattern.quote(","))) {
+                        for (String rank : value.split(Pattern.quote(","))) {
+                            add(new Card(Suit.parse(suit), Rank.parse(rank)));
+                        }
+                    }
+                } else {
+                    add(Card.parse(key));
+                }
             }
+        } catch (Exception exception) {
+            throw new ExceptionInInitializerError(exception);
         }
     }
 

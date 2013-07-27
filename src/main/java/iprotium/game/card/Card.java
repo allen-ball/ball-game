@@ -1,9 +1,13 @@
 /*
  * $Id$
  *
- * Copyright 2010, 2011 Allen D. Ball.  All rights reserved.
+ * Copyright 2010 - 2013 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game.card;
+
+import iprotium.util.ComparableUtil;
+import java.beans.ConstructorProperties;
+import java.util.regex.Pattern;
 
 /**
  * Playing card.
@@ -14,16 +18,35 @@ package iprotium.game.card;
 public class Card implements Comparable<Card> {
     private final Suit suit;
     private final Rank rank;
+    private final transient String string;
 
     /**
-     * Sole constructor.
+     * Sole protected constructor.
      *
      * @param   suit            The {@link Card} {@link Suit}.
      * @param   rank            The {@link Card} {@link Rank}.
      */
-    public Card(Suit suit, Rank rank) {
+    @ConstructorProperties( { "suit", "rank" } )
+    protected Card(Suit suit, Rank rank) {
         this.rank = rank;
         this.suit = suit;
+
+        if (rank.equals(Rank.JOKER)) {
+            if (suit != null) {
+                throw new IllegalArgumentException("suit=" + suit +
+                                                   ",rank=" + rank);
+            }
+        }
+
+        switch (rank) {
+        case JOKER:
+            this.string = rank.toString();
+            break;
+
+        default:
+            this.string = rank.toString() + "-" + suit.toString();
+            break;
+        }
     }
 
     /**
@@ -56,11 +79,13 @@ public class Card implements Comparable<Card> {
         int difference = 0;
 
         if (difference == 0) {
-            difference = this.getSuit().compareTo(that.getSuit());
+            difference =
+                ComparableUtil.compare(this.getSuit(), that.getSuit());
         }
 
         if (difference == 0) {
-            difference = this.getRank().compareTo(that.getRank());
+            difference =
+                ComparableUtil.compare(this.getRank(), that.getRank());
         }
 
         return difference;
@@ -74,17 +99,50 @@ public class Card implements Comparable<Card> {
     }
 
     private boolean equals(Card that) {
-        return (this.getSuit().equals(that.getSuit())
-                && this.getRank().equals(that.getRank()));
+        return (that != null && this.compareTo(that) == 0);
     }
 
     @Override
     public int hashCode() {
-        return getSuit().hashCode() ^ getRank().hashCode();
+        int code = 0;
+
+        if (getSuit() != null) {
+            code ^= getSuit().hashCode();
+        }
+
+        if (getRank() != null) {
+            code ^= getRank().hashCode();
+        }
+
+        return code;
     }
 
     @Override
-    public String toString() {
-        return getRank().toString() + "-" + getSuit().toString();
+    public String toString() { return string; }
+
+    /**
+     * Static method to parse a {@link String} consistent with
+     * {@link #toString} to a {@link Card}.
+     *
+     * @param   string          The {@link String} to parse.
+     *
+     * @return  The {@link Card}.
+     */
+    public static Card parse(String string) {
+        Card card = null;
+
+        try {
+            String[] substrings = string.split(Pattern.quote("-"), 2);
+
+            card =
+                new Card((substrings.length > 1)
+                             ? Suit.parse(substrings[1])
+                             : null,
+                         Rank.parse(substrings[0]));
+        } catch (Exception exception) {
+            throw new IllegalArgumentException(string, exception);
+        }
+
+        return card;
     }
 }
