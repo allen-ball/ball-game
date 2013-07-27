@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2010, 2011 Allen D. Ball.  All rights reserved.
+ * Copyright 2010 - 2013 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game.life;
 
@@ -117,4 +117,7 @@ public class Automata {
         return ((0 <= y && y < height && 0 <= x && x < width)
                 && state.testBit(y * width + x));
     }
+
+    @Override
+    public String toString() { return super.toString(); }
 }

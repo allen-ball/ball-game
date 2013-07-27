@@ -71,4 +71,7 @@ public class Board {
 	    throw new InternalError();
         }
     }
+
+    @Override
+    public String toString() { return super.toString(); }
 }

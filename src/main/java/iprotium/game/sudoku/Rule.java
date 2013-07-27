@@ -104,4 +104,7 @@ public abstract class Rule {
 
         return set;
     }
+
+    @Override
+    public String toString() { return getClass().getSimpleName(); }
 }

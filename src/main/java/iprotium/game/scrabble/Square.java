@@ -22,4 +22,7 @@ public class Square implements Cloneable {
     public Square clone() throws CloneNotSupportedException {
         return (Square) super.clone();
     }
+
+    @Override
+    public String toString() { return getClass().getSimpleName(); }
 }
