@@ -80,12 +80,6 @@
       </classpath>
       <src path="${src.dir}/main/java"/>
     </javac>
-    <taskdef classpathref="build.classpath"
-             resource="iprotium/util/ant/defaults.properties"/>
-    <provider-file-for classpathref="build.classpath"
-                       basedir="${target.classes.dir}">
-      <service>iprotium.game.sudoku.Rule</service>
-    </provider-file-for>
   </target>
 
   <target name="jar"

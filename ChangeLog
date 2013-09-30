@@ -1,3 +1,8 @@
+2013-09-29  Allen D. Ball  <ball@10-0-1-2.lan>
+
+	* Use @ServiceProviderFor annotations to generate
+	META-INF/services files.
+
 2013-07-27  Allen D. Ball  <ball@10-0-1-2.lan>
 
 	* iprotium.game.card:

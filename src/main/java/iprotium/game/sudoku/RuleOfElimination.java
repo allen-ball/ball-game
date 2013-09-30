@@ -1,10 +1,11 @@
 /*
  * $Id$
  *
- * Copyright 2012 Allen D. Ball.  All rights reserved.
+ * Copyright 2012, 2013 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game.sudoku;
 
+import iprotium.annotation.ServiceProviderFor;
 import iprotium.game.Grid;
 
 /**
@@ -15,6 +16,7 @@ import iprotium.game.Grid;
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
  * @version $Revision$
  */
+@ServiceProviderFor({ Rule.class })
 public class RuleOfElimination extends Rule {
 
     /**

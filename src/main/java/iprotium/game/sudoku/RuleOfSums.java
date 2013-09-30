@@ -1,10 +1,11 @@
 /*
  * $Id$
  *
- * Copyright 2012 Allen D. Ball.  All rights reserved.
+ * Copyright 2012, 2013 Allen D. Ball.  All rights reserved.
  */
 package iprotium.game.sudoku;
 
+import iprotium.annotation.ServiceProviderFor;
 import iprotium.game.Grid;
 import java.util.SortedSet;
 
@@ -16,6 +17,7 @@ import java.util.SortedSet;
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
  * @version $Revision$
  */
+@ServiceProviderFor({ Rule.class })
 public class RuleOfSums extends Rule {
 
     /**
