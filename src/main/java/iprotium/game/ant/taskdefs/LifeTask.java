@@ -5,6 +5,7 @@
  */
 package iprotium.game.ant.taskdefs;
 
+import iprotium.annotation.AntTask;
 import iprotium.game.life.Board;
 import iprotium.game.life.Game;
 import iprotium.text.TextTable;
@@ -22,6 +23,7 @@ import static iprotium.util.StringUtil.NIL;
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
  * @version $Revision$
  */
+@AntTask("life")
 public class LifeTask extends AbstractClasspathTask {
     private int height = 0;
     private int width = 0;

@@ -1,3 +1,8 @@
+2013-10-01  Allen D. Ball  <ball@10-0-1-2.lan>
+
+	* Use @AntTask annotations to generate "defaults.properties"
+	files.
+
 2013-09-29  Allen D. Ball  <ball@10-0-1-2.lan>
 
 	* Use @ServiceProviderFor annotations to generate

@@ -5,6 +5,7 @@
  */
 package iprotium.game.ant.taskdefs;
 
+import iprotium.annotation.AntTask;
 import iprotium.game.sudoku.Cell;
 import iprotium.game.sudoku.Puzzle;
 import iprotium.game.sudoku.Rule;
@@ -22,6 +23,7 @@ import static iprotium.util.StringUtil.NIL;
  * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
  * @version $Revision$
  */
+@AntTask("sudoku")
 public class SudokuTask extends AbstractClasspathTask {
     private final Puzzle puzzle = new Puzzle();
 
