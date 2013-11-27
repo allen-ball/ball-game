@@ -52,16 +52,6 @@
               value="${pom.artifactId}-${pom.version}.jar"/>
   </target>
 
-  <target name="buildnumber" unless="buildnumber">
-    <tstamp>
-      <format property="buildnumber.date" pattern="yyyyMMdd"/>
-      <format property="buildnumber.time" pattern="HHmm"/>
-    </tstamp>
-    <property name="buildnumber"
-              value="${buildnumber.date}${buildnumber.time}"/>
-    <echo>${buildnumber}</echo>
-  </target>
-
   <target name="classes"
           description="--> Compile Java source."
           depends="depend">
@@ -84,60 +74,10 @@
 
   <target name="jar"
           description="--> Construct iprotium-game.jar."
-          depends="buildnumber,classes">
-    <jar destfile="${target.dir}/${artifact}">
+          depends="classes">
+    <zip destfile="${target.dir}/${artifact}">
       <fileset dir="${target.classes.dir}"/>
-      <manifest>
-        <attribute name="Built-By" value="${user.name}"/>
-        <section name="iprotium/game/">
-          <attribute name="Extension-Name" value="iprotium.game"/>
-          <attribute name="Specification-Title" value="${pom.artifactId}"/>
-          <attribute name="Specification-Version" value="${pom.version}"/>
-          <attribute name="Specification-Vendor" value="${vendor}"/>
-          <attribute name="Implementation-Title" value="iprotium.game"/>
-          <attribute name="Implementation-Version"
-                     value="${pom.version}.${buildnumber.date}"/>
-          <attribute name="Implementation-Vendor" value="${vendor}"/>
-          <attribute name="Sealed" value="true"/>
-        </section>
-        <section name="iprotium/game/ant/taskdefs/">
-          <attribute name="Sealed" value="true"/>
-        </section>
-        <section name="iprotium/game/card/">
-          <attribute name="Sealed" value="true"/>
-        </section>
-        <section name="iprotium/game/card/poker/">
-          <attribute name="Sealed" value="true"/>
-        </section>
-        <section name="iprotium/game/card/solitaire/">
-          <attribute name="Sealed" value="true"/>
-        </section>
-        <section name="iprotium/game/card/trick/">
-          <attribute name="Sealed" value="true"/>
-        </section>
-        <section name="iprotium/game/card/trick/bridge/">
-          <attribute name="Sealed" value="true"/>
-        </section>
-        <section name="iprotium/game/checker/">
-          <attribute name="Sealed" value="true"/>
-        </section>
-        <section name="iprotium/game/chess/">
-          <attribute name="Sealed" value="true"/>
-        </section>
-        <section name="iprotium/game/domino/">
-          <attribute name="Sealed" value="true"/>
-        </section>
-        <section name="iprotium/game/life/">
-          <attribute name="Sealed" value="true"/>
-        </section>
-        <section name="iprotium/game/scrabble/">
-          <attribute name="Sealed" value="true"/>
-        </section>
-        <section name="iprotium/game/sudoku/">
-          <attribute name="Sealed" value="true"/>
-        </section>
-      </manifest>
-    </jar>
+    </zip>
     <jarlib-display file="${target.dir}/${artifact}"/>
   </target>
 
