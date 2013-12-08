@@ -8,7 +8,7 @@ package iprotium.game.chess;
 /**
  * Chess board and pieces' color {@link Enum} type.
  *
- * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
+ * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$
  */
 public enum Color { WHITE, BLACK; }

@@ -13,7 +13,7 @@ import java.util.TreeSet;
 /**
  * Scrabble Official Word List ({@link OWL}).
  *
- * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
+ * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$
  */
 public class OWL extends TreeSet<CharSequence> implements Cloneable {

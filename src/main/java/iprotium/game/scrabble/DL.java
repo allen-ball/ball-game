@@ -8,7 +8,7 @@ package iprotium.game.scrabble;
 /**
  * Scrabble double letter {@link Square}.
  *
- * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
+ * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$
  */
 public class DL extends Square implements Cloneable {

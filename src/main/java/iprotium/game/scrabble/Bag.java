@@ -13,7 +13,7 @@ import java.util.TreeMap;
 /**
  * Scrabble {@link Bag}.
  *
- * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
+ * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$
  */
 public class Bag extends ArrayList<Character> implements Cloneable {

@@ -14,7 +14,7 @@ import java.util.SortedSet;
  * minimum maximum possible value for any cell and removes any greater
  * numbers from consideration.
  *
- * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
+ * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$
  */
 @ServiceProviderFor({ Rule.class })

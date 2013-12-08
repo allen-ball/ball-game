@@ -8,7 +8,7 @@ package iprotium.game.card.trick.bridge;
 /**
  * Bridge {@link iprotium.game.card.Deck}.
  *
- * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
+ * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$
  */
 public class Deck extends iprotium.game.card.Deck {

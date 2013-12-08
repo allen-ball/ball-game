@@ -1,7 +1,7 @@
 /**
  * Classes specific to "trick" card games.
  *
- * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
+ * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  */
 @ManifestSection
 package iprotium.game.card.trick;

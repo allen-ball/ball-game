@@ -15,7 +15,7 @@ import static java.util.Collections.unmodifiableList;
 /**
  * {@link Grid} base class.
  *
- * @author <a href="mailto:ball@iprotium.com">Allen D. Ball</a>
+ * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$
  */
 public class Grid<E> extends TableModel implements Iterable<E> {
