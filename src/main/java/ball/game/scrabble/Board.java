@@ -5,73 +5,76 @@
  */
 package ball.game.scrabble;
 
+import ball.game.Grid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
 
 /**
  * Scrabble {@link Board}.
  *
+ * {@include Board.properties}
+ *
  * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$
  */
-public class Board {
-    private static final int HEIGHT = 15;
-    private static final int WIDTH = 15;
+public class Board extends Grid<Square> {
+    private static final long serialVersionUID = -399826193477575690L;
 
-    private final Square[][] board = new Square[HEIGHT][];
-
-    {
-        for (int y = 0; y < board.length; y += 1) {
-            board[y] = new Square[WIDTH];
-        }
-    }
+    private static final ResourceBundleMap MAP =
+        new ResourceBundleMap(Board.class);
 
     /**
-     * Sole constructor.
+     * Sole public constructor.
      */
-    public Board() {
-        ResourceBundle bundle = ResourceBundle.getBundle(getClass().getName());
+    public Board() { this(MAP); }
 
-        reflect(0, 0, new TW());
-        reflect(0, 3, new DL());
-        reflect(0, 7, new TW());
-        reflect(1, 1, new DW());
-        reflect(1, 5, new TL());
-        reflect(2, 2, new DW());
-        reflect(3, 0, new DL());
-        reflect(3, 3, new DW());
-        reflect(3, 7, new DL());
-        reflect(4, 4, new DW());
-        reflect(5, 1, new TL());
-        reflect(5, 5, new TL());
-        reflect(6, 2, new DL());
-        reflect(6, 6, new DL());
-        reflect(7, 0, new TW());
-        reflect(7, 7, new DW());
+    private Board(ResourceBundleMap map) {
+        super(map.size(), map.size(), Square.class, squares(map));
+    }
 
-        for (int y = 0; y < board.length; y += 1) {
-            for (int x = 0; x < board[y].length; x += 1) {
-                if (board[y][x] == null) {
-                    board[y][x] = new Square();
+    private static List<? extends Square> squares(ResourceBundleMap map) {
+        ArrayList<Square> list = null;
+
+        try {
+            int n = map.size();
+
+            list = new ArrayList<Square>(n * n);
+
+            String pkg = Square.class.getPackage().getName();
+
+            for (String value : map.values()) {
+                String[] names = value.split("[\\p{Space}]+", n);
+
+                for (int i = 0; i < n; i += 1) {
+                    String name = pkg + "." + names[i];
+
+                    try {
+                        list.add((Square) Class.forName(name).newInstance());
+                    } catch (Exception exception) {
+                        list.add(new Square());
+                    }
                 }
+            }
+        } catch (Exception exception) {
+            throw new ExceptionInInitializerError(exception);
+        }
+
+        return list;
+    }
+
+    private static class ResourceBundleMap extends TreeMap<String,String> {
+        private static final long serialVersionUID = 5871194943402587641L;
+
+        public ResourceBundleMap(Class<? extends Board> type) {
+            super();
+
+            ResourceBundle bundle = ResourceBundle.getBundle(type.getName());
+
+            for (String key : bundle.keySet()) {
+                put(key, bundle.getString(key).trim());
             }
         }
     }
-
-    private void reflect(int y, int x, Square square) {
-        board[y][x] = square;
-
-        int ym = (HEIGHT - 1) - y;
-        int xm = (WIDTH - 1) - x;
-
-        try {
-            board[ym][x] = square.clone();
-            board[y][xm] = square.clone();
-            board[ym][xm] = square.clone();
-        } catch (CloneNotSupportedException exception) {
-	    throw new InternalError();
-        }
-    }
-
-    @Override
-    public String toString() { return super.toString(); }
 }

@@ -5,6 +5,9 @@
 	Added constructor with Collection argument to specify Grid values.
 	Added asList() method.
 
+	* src/main/java/ball/game/scrabble/Board.java:
+	Re-factored as a subclass of Grid.
+
 2014-07-05  Allen D. Ball  <ball@sol.local>
 
 	* pom.xml: Specify JRE dependency,
