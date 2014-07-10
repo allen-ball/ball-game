@@ -1,3 +1,10 @@
+2014-07-10  Allen D. Ball  <ball@sol.local>
+
+	* src/main/java/ball/game/Grid.java:
+	Made Grid base class abstract.
+	Added constructor with Collection argument to specify Grid values.
+	Added asList() method.
+
 2014-07-05  Allen D. Ball  <ball@sol.local>
 
 	* pom.xml: Specify JRE dependency,
