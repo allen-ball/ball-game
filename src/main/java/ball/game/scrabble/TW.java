@@ -16,7 +16,7 @@ public class TW extends Square implements Cloneable {
     /**
      * Sole constructor.
      */
-    public TW() { }
+    public TW() { super("@"); }
 
     @Override
     public TW clone() throws CloneNotSupportedException {

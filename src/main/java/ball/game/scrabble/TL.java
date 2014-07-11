@@ -16,7 +16,7 @@ public class TL extends Square implements Cloneable {
     /**
      * Sole constructor.
      */
-    public TL() { }
+    public TL() { super("%"); }
 
     @Override
     public TL clone() throws CloneNotSupportedException {

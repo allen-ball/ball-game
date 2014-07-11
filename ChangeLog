@@ -8,6 +8,9 @@
 	* src/main/java/ball/game/scrabble/Board.java:
 	Re-factored as a subclass of Grid.
 
+	* src/main/java/ball/game/scrabble/Square.java:
+	Added play() methods.
+
 	* src/main/java/ball/game/scrabble/Tile.java: Initial writing.
 
 2014-07-05  Allen D. Ball  <ball@sol.local>

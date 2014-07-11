@@ -16,7 +16,7 @@ public class DW extends Square implements Cloneable {
     /**
      * Sole constructor.
      */
-    public DW() { }
+    public DW() { super("*"); }
 
     @Override
     public DW clone() throws CloneNotSupportedException {

@@ -8,21 +8,49 @@ package ball.game.scrabble;
 /**
  * Scrabble {@link Board} {@link Square}.
  *
+ * {@bean-info}
+ *
  * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$
  */
 public class Square implements Cloneable {
+    private Tile tile = null;
+    private char letter = ' ';
+    private String string = null;
 
     /**
-     * Sole constructor.
+     * Sole public constructor.
      */
-    public Square() { }
+    public Square() { this("."); }
 
-    @Override
-    public Square clone() throws CloneNotSupportedException {
-        return (Square) super.clone();
+    /**
+     * Protected constructor to specify the {@link Square} representation.
+     *
+     * @param   string          The {@link String} representation of this
+     *                          {@link Square} if no {@link Tile} has been
+     *                          played.
+     */
+    protected Square(String string) { this.string = string; }
+
+    public boolean isEmpty() { return (tile == null); }
+
+    public void play(Tile tile) { play(tile, tile.getLetter()); }
+
+    public void play(Tile tile, char letter) {
+        if (isEmpty()) {
+            this.tile = tile;
+            this.letter = letter;
+        } else {
+            throw new IllegalStateException();
+        }
+
+        if (tile.isBlank()) {
+            string = "[" + letter + "]";
+        } else {
+            string = tile.toString();
+        }
     }
 
     @Override
-    public String toString() { return getClass().getSimpleName(); }
+    public String toString() { return string; }
 }

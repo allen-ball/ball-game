@@ -16,7 +16,7 @@ public class DL extends Square implements Cloneable {
     /**
      * Sole constructor.
      */
-    public DL() { }
+    public DL() { super("+"); }
 
     @Override
     public DL clone() throws CloneNotSupportedException {
