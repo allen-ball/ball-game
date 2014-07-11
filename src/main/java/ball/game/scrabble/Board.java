@@ -19,7 +19,7 @@ import java.util.TreeMap;
  * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$
  */
-public class Board extends Grid<Square> {
+public class Board extends Grid<SQ> {
     private static final long serialVersionUID = -399826193477575690L;
 
     private static final ResourceBundleMap MAP =
@@ -31,18 +31,18 @@ public class Board extends Grid<Square> {
     public Board() { this(MAP); }
 
     private Board(ResourceBundleMap map) {
-        super(map.size(), map.size(), Square.class, squares(map));
+        super(map.size(), map.size(), SQ.class, squares(map));
     }
 
-    private static List<? extends Square> squares(ResourceBundleMap map) {
-        ArrayList<Square> list = null;
+    private static List<? extends SQ> squares(ResourceBundleMap map) {
+        ArrayList<SQ> list = null;
 
         try {
             int n = map.size();
 
-            list = new ArrayList<Square>(n * n);
+            list = new ArrayList<SQ>(n * n);
 
-            String pkg = Square.class.getPackage().getName();
+            String pkg = SQ.class.getPackage().getName();
 
             for (String value : map.values()) {
                 String[] names = value.split("[\\p{Space}]+", n);
@@ -51,9 +51,9 @@ public class Board extends Grid<Square> {
                     String name = pkg + "." + names[i];
 
                     try {
-                        list.add((Square) Class.forName(name).newInstance());
+                        list.add((SQ) Class.forName(name).newInstance());
                     } catch (Exception exception) {
-                        list.add(new Square());
+                        list.add(new SQ());
                     }
                 }
             }

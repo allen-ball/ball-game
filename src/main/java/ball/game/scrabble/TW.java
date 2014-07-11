@@ -6,12 +6,12 @@
 package ball.game.scrabble;
 
 /**
- * Scrabble triple word {@link Square}.
+ * Scrabble triple word square.
  *
  * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$
  */
-public class TW extends Square implements Cloneable {
+public class TW extends SQ implements Cloneable {
 
     /**
      * Sole constructor.
