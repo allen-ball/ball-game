@@ -6,22 +6,26 @@
 package ball.game.scrabble;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 
 /**
  * Scrabble {@link Bag}.
  *
+ * {@bean-info}
+ *
  * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$
  */
-public class Bag extends ArrayList<Character> implements Cloneable {
-    private static final long serialVersionUID = -6473916460700746587L;
+public class Bag extends ArrayList<Tile> implements Cloneable {
+    private static final long serialVersionUID = -3450364322503748772L;
 
     private final Locale locale;
-    private final Frequencies frequencies;
-    private final Points points;
+    private final Map<Character,Integer> frequencies;
+    private final Map<Character,Integer> points;
 
     /**
      * No-argument constructor.
@@ -42,12 +46,12 @@ public class Bag extends ArrayList<Character> implements Cloneable {
             throw new NullPointerException("locale");
         }
 
-        frequencies = new Frequencies();
-        points = new Points();
+        frequencies = Collections.unmodifiableMap(new Frequencies());
+        points = Collections.unmodifiableMap(new Points());
 
         for (Character key : frequencies.keySet()) {
             for (int i = 0, n = frequencies.get(key); i < n; i += 1) {
-                add(key);
+                add(new Tile(key, points.get(key)));
             }
         }
     }
@@ -59,8 +63,22 @@ public class Bag extends ArrayList<Character> implements Cloneable {
      */
     public Locale getLocale() { return locale; }
 
+    /**
+     * Method to get the frequency {@link Map} for this {@link Bag}.
+     *
+     * @return  The frequency {@link Map} for this {@link Bag}.
+     */
+    public Map<Character,Integer> frequencies() { return frequencies; }
+
+    /**
+     * Method to get the points {@link Map} for this {@link Bag}.
+     *
+     * @return  The points {@link Map} for this {@link Bag}.
+     */
+    public Map<Character,Integer> points() { return points; }
+
     @Override
-    public Character[] toArray() { return toArray(new Character[] { }); }
+    public Tile[] toArray() { return toArray(new Tile[] { }); }
 
     @Override
     public Bag clone() { return (Bag) super.clone(); }

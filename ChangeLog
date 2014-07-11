@@ -5,6 +5,9 @@
 	Added constructor with Collection argument to specify Grid values.
 	Added asList() method.
 
+	* src/main/java/ball/game/scrabble/Bag.java:
+	Re-factored as a List of Tiles.
+
 	* src/main/java/ball/game/scrabble/Board.java:
 	Re-factored as a subclass of Grid.
 
