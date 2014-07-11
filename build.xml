@@ -92,6 +92,14 @@
     <life height="${height}" width="${width}" state0="${state0}"/>
   </target>
 
+  <target name="scrabble"
+          description="--> Invokes &lt;scrabble/&gt; task."
+          depends="classes">
+    <taskdef classpathref="build.classpath"
+             resource="ball/game/ant/defaults.properties"/>
+    <scrabble/>
+  </target>
+
   <target name="sudoku"
           description="--> Invokes &lt;sudoku/&gt; task."
           depends="classes">
