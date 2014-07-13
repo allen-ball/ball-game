@@ -6,16 +6,17 @@
 package ball.game.ant.taskdefs;
 
 import ball.annotation.AntTask;
-import ball.game.scrabble.Bag;
+import ball.game.scrabble.AI;
 import ball.game.scrabble.Board;
-import ball.game.scrabble.OWL;
+import ball.game.scrabble.Game;
+import ball.game.scrabble.Player;
 import ball.game.scrabble.Rack;
 import ball.game.scrabble.Tile;
 import ball.text.TextTable;
 import ball.util.ant.taskdefs.AbstractClasspathTask;
 import java.util.Collections;
-import java.util.List;
 import java.util.LinkedHashSet;
+import java.util.List;
 import org.apache.tools.ant.BuildException;
 
 /**
@@ -66,23 +67,22 @@ public abstract class ScrabbleTask extends AbstractClasspathTask {
             }
 
             try {
-                OWL owl = new OWL();
-                Bag bag = new Bag();
-                Rack rack = new Rack();
+                Game game = new Game();
+                Player player = new AI();
 
                 for (char letter : getRack().toUpperCase().toCharArray()) {
-                    rack.add(bag.draw(letter));
+                    player.getRack().add(game.getBag().draw(letter));
                 }
 
-                log(String.valueOf(rack));
+                log(String.valueOf(player.getRack()));
 
                 LinkedHashSet<String> set = new LinkedHashSet<String>();
 
-                for (List<Tile> list : rack.combinations()) {
+                for (List<Tile> list : player.getRack().combinations()) {
                     set.add(Tile.toString(list));
                 }
 
-                set.retainAll(owl);
+                set.retainAll(game.getWordList());
 
                 log(String.valueOf(set));
             } catch (BuildException exception) {
