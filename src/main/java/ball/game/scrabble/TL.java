@@ -11,15 +11,10 @@ package ball.game.scrabble;
  * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$
  */
-public class TL extends SQ implements Cloneable {
+public class TL extends SQ {
 
     /**
      * Sole constructor.
      */
     public TL() { super("%"); }
-
-    @Override
-    public TL clone() throws CloneNotSupportedException {
-        return (TL) super.clone();
-    }
 }

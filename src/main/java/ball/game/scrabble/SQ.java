@@ -13,7 +13,7 @@ package ball.game.scrabble;
  * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$
  */
-public class SQ implements Cloneable {
+public class SQ {
     private Tile tile = null;
     private char letter = ' ';
     private String string = null;
@@ -45,9 +45,9 @@ public class SQ implements Cloneable {
         }
 
         if (tile.isBlank()) {
-            string = "[" + letter + "]";
+            string = String.valueOf(letter).toLowerCase();
         } else {
-            string = tile.toString();
+            string = tile.toString().toUpperCase();
         }
     }
 

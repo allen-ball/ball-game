@@ -1,3 +1,8 @@
+2014-07-12  Allen D. Ball  <ball@sol.local>
+
+	* src/main/java/ball/game/scrabble/SQ.java:
+	No longer implement Cloneable.
+
 2014-07-11  Allen D. Ball  <ball@sol.local>
 
 	* src/main/java/ball/game/scrabble/SQ.java: Renamed from Square.
