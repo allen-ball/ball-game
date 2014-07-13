@@ -2,6 +2,9 @@
 
 	* Added <scrabble-words-for/> build target and Ant Task.
 
+	* src/main/java/ball/game/scrabble/WordList.java:
+	Initial writing.
+
 2014-07-12  Allen D. Ball  <ball@sol.local>
 
 	* src/main/java/ball/game/scrabble/Bag.java:
