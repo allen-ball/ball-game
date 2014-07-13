@@ -6,6 +6,8 @@
 package ball.game.scrabble;
 
 import java.beans.ConstructorProperties;
+import java.nio.CharBuffer;
+import java.util.Collection;
 
 /**
  * Scrabble {@link Tile}.
@@ -15,8 +17,12 @@ import java.beans.ConstructorProperties;
  * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$
  */
-public class Tile implements Cloneable {
-    private static final char BLANK = '_';
+public class Tile {
+
+    /**
+     * {@link #BLANK} = {@value #BLANK}
+     */
+    public static final char BLANK = '_';
 
     private final char letter;
     private final int points;
@@ -38,10 +44,23 @@ public class Tile implements Cloneable {
     public boolean isBlank() { return (getLetter() == BLANK); }
 
     @Override
-    public Tile clone() throws CloneNotSupportedException {
-        return (Tile) super.clone();
-    }
-
-    @Override
     public String toString() { return String.valueOf(letter); }
+
+    /**
+     * Static method to return the {@link String} represented by the
+     * {@link Collection} of {@link Tile}s.
+     *
+     * @param   collection      The {@link Collection} of {@link Tile}s.
+     *
+     * @return  The {@link String} representation.
+     */
+    public static String toString(Collection<Tile> collection) {
+        CharBuffer buffer = CharBuffer.allocate(collection.size());
+
+        for (Tile tile : collection) {
+            buffer.put(tile.getLetter());
+        }
+
+        return buffer.flip().toString();
+    }
 }
