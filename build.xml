@@ -92,12 +92,12 @@
     <life height="${height}" width="${width}" state0="${state0}"/>
   </target>
 
-  <target name="scrabble"
-          description="--> Invokes &lt;scrabble/&gt; task."
+  <target name="scrabble-words-for"
+          description="--> Invokes &lt;scrabble-words-for/&gt; task."
           depends="classes">
     <taskdef classpathref="build.classpath"
              resource="ball/game/ant/defaults.properties"/>
-    <scrabble/>
+    <scrabble-words-for rack="${rack}"/>
   </target>
 
   <target name="sudoku"
