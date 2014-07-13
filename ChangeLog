@@ -3,6 +3,8 @@
 	* src/main/java/ball/game/scrabble/Bag.java:
 	Added draw() and draw(char) methods.
 
+	* src/main/java/ball/game/scrabble/Rack.java: Initial writing.
+
 	* src/main/java/ball/game/scrabble/Tile.java:
 	Made BLANK member public and added static
 	toString(Collection<Tile>) method.
