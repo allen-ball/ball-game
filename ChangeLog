@@ -2,6 +2,9 @@
 
 	* Added <scrabble-words-for/> build target and Ant Task.
 
+	* src/main/java/ball/game/scrabble/OWL.java:
+	Re-factored as a subclass of WordList.
+
 	* src/main/java/ball/game/scrabble/WordList.java:
 	Initial writing.
 
