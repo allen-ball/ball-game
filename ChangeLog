@@ -2,6 +2,11 @@
 
 	* Added <scrabble-words-for/> build target and Ant Task.
 
+	* src/main/java/ball/game/scrabble/Game.java,
+	src/main/java/ball/game/scrabble/Player.java,
+	src/main/java/ball/game/scrabble/AI.java:
+	Initial (and interim) check-in.
+
 	* src/main/java/ball/game/scrabble/OWL.java:
 	Re-factored as a subclass of WordList.
 
