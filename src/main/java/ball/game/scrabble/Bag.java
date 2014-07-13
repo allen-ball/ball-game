@@ -21,7 +21,7 @@ import java.util.TreeMap;
  * @version $Revision$
  */
 public class Bag extends ArrayList<Tile> implements Cloneable {
-    private static final long serialVersionUID = -3450364322503748772L;
+    private static final long serialVersionUID = -3705287411834404262L;
 
     private final Locale locale;
     private final Map<Character,Integer> frequencies;
@@ -76,6 +76,37 @@ public class Bag extends ArrayList<Tile> implements Cloneable {
      * @return  The points {@link Map} for this {@link Bag}.
      */
     public Map<Character,Integer> points() { return points; }
+
+    /**
+     * Method to draw the next {@link Tile} in the {@link Bag}.
+     *
+     * @return  The next {@link Tile}.
+     *
+     * @see #remove(int)
+     */
+    public Tile draw() { return remove(0); }
+
+    /**
+     * Method to draw a specific {@link Tile} from the {@link Bag}.
+     *
+     * @param   letter          The name of the requested {@link Tile}.
+     *
+     * @return  The request {@link Tile}; {@code null} if none available..
+     *
+     * @see #remove(int)
+     */
+    public Tile draw(char letter) {
+        int index = -1;
+
+        for (int i = 0, n = size(); i < n; i += 1) {
+            if (get(i).getLetter() == letter) {
+                index = i;
+                break;
+            }
+        }
+
+        return (0 <= index && index < size()) ? remove(index) : null;
+    }
 
     @Override
     public Tile[] toArray() { return toArray(new Tile[] { }); }
