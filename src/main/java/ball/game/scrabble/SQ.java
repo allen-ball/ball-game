@@ -14,6 +14,8 @@ package ball.game.scrabble;
  * @version $Revision$
  */
 public class SQ {
+    private final int letterPremium;
+    private final int wordPremium;
     private Tile tile = null;
     private char letter = ' ';
     private String string = null;
@@ -30,7 +32,40 @@ public class SQ {
      *                          {@link SQ} if no {@link Tile} has been
      *                          played.
      */
-    protected SQ(String string) { this.string = string; }
+    protected SQ(String string) {
+        if (getClass().getAnnotation(LetterPremium.class) != null) {
+            letterPremium =
+                getClass().getAnnotation(LetterPremium.class).value();
+        } else {
+            letterPremium = 0;
+        }
+
+        if (getClass().getAnnotation(WordPremium.class) != null) {
+            wordPremium = getClass().getAnnotation(WordPremium.class).value();
+        } else {
+            wordPremium = 0;
+        }
+
+        if (string != null) {
+            this.string = string;
+        } else {
+            throw new NullPointerException("string");
+        }
+    }
+
+    public boolean isPremium() {
+        return (letterPremium > 1 || wordPremium > 1);
+    }
+
+    /**
+     * @see LetterPremium
+     */
+    public int getLetterPremium() { return letterPremium; }
+
+    /**
+     * @see WordPremium
+     */
+    public int getWordPremium() { return wordPremium; }
 
     public boolean isEmpty() { return (tile == null); }
 

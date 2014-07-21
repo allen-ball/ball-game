@@ -11,6 +11,7 @@ package ball.game.scrabble;
  * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$
  */
+@LetterPremium(2)
 public class DL extends SQ {
 
     /**

@@ -1,5 +1,10 @@
 2014-07-21  Allen D. Ball  <ball@sol.local>
 
+	* src/main/java/ball/game/scrabble/SQ.java (and subclasses):
+	Use @LetterPremium and @WordPremium to indicate premium squares.
+	Implement isPremium(), getLetterPremium(), and getWordPremium()
+	methods.
+
 	* src/main/java/ball/game/scrabble/LetterPremium.java,
 	src/main/java/ball/game/scrabble/WordPremium.java,
 	src/main/java/ball/game/scrabble/PremiumProcessor.java:
