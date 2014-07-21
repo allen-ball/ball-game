@@ -1,3 +1,10 @@
+2014-07-21  Allen D. Ball  <ball@sol.local>
+
+	* src/main/java/ball/game/scrabble/LetterPremium.java,
+	src/main/java/ball/game/scrabble/WordPremium.java,
+	src/main/java/ball/game/scrabble/PremiumProcessor.java:
+	Initial writing.
+
 2014-07-13  Allen D. Ball  <ball@sol.local>
 
 	* Added <scrabble-words-for/> build target and Ant Task.
