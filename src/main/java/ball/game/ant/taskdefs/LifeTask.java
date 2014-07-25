@@ -87,6 +87,7 @@ public class LifeTask extends AbstractClasspathTask {
 
                 if (! game.contains(state)) {
                     game.addLast(state);
+                    continue;
                 } else {
                     log("Steady state: Returned to Generation #"
                         + String.valueOf(game.indexOf(state)));
@@ -100,7 +101,4 @@ public class LifeTask extends AbstractClasspathTask {
             throw new BuildException(throwable);
         }
     }
-
-    @Override
-    public String toString() { return getClass().getSimpleName(); }
 }
