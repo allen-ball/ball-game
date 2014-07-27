@@ -5,7 +5,6 @@
  */
 package ball.game.ant.taskdefs;
 
-import ball.annotation.AntTask;
 import ball.game.scrabble.AI;
 import ball.game.scrabble.Board;
 import ball.game.scrabble.Game;
@@ -14,6 +13,7 @@ import ball.game.scrabble.Rack;
 import ball.game.scrabble.Tile;
 import ball.text.TextTable;
 import ball.util.ant.taskdefs.AbstractClasspathTask;
+import ball.util.ant.taskdefs.AntTask;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;

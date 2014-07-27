@@ -5,12 +5,12 @@
  */
 package ball.game.ant.taskdefs;
 
-import ball.annotation.AntTask;
 import ball.game.sudoku.Cell;
 import ball.game.sudoku.Puzzle;
 import ball.game.sudoku.Rule;
 import ball.text.TextTable;
 import ball.util.ant.taskdefs.AbstractClasspathTask;
+import ball.util.ant.taskdefs.AntTask;
 import java.util.ServiceLoader;
 import org.apache.tools.ant.BuildException;
 

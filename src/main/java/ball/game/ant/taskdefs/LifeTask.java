@@ -5,11 +5,11 @@
  */
 package ball.game.ant.taskdefs;
 
-import ball.annotation.AntTask;
 import ball.game.life.Board;
 import ball.game.life.Game;
 import ball.text.TextTable;
 import ball.util.ant.taskdefs.AbstractClasspathTask;
+import ball.util.ant.taskdefs.AntTask;
 import java.math.BigInteger;
 import org.apache.tools.ant.BuildException;
 
