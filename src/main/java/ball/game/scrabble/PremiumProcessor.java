@@ -107,8 +107,7 @@ public class PremiumProcessor extends AbstractAnnotationProcessor {
             break;
 
         default:
-            throw new IllegalStateException();
-            /* break; */
+            break;
         }
     }
 }
