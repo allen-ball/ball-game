@@ -14,6 +14,7 @@ import ball.game.scrabble.Tile;
 import ball.text.TextTable;
 import ball.util.ant.taskdefs.AbstractClasspathTask;
 import ball.util.ant.taskdefs.AntTask;
+import ball.util.ant.taskdefs.NotNull;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -57,14 +58,13 @@ public abstract class ScrabbleTask extends AbstractClasspathTask {
          */
         public WordsFor() { super(); }
 
+        @NotNull
+        public String getRack() { return rack; }
         public void setRack(String rack) { this.rack = rack; }
-        protected String getRack() { return rack; }
 
         @Override
         public void execute() throws BuildException {
-            if (getRack() == null) {
-                throw new BuildException("`rack' attribute must be specified");
-            }
+            super.execute();
 
             try {
                 Game game = new Game();

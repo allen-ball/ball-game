@@ -35,13 +35,13 @@ public class LifeTask extends AbstractClasspathTask {
      */
     public LifeTask() { super(); }
 
-    protected int getHeight() { return height; }
+    public int getHeight() { return height; }
     public void setHeight(int height) { this.height = height; }
 
-    protected int getWidth() { return width; }
+    public int getWidth() { return width; }
     public void setWidth(int width) { this.width = width; }
 
-    protected BigInteger getState0() { return state0; }
+    public BigInteger getState0() { return state0; }
     public void setState0(String state0) { this.state0 = parse(state0); }
 
     public void addText(String text) { setState0(text); }
@@ -74,6 +74,8 @@ public class LifeTask extends AbstractClasspathTask {
 
     @Override
     public void execute() throws BuildException {
+        super.execute();
+
         try {
             Game game = new Game(getHeight(), getWidth(), getState0());
             Board board = new Board(game);

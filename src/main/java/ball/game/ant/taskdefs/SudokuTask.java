@@ -34,7 +34,7 @@ public class SudokuTask extends AbstractClasspathTask {
      */
     public SudokuTask() { super(); }
 
-    protected Puzzle getPuzzle() { return puzzle; }
+    public Puzzle getPuzzle() { return puzzle; }
     public void setPuzzle(String string) { parse(string); }
 
     public void addText(String text) { parse(text); }
@@ -60,6 +60,8 @@ public class SudokuTask extends AbstractClasspathTask {
 
     @Override
     public void execute() throws BuildException {
+        super.execute();
+
         ServiceLoader<Rule> loader =
             ServiceLoader.load(Rule.class, getClassLoader());
         Puzzle puzzle = getPuzzle();
