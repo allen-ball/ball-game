@@ -5,7 +5,7 @@
  */
 package ball.game.life;
 
-import ball.text.TableModel;
+import ball.swing.table.AbstractTableModelImpl;
 
 /**
  * Life {@link Board}.
@@ -13,7 +13,7 @@ import ball.text.TableModel;
  * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$
  */
-public class Board extends TableModel {
+public class Board extends AbstractTableModelImpl {
     private static final long serialVersionUID = -8272117924997665864L;
 
     private final Game game;

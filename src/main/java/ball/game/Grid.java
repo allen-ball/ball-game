@@ -5,7 +5,7 @@
  */
 package ball.game;
 
-import ball.text.TableModel;
+import ball.swing.table.AbstractTableModelImpl;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -19,7 +19,8 @@ import static java.util.Collections.unmodifiableList;
  * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$
  */
-public abstract class Grid<E> extends TableModel implements Iterable<E> {
+public abstract class Grid<E> extends AbstractTableModelImpl
+                                      implements Iterable<E> {
     private final Class<E> type;
     private final List<List<E>> lists;
     private final List<Grid<E>> rows;

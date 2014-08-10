@@ -8,7 +8,6 @@ package ball.game.ant.taskdefs;
 import ball.game.sudoku.Cell;
 import ball.game.sudoku.Puzzle;
 import ball.game.sudoku.Rule;
-import ball.text.TextTable;
 import ball.util.ant.taskdefs.AbstractClasspathTask;
 import ball.util.ant.taskdefs.AntTask;
 import java.util.ServiceLoader;
@@ -99,12 +98,6 @@ public class SudokuTask extends AbstractClasspathTask {
         } catch (Throwable throwable) {
             throwable.printStackTrace();
             throw new BuildException(throwable);
-        }
-    }
-
-    private void log(Puzzle puzzle) {
-        for (String line : new TextTable(puzzle)) {
-            log(line);
         }
     }
 }

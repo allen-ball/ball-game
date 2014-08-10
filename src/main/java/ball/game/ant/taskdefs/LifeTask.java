@@ -7,7 +7,6 @@ package ball.game.ant.taskdefs;
 
 import ball.game.life.Board;
 import ball.game.life.Game;
-import ball.text.TextTable;
 import ball.util.ant.taskdefs.AbstractClasspathTask;
 import ball.util.ant.taskdefs.AntTask;
 import java.math.BigInteger;
@@ -83,7 +82,7 @@ public class LifeTask extends AbstractClasspathTask {
             for (;;) {
                 log(NIL);
                 log("Generation #" + String.valueOf(game.size() - 1));
-                log(new TextTable(board));
+                log(board);
 
                 BigInteger state = game.automata().next(game.getLast());
 

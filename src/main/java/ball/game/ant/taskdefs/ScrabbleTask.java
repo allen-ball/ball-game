@@ -11,7 +11,6 @@ import ball.game.scrabble.Game;
 import ball.game.scrabble.Player;
 import ball.game.scrabble.Rack;
 import ball.game.scrabble.Tile;
-import ball.text.TextTable;
 import ball.util.ant.taskdefs.AbstractClasspathTask;
 import ball.util.ant.taskdefs.AntTask;
 import ball.util.ant.taskdefs.NotNull;
@@ -35,12 +34,6 @@ public abstract class ScrabbleTask extends AbstractClasspathTask {
      * Sole constructor.
      */
     protected ScrabbleTask() { super(); }
-
-    protected void log(Board board) {
-        for (String line : new TextTable(board)) {
-            log(line);
-        }
-    }
 
     /**
      * {@link.uri http://ant.apache.org/ Ant}
