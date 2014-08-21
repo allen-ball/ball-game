@@ -59,7 +59,7 @@ public class PremiumProcessor extends AbstractAnnotationProcessor {
                         Element element) throws Exception {
         switch (element.getKind()) {
         case CLASS:
-            if (isAssignable(element, supertype)) {
+            if (isAssignable(element.asType(), supertype.asType())) {
                 if (! element.getModifiers().contains(ABSTRACT)) {
                     if (hasPublicNoArgumentConstructor(element)) {
                         HashSet<TypeElement> set = new HashSet<TypeElement>();
