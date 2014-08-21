@@ -50,7 +50,11 @@ public class PremiumProcessor extends AbstractAnnotationProcessor {
     public void init(ProcessingEnvironment processingEnv) {
         super.init(processingEnv);
 
-        supertype = getTypeElementFor(SQ.class);
+        try {
+            supertype = getTypeElementFor(SQ.class);
+        } catch (Exception exception) {
+            print(ERROR, null, exception);
+        }
     }
 
     @Override
