@@ -66,7 +66,7 @@ public class PremiumProcessor extends AbstractAnnotationProcessor {
             if (isAssignable(element.asType(), supertype.asType())) {
                 if (! element.getModifiers().contains(ABSTRACT)) {
                     if (hasPublicNoArgumentConstructor(element)) {
-                        HashSet<TypeElement> set = new HashSet<TypeElement>();
+                        HashSet<TypeElement> set = new HashSet<>();
 
                         for (Class<? extends Annotation> type :
                                  getSupportedAnnotationTypeList()) {

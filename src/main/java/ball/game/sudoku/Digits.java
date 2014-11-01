@@ -24,7 +24,7 @@ public class Digits extends TreeSet<Integer> {
     protected static final int SUM;
 
     static {
-        TreeSet<Integer> digits = new TreeSet<Integer>();
+        TreeSet<Integer> digits = new TreeSet<>();
         int sum = 0;
 
         for (int i = 1; i <= 9; i += 1) {

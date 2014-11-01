@@ -69,7 +69,7 @@ public abstract class ScrabbleTask extends AbstractClasspathTask {
 
                 log(String.valueOf(player.getRack()));
 
-                LinkedHashSet<String> set = new LinkedHashSet<String>();
+                LinkedHashSet<String> set = new LinkedHashSet<>();
 
                 for (List<Tile> list : player.getRack().combinations()) {
                     set.add(Tile.toString(list));

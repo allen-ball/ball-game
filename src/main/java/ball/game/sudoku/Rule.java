@@ -79,7 +79,7 @@ public abstract class Rule {
      * @return  The {@link SortedSet} of used digits.
      */
     protected SortedSet<Integer> used(Iterable<Cell> iterable) {
-        TreeSet<Integer> set = new TreeSet<Integer>();
+        TreeSet<Integer> set = new TreeSet<>();
 
         for (Cell cell : iterable) {
             if (cell.isSolved()) {
@@ -98,7 +98,7 @@ public abstract class Rule {
      * @return  The {@link SortedSet} of unused digits.
      */
     protected SortedSet<Integer> unused(Iterable<Cell> iterable) {
-        TreeSet<Integer> set = new TreeSet<Integer>(Digits.ALL);
+        TreeSet<Integer> set = new TreeSet<>(Digits.ALL);
 
         set.removeAll(used(iterable));
 

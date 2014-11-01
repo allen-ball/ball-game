@@ -66,7 +66,7 @@ public class Rack extends ArrayList<Tile> implements Cloneable {
      * @see Combinations
      */
     public Collection<List<Tile>> combinations() {
-        LinkedList<List<Tile>> collection = new LinkedList<List<Tile>>();
+        LinkedList<List<Tile>> collection = new LinkedList<>();
 
         for (int count = size(); count > 0; count -= 1) {
             for (List<Tile> list : new Combinations<Tile>(this, count)) {

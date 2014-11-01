@@ -26,7 +26,7 @@ public enum Suit {
 
     static {
         TreeMap<String,Suit> map =
-            new TreeMap<String,Suit>(String.CASE_INSENSITIVE_ORDER);
+            new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
         for (Suit suit : Suit.values()) {
             map.put(suit.name(), suit);

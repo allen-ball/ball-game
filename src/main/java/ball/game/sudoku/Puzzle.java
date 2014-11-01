@@ -47,7 +47,7 @@ public class Puzzle extends Grid<Cell> {
      * @return  The {@link List} of Sudoku sub-{@link Grid}s.
      */
     public List<Grid<Cell>> subgrids() {
-        ArrayList<Grid<Cell>> list = new ArrayList<Grid<Cell>>();
+        ArrayList<Grid<Cell>> list = new ArrayList<>();
 
         list.addAll(rows());
         list.addAll(columns());
@@ -69,7 +69,7 @@ public class Puzzle extends Grid<Cell> {
      *          argument {@link Cell}.
      */
     public List<Grid<Cell>> subgridsOf(Cell cell) {
-        ArrayList<Grid<Cell>> list = new ArrayList<Grid<Cell>>();
+        ArrayList<Grid<Cell>> list = new ArrayList<>();
 
         for (Grid<Cell> grid : subgrids()) {
             if (cell.isIn(grid)) {

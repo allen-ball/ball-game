@@ -61,7 +61,7 @@ public abstract class Grid<E> extends AbstractTableModelImpl
             throw new NullPointerException("type");
         }
 
-        ArrayList<List<E>> lists = new ArrayList<List<E>>(height);
+        ArrayList<List<E>> lists = new ArrayList<>(height);
 
         if (grid != null) {
             for (List<? extends E> list :
@@ -107,7 +107,7 @@ public abstract class Grid<E> extends AbstractTableModelImpl
      *          order.
      */
     public List<E> asList() {
-        ArrayList<E> list = new ArrayList<E>(getRowCount() * getColumnCount());
+        ArrayList<E> list = new ArrayList<>(getRowCount() * getColumnCount());
 
         for (List<? extends E> row : lists) {
             list.addAll(row);
@@ -126,7 +126,7 @@ public abstract class Grid<E> extends AbstractTableModelImpl
      * @return  The {@link List} of sub-{@link Grid}s.
      */
     public List<Grid<E>> subGrids(int height, int width) {
-        ArrayList<Grid<E>> list = new ArrayList<Grid<E>>();
+        ArrayList<Grid<E>> list = new ArrayList<>();
 
         for (int y = 0; y < getRowCount(); y += height) {
             for (int x = 0; x < getColumnCount(); x += width) {
