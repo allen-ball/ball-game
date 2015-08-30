@@ -18,7 +18,7 @@
 
   <target name="life"
           description="--> Invokes &lt;life/&gt; task."
-          depends="classes">
+          depends="jar-classes">
     <taskdef classpathref="build.classpath"
              resource="ball/game/ant/defaults.properties"/>
     <life height="${height}" width="${width}" state0="${state0}"/>
@@ -26,7 +26,7 @@
 
   <target name="scrabble-words-for"
           description="--> Invokes &lt;scrabble-words-for/&gt; task."
-          depends="classes">
+          depends="jar-classes">
     <taskdef classpathref="build.classpath"
              resource="ball/game/ant/defaults.properties"/>
     <scrabble-words-for rack="${rack}"/>
@@ -34,7 +34,7 @@
 
   <target name="sudoku"
           description="--> Invokes &lt;sudoku/&gt; task."
-          depends="classes">
+          depends="jar-classes">
     <taskdef classpathref="build.classpath"
              resource="ball/game/ant/defaults.properties"/>
     <sudoku puzzle="${puzzle}"/>
@@ -42,7 +42,7 @@
 
   <target name="bean-info-for"
           description="--> Invokes &lt;bean-info-for/&gt; task."
-          depends="classes">
+          depends="jar-classes">
     <taskdef classpathref="build.classpath"
              resource="ball/util/ant/defaults.properties"/>
     <bean-info-for classpathref="build.classpath" type="${type}"/>
@@ -50,7 +50,7 @@
 
   <target name="combinations-count"
           description="--> Invokes &lt;combinations-count/&gt; task."
-          depends="classes">
+          depends="jar-classes">
     <taskdef classpathref="build.classpath"
              resource="ball/util/ant/defaults.properties"/>
     <combinations-count classpathref="build.classpath"
@@ -59,7 +59,7 @@
 
   <target name="combinations-of"
           description="--> Invokes &lt;combinations-of/&gt; task."
-          depends="classes">
+          depends="jar-classes">
     <taskdef classpathref="build.classpath"
              resource="ball/util/ant/defaults.properties"/>
     <combinations-of classpathref="build.classpath"
@@ -68,7 +68,7 @@
 
   <target name="instance-of"
           description="--> Invokes &lt;instance-of/&gt; task."
-          depends="classes">
+          depends="jar-classes">
     <taskdef classpathref="build.classpath"
              resource="ball/util/ant/defaults.properties"/>
     <instance-of classpathref="build.classpath" type="${type}"/>
@@ -76,7 +76,7 @@
 
   <target name="members-of"
           description="--> Invokes &lt;members-of/&gt; task."
-          depends="classes">
+          depends="jar-classes">
     <taskdef classpathref="build.classpath"
              resource="ball/util/ant/defaults.properties"/>
     <members-of classpathref="build.classpath" type="${type}"/>
@@ -84,7 +84,7 @@
 
   <target name="permutations-count"
           description="--> Invokes &lt;permutations-count/&gt; task."
-          depends="classes">
+          depends="jar-classes">
     <taskdef classpathref="build.classpath"
              resource="ball/util/ant/defaults.properties"/>
     <permutations-count classpathref="build.classpath" type="${type}"/>
@@ -92,7 +92,7 @@
 
   <target name="permutations-of"
           description="--> Invokes &lt;permutations-of/&gt; task."
-          depends="classes">
+          depends="jar-classes">
     <taskdef classpathref="build.classpath"
              resource="ball/util/ant/defaults.properties"/>
     <permutations-of classpathref="build.classpath" type="${type}"/>
