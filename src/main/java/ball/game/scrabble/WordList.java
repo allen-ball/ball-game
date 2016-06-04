@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2014 Allen D. Ball.  All rights reserved.
+ * Copyright 2014 - 2016 Allen D. Ball.  All rights reserved.
  */
 package ball.game.scrabble;
 
@@ -17,6 +17,8 @@ import java.util.TreeSet;
  * @version $Revision$
  */
 public abstract class WordList extends TreeSet<CharSequence> {
+    private static final long serialVersionUID = 9123060041133450168L;
+
     private final Locale locale;
 
     /**

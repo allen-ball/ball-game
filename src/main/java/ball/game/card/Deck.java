@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2010 - 2014 Allen D. Ball.  All rights reserved.
+ * Copyright 2010 - 2016 Allen D. Ball.  All rights reserved.
  */
 package ball.game.card;
 
@@ -19,6 +19,7 @@ import static ball.util.StringUtil.isNil;
  * @version $Revision$
  */
 public abstract class Deck extends ArrayList<Card> implements Cloneable {
+    private static final long serialVersionUID = -1376087186450102030L;
 
     /**
      * Sole constructor.

@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2012 - 2014 Allen D. Ball.  All rights reserved.
+ * Copyright 2012 - 2016 Allen D. Ball.  All rights reserved.
  */
 package ball.game;
 
@@ -21,6 +21,8 @@ import static java.util.Collections.unmodifiableList;
  */
 public abstract class Grid<E> extends AbstractTableModelImpl
                                       implements Iterable<E> {
+    private static final long serialVersionUID = 5529614649277676004L;
+
     private final Class<E> type;
     private final List<List<E>> lists;
     private final List<Grid<E>> rows;

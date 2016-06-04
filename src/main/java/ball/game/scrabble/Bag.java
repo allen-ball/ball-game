@@ -115,6 +115,8 @@ public class Bag extends ArrayList<Tile> implements Cloneable {
     public Bag clone() { return (Bag) super.clone(); }
 
     private abstract class TreeMapImpl extends TreeMap<Character,Integer> {
+        private static final long serialVersionUID = -1088953797198915674L;
+
         protected TreeMapImpl() { super(); }
 
         protected void load(String name) {
