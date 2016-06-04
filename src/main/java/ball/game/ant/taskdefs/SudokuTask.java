@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2012 - 2014 Allen D. Ball.  All rights reserved.
+ * Copyright 2012 - 2016 Allen D. Ball.  All rights reserved.
  */
 package ball.game.ant.taskdefs;
 
@@ -19,7 +19,7 @@ import static ball.util.StringUtil.NIL;
  * {@link.uri http://ant.apache.org/ Ant} {@link org.apache.tools.ant.Task}
  * to solve Sudoku.
  *
- * {@bean-info}
+ * {@bean.info}
  *
  * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$

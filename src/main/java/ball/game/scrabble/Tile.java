@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2014 Allen D. Ball.  All rights reserved.
+ * Copyright 2014 - 2016 Allen D. Ball.  All rights reserved.
  */
 package ball.game.scrabble;
 
@@ -12,7 +12,7 @@ import java.util.Collection;
 /**
  * Scrabble {@link Tile}.
  *
- * {@bean-info}
+ * {@bean.info}
  *
  * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$

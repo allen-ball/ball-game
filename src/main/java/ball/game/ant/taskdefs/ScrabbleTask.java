@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2014 Allen D. Ball.  All rights reserved.
+ * Copyright 2014 - 2016 Allen D. Ball.  All rights reserved.
  */
 package ball.game.ant.taskdefs;
 
@@ -23,7 +23,7 @@ import org.apache.tools.ant.BuildException;
  * Abstract Scrabble {@link.uri http://ant.apache.org/ Ant}
  * {@link org.apache.tools.ant.Task} base class.
  *
- * {@bean-info}
+ * {@bean.info}
  *
  * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$
@@ -40,7 +40,7 @@ public abstract class ScrabbleTask extends AbstractClasspathTask {
      * {@link org.apache.tools.ant.Task} to find possible words for a
      * {@link Rack}.
      *
-     * {@bean-info}
+     * {@bean.info}
      */
     @AntTask("scrabble-words-for")
     public static class WordsFor extends ScrabbleTask {
