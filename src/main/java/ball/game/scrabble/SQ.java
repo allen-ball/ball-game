@@ -58,11 +58,15 @@ public class SQ {
     }
 
     /**
+     * @return  The letter premium value.
+     *
      * @see LetterPremium
      */
     public int getLetterPremium() { return letterPremium; }
 
     /**
+     * @return  The word premium value.
+     *
      * @see WordPremium
      */
     public int getWordPremium() { return wordPremium; }

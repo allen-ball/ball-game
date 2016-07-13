@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2012 - 2014 Allen D. Ball.  All rights reserved.
+ * Copyright 2012 - 2016 Allen D. Ball.  All rights reserved.
  */
 package ball.game.sudoku;
 
@@ -63,11 +63,15 @@ public class Cell extends Digits {
     public Integer solution() { return isSolved() ? first() : null; }
 
     /**
+     * @return  The minimum value of the {@link Cell}.
+     *
      * @see #first()
      */
     public Integer min() { return first(); }
 
     /**
+     * @return  The maximum value of the {@link Cell}.
+     *
      * @see #last()
      */
     public Integer max() { return last(); }
@@ -75,6 +79,9 @@ public class Cell extends Digits {
     /**
      * Method to determine if {@code this} {@link Cell} is in the specified
      * {@link Iterable} with {@code ==}.
+     *
+     * @param   iterable        The {@link Iterable} of {@link Object}s to
+     *                          test.
      *
      * @return  {@code true} if the {@link Cell} is in the {@link Iterable};
      *          {@code false} otherwise.
