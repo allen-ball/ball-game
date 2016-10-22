@@ -1,3 +1,9 @@
+2016-10-22  Allen D. Ball  <ball@sol.local>
+
+	* src/main/java/ball/game/scrabble/OSPD41.java,
+	src/main/java/ball/game/scrabble/OWL21.java:
+	Added word lists.
+
 2016-10-21  Allen D. Ball  <ball@sol.local>
 
 	* src/main/java/ball/game/scrabble/WordList.java:
