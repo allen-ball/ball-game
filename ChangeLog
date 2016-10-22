@@ -1,5 +1,7 @@
 2016-10-22  Allen D. Ball  <ball@sol.local>
 
+	* Added "boggle" package and the public domain ENABLE list.
+
 	* src/main/java/ball/game/scrabble/OSPD41.java,
 	src/main/java/ball/game/scrabble/OWL21.java:
 	Added word lists.

@@ -3,7 +3,7 @@
  *
  * Copyright 2014 - 2016 Allen D. Ball.  All rights reserved.
  */
-package ball.game.scrabble;
+package ball.game;
 
 import ball.util.CharSequenceOrder;
 import java.beans.ConstructorProperties;
@@ -12,13 +12,13 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
- * Scrabble Official Word List ({@link WordList}).
+ * Abstract Word List base class.
  *
  * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$
  */
 public abstract class WordList extends TreeSet<CharSequence> {
-    private static final long serialVersionUID = 5876742406694909679L;
+    private static final long serialVersionUID = 1127718429632938077L;
 
     private final Locale locale;
 

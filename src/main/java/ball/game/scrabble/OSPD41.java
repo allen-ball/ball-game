@@ -5,6 +5,7 @@
  */
 package ball.game.scrabble;
 
+import ball.game.WordList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
