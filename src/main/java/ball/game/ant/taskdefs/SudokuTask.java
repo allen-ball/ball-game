@@ -44,7 +44,7 @@ public class SudokuTask extends AbstractClasspathTask {
 
         int i = 0;
 
-        for (Cell cell : puzzle) {
+        for (Cell cell : puzzle.values()) {
             if (i < string.length()) {
                 if (string.charAt(i) != '.') {
                     cell.retainAll((int) string.charAt(i) - '0');

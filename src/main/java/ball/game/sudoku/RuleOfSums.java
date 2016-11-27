@@ -1,12 +1,12 @@
 /*
  * $Id$
  *
- * Copyright 2012 - 2014 Allen D. Ball.  All rights reserved.
+ * Copyright 2012 - 2016 Allen D. Ball.  All rights reserved.
  */
 package ball.game.sudoku;
 
 import ball.annotation.ServiceProviderFor;
-import ball.game.Grid;
+import ball.util.CoordinateMap;
 import java.util.SortedSet;
 
 /**
@@ -29,12 +29,12 @@ public class RuleOfSums extends Rule {
     public boolean applyTo(Puzzle puzzle) {
         boolean modified = false;
 
-        for (Cell cell : puzzle) {
-            if (cell.size() > 1) {
+        for (Cell cell : puzzle.values()) {
+            if (! cell.isSolved()) {
                 int max = cell.last();
 
-                for (Grid<Cell> grid : puzzle.subgridsOf(cell)) {
-                    max = Math.min(max, max(grid));
+                for (CoordinateMap<Cell> map : puzzle.subMapsOf(cell)) {
+                    max = Math.min(max, max(map.values()));
                 }
 
                 SortedSet<Integer> set = cell.tailSet(max, false);

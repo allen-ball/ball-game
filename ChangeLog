@@ -1,3 +1,7 @@
+2016-11-27  Allen D. Ball  <ball@sol.local>
+
+	* Replaced Grid with CoordinateMap.
+
 2016-10-22  Allen D. Ball  <ball@sol.local>
 
 	* Added "boggle" package and the public domain ENABLE list.

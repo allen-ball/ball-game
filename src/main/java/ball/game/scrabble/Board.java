@@ -1,12 +1,13 @@
 /*
  * $Id$
  *
- * Copyright 2011 - 2014 Allen D. Ball.  All rights reserved.
+ * Copyright 2011 - 2016 Allen D. Ball.  All rights reserved.
  */
 package ball.game.scrabble;
 
-import ball.game.Grid;
+import ball.util.CoordinateMap;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
@@ -19,7 +20,7 @@ import java.util.TreeMap;
  * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$
  */
-public class Board extends Grid<SQ> {
+public class Board extends CoordinateMap<SQ> {
     private static final long serialVersionUID = -399826193477575690L;
 
     private static final ResourceBundleMap MAP =
@@ -31,7 +32,9 @@ public class Board extends Grid<SQ> {
     public Board() { this(MAP); }
 
     private Board(ResourceBundleMap map) {
-        super(map.size(), map.size(), SQ.class, squares(map));
+        super(map.size(), map.size());
+
+        Collections.copy(asList(), squares(map));
     }
 
     private static List<? extends SQ> squares(ResourceBundleMap map) {

@@ -5,7 +5,6 @@
  */
 package ball.game.sudoku;
 
-import ball.game.Grid;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
