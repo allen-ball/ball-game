@@ -28,6 +28,20 @@ public class RuleOfElimination extends Rule {
     public boolean applyTo(Puzzle puzzle) {
         boolean modified = false;
 
+        for (;;) {
+            if (iterate(puzzle)) {
+                modified |= true;
+            } else {
+                break;
+            }
+        }
+
+        return modified;
+    }
+
+    private boolean iterate(Puzzle puzzle) {
+        boolean modified = false;
+
         for (Cell cell : puzzle.values()) {
             for (CoordinateMap<Cell> map : puzzle.subMapsOf(cell)) {
                 if (! cell.isSolved()) {
