@@ -18,7 +18,7 @@ import java.util.SortedSet;
  * @version $Revision$
  */
 @ServiceProviderFor({ Rule.class })
-public class RuleOfSums extends Rule {
+public class RuleOfSums extends RuleOfElimination {
 
     /**
      * Sole constructor.
@@ -27,6 +27,21 @@ public class RuleOfSums extends Rule {
 
     @Override
     public boolean applyTo(Puzzle puzzle) {
+        boolean modified = false;
+
+        for (;;) {
+            if (iterate(puzzle)) {
+                modified |= true;
+                super.applyTo(puzzle);
+            } else {
+                break;
+            }
+        }
+
+        return modified;
+    }
+
+    private boolean iterate(Puzzle puzzle) {
         boolean modified = false;
 
         for (Cell cell : puzzle.values()) {

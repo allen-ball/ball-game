@@ -1,5 +1,8 @@
 2016-11-27  Allen D. Ball  <ball@sol.local>
 
+	* src/main/java/ball/game/sudoku/RuleOfSums.java:
+	Re-factor as subclass of RuleOfElimination.
+
 	* src/main/java/ball/game/sudoku/RuleOfUniqueness.java:
 	Initial writing.
 
