@@ -8,6 +8,7 @@ package ball.game.ant.taskdefs;
 import ball.game.sudoku.Cell;
 import ball.game.sudoku.Puzzle;
 import ball.game.sudoku.Rule;
+import ball.game.sudoku.RuleOfElimination;
 import ball.util.ant.taskdefs.AbstractClasspathTask;
 import ball.util.ant.taskdefs.AntTask;
 import java.util.ServiceLoader;
@@ -68,24 +69,18 @@ public class SudokuTask extends AbstractClasspathTask {
         try {
             log(puzzle);
 
-            while (! puzzle.isSolved()) {
-                if (! puzzle.isLegal()) {
-                    throw new BuildException("Illegal puzzle");
-                }
+            if (! puzzle.isSolved()) {
+                apply(new RuleOfElimination(), puzzle);
+            }
 
+            while (! puzzle.isSolved()) {
                 boolean modified = false;
 
                 for (Rule rule : loader) {
-                    if (rule.applyTo(puzzle)) {
-                        modified |= true;
+                    modified |= apply(rule, puzzle);
 
-                        log(NIL);
-                        log(rule.getClass().getCanonicalName());
-                        log(puzzle);
-
-                        if (puzzle.isSolved()) {
-                            break;
-                        }
+                    if (puzzle.isSolved()) {
+                        break;
                     }
                 }
 
@@ -99,5 +94,21 @@ public class SudokuTask extends AbstractClasspathTask {
             throwable.printStackTrace();
             throw new BuildException(throwable);
         }
+    }
+
+    private boolean apply(Rule rule, Puzzle puzzle) throws Exception {
+        if (! puzzle.isLegal()) {
+            throw new BuildException("Illegal puzzle");
+        }
+
+        boolean modified = rule.applyTo(puzzle);
+
+        if (modified) {
+            log(NIL);
+            log(rule.getClass().getCanonicalName());
+            log(puzzle);
+        }
+
+        return modified;
     }
 }
