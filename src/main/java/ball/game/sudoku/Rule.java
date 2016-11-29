@@ -1,12 +1,9 @@
 /*
  * $Id$
  *
- * Copyright 2012 - 2014 Allen D. Ball.  All rights reserved.
+ * Copyright 2012 - 2016 Allen D. Ball.  All rights reserved.
  */
 package ball.game.sudoku;
-
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 /**
  * Sudoku {@link Puzzle} solution {@link Rule}.
@@ -71,37 +68,24 @@ public abstract class Rule {
     }
 
     /**
-     * Method to get the {@link SortedSet} of used digits.
+     * Method to get the solved {@link Digits}.
      *
      * @param   iterable        The {@link Iterable} of {@link Cell}s.
      *
-     * @return  The {@link SortedSet} of used digits.
+     * @return  The solved {@link Digits}.
      */
-    protected SortedSet<Integer> used(Iterable<Cell> iterable) {
-        TreeSet<Integer> set = new TreeSet<>();
+    protected Digits solved(Iterable<Cell> iterable) {
+        Digits digits = new Digits();
+
+        digits.clear();
 
         for (Cell cell : iterable) {
             if (cell.isSolved()) {
-                set.addAll(cell);
+                digits.addAll(cell);
             }
         }
 
-        return set;
-    }
-
-    /**
-     * Method to get the {@link SortedSet} of unused digits.
-     *
-     * @param   iterable        The {@link Iterable} of {@link Cell}s.
-     *
-     * @return  The {@link SortedSet} of unused digits.
-     */
-    protected SortedSet<Integer> unused(Iterable<Cell> iterable) {
-        TreeSet<Integer> set = new TreeSet<>(Digits.ALL);
-
-        set.removeAll(used(iterable));
-
-        return set;
+        return digits;
     }
 
     @Override

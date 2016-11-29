@@ -43,9 +43,13 @@ public class RuleOfElimination extends Rule {
         boolean modified = false;
 
         for (Cell cell : puzzle.values()) {
-            for (CoordinateMap<Cell> map : puzzle.subMapsOf(cell)) {
-                if (! cell.isSolved()) {
-                    modified |= cell.removeAll(used(map.values()));
+            if (cell.isSolved()) {
+                for (CoordinateMap<Cell> map : puzzle.subMapsOf(cell)) {
+                    for (Cell other : map.values()) {
+                        if (other != cell) {
+                            modified |= other.removeAll(cell);
+                        }
+                    }
                 }
             }
         }

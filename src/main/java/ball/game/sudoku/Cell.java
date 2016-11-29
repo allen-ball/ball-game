@@ -5,10 +5,6 @@
  */
 package ball.game.sudoku;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.SortedSet;
-
 /**
  * Sudoku {@link Cell}.
  *
@@ -16,7 +12,7 @@ import java.util.SortedSet;
  * @version $Revision$
  */
 public class Cell extends Digits {
-    private static final long serialVersionUID = -5026029064191575737L;
+    private static final long serialVersionUID = -2029175165124035385L;
 
     /**
      * {@link #UNKNOWN} = {@value #UNKNOWN}
@@ -24,26 +20,12 @@ public class Cell extends Digits {
     public static final String UNKNOWN = ".";
 
     /**
-     * Construct with all possible digits.
+     * Sole constructor.  Construct with all possible digits.
      */
-    public Cell() { this(ALL); }
-
-    /**
-     * Construct with specified digits.
-     *
-     * @param   digits          The initial digits.
-     */
-    public Cell(Integer... digits) { this(Arrays.asList(digits)); }
-
-    /**
-     * Construct with specified digits.
-     *
-     * @param   collection      The {@link Collection} of initial digits.
-     */
-    public Cell(Collection<? extends Integer> collection) {
+    public Cell() {
         super();
 
-        addAll(collection);
+        addAll(ALL);
     }
 
     /**
@@ -105,15 +87,15 @@ public class Cell extends Digits {
         return isSolved() ? String.valueOf(first()) : toString(this);
     }
 
-    private String toString(SortedSet<Integer> set) {
+    private String toString(Cell cell) {
         StringBuilder buffer = new StringBuilder();
 
-        if (set.size() == Digits.ALL.size()) {
+        if (cell.size() == ALL.size()) {
             buffer.append(".");
         } else {
             buffer.append("[");
 
-            for (int digit : set) {
+            for (int digit : cell) {
                 buffer.append(digit);
             }
 
