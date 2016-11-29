@@ -1,3 +1,8 @@
+2016-11-28  Allen D. Ball  <ball@sol.local>
+
+	* src/main/java/ball/game/sudoku/RuleOfNIdenticalCellsOfSizeN.java:
+	Initial writing.
+
 2016-11-27  Allen D. Ball  <ball@sol.local>
 
 	* src/main/java/ball/game/ant/taskdefs/SudokuTask.java:
