@@ -12,8 +12,8 @@ import java.util.TreeSet;
 /**
  * Sudoku "rule-of-uniqueness" {@link Rule} implementation.  If a digit is
  * the only possible solution for a {@link Cell} in its row, column, and 3x3
- * nonet once other possible solutions are removed then it must be the
- * solution for that cell.
+ * nonet once other possible solutions for the other cells in the same row,
+ * column, and nonet are removed then it must be the solution for that cell.
  *
  * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$
