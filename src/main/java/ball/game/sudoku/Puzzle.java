@@ -8,9 +8,8 @@ package ball.game.sudoku;
 import ball.util.Coordinate;
 import ball.util.CoordinateMap;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-
-import static java.util.Collections.unmodifiableList;
 
 /**
  * Sudoku {@link Puzzle}.
@@ -41,7 +40,7 @@ public class Puzzle extends CoordinateMap<Cell> {
             }
         }
 
-        nonets = unmodifiableList(list);
+        nonets = Collections.unmodifiableList(list);
     }
 
     /**
@@ -51,7 +50,7 @@ public class Puzzle extends CoordinateMap<Cell> {
      * @return  The {@link List} of 3x3 nonet {@link CoordinateMap}s.
      */
     public List<CoordinateMap<Cell>> nonets() {
-        return unmodifiableList(nonets);
+        return Collections.unmodifiableList(nonets);
     }
 
     /**
