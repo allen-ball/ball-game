@@ -26,7 +26,7 @@ public class Puzzle extends CoordinateMap<Cell> {
      * Sole constructor.
      */
     public Puzzle() {
-        super();
+        super(Cell.class);
 
         for (Coordinate key : Coordinate.generate(0, 0, 9, 9)) {
             put(key, new Cell());
