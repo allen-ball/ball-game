@@ -1,3 +1,7 @@
+2017-01-21  Allen D. Ball  <ball@sol.local>
+
+	* Renamed ball.game.checker to ball.game.checkers.
+
 2016-11-28  Allen D. Ball  <ball@sol.local>
 
 	* src/main/java/ball/game/sudoku/RuleOfNIdenticalCellsOfSizeN.java:
