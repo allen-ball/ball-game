@@ -4,6 +4,9 @@
 	Added static get(Enum<?>,Collection<Card>) and
 	sortBy(Class<E>,Collection<Card>) methods.
 
+	* src/main/java/ball/game/card/poker/:
+	Interim check-in.
+
 2017-01-21  Allen D. Ball  <ball@sol.local>
 
 	* Renamed ball.game.checker to ball.game.checkers.
