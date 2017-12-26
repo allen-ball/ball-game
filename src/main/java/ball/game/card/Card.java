@@ -1,12 +1,17 @@
 /*
  * $Id$
  *
- * Copyright 2010 - 2014 Allen D. Ball.  All rights reserved.
+ * Copyright 2010 - 2017 Allen D. Ball.  All rights reserved.
  */
 package ball.game.card;
 
 import ball.util.ComparableUtil;
 import java.beans.ConstructorProperties;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.regex.Pattern;
 
 /**
@@ -144,5 +149,61 @@ public class Card implements Comparable<Card> {
         }
 
         return card;
+    }
+
+    /**
+     * Static method to get the {@link List} of {@link Card}s that have the
+     * matching attribute.
+     *
+     * @param   attribute       The {@link Enum}.
+     * @param   collection      The {@link Collection} of {@link Card}s to
+     *                          examine.
+     *
+     * @return  The {@link List} of matching {@link Card}s.
+     */
+    public static List<Card> get(Enum<?> attribute,
+                                 Collection<Card> collection) {
+        ArrayList<Card> list = new ArrayList<>();
+
+        for (Card card : collection) {
+            if (attribute instanceof Color) {
+                if (attribute.equals(card.getColor())) {
+                    list.add(card);
+                }
+            } else if (attribute instanceof Rank) {
+                if (attribute.equals(card.getRank())) {
+                    list.add(card);
+                }
+            } else if (attribute instanceof Suit) {
+                if (attribute.equals(card.getSuit())) {
+                    list.add(card);
+                }
+            }
+        }
+
+        return list;
+    }
+
+    /**
+     * Static method to sort the {@link Collection} of {@link Card}s by an
+     * attribute.
+     *
+     * @param   type            The atribute {@link Enum} {@link Class}.
+     * @param   collection      The {@link Collection} of {@link Card}s to
+     *                          examine.
+     *
+     * @param   <E>             The attribute {@link Enum} generic type.
+     *
+     * @return  The {@link SortedMap} of sorted {@link Card}s.
+     */
+    public static <E extends Enum<E>> SortedMap<E,List<Card>> sortBy(Class<E> type,
+                                                                     Collection<Card> collection) {
+        TreeMap<E,List<Card>> map = new TreeMap<>();
+
+        for (E attribute : type.getEnumConstants()) {
+            map.put(attribute, get(attribute, collection));
+        }
+
+        return map;
     }
 }
