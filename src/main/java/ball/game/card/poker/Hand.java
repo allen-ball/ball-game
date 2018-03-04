@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2017 Allen D. Ball.  All rights reserved.
+ * Copyright 2017, 2018 Allen D. Ball.  All rights reserved.
  */
 package ball.game.card.poker;
 
@@ -26,7 +26,7 @@ public abstract class Hand implements Comparable<Hand> {
     /**
      * Poker hands ranked in best-to-worse order.
      *
-     * {@include.collection #TYPES}
+     * {@include #TYPES}
      */
     public static final List<Class<? extends Hand>> TYPES =
         unmodifiableList(asList(FiveOfAKind.class,
