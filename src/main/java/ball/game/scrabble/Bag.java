@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2010 - 2016 Allen D. Ball.  All rights reserved.
+ * Copyright 2010 - 2018 Allen D. Ball.  All rights reserved.
  */
 package ball.game.scrabble;
 
@@ -11,6 +11,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Scrabble {@link Bag}.
@@ -40,11 +42,7 @@ public class Bag extends ArrayList<Tile> implements Cloneable {
     private Bag(Locale locale) {
         super(100);
 
-        if (locale != null) {
-            this.locale = locale;
-        } else {
-            throw new NullPointerException("locale");
-        }
+        this.locale = requireNonNull(locale, "locale");
 
         frequencies = Collections.unmodifiableMap(new Frequencies());
         points = Collections.unmodifiableMap(new Points());

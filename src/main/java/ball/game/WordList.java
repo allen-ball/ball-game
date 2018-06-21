@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2014 - 2016 Allen D. Ball.  All rights reserved.
+ * Copyright 2014 - 2018 Allen D. Ball.  All rights reserved.
  */
 package ball.game;
 
@@ -10,6 +10,8 @@ import java.beans.ConstructorProperties;
 import java.util.Locale;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Abstract Word List base class.
@@ -31,11 +33,7 @@ public abstract class WordList extends TreeSet<CharSequence> {
     protected WordList(Locale locale) {
         super(CharSequenceOrder.CASE_INSENSITIVE);
 
-        if (locale != null) {
-            this.locale = locale;
-        } else {
-            throw new NullPointerException("locale");
-        }
+        this.locale = requireNonNull(locale, "locale");
     }
 
     /**

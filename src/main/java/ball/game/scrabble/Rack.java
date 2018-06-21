@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2014 - 2016 Allen D. Ball.  All rights reserved.
+ * Copyright 2014 - 2018 Allen D. Ball.  All rights reserved.
  */
 package ball.game.scrabble;
 
@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Scrabble {@link Rack}.
@@ -83,9 +85,7 @@ public class Rack extends ArrayList<Tile> implements Cloneable {
             throw new IllegalStateException();
         }
 
-        if (tile == null) {
-            throw new NullPointerException();
-        }
+        requireNonNull(tile, "tile");
 
         return super.add(tile);
     }

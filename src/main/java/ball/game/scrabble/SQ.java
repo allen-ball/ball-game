@@ -1,9 +1,11 @@
 /*
  * $Id$
  *
- * Copyright 2011 - 2016 Allen D. Ball.  All rights reserved.
+ * Copyright 2011 - 2018 Allen D. Ball.  All rights reserved.
  */
 package ball.game.scrabble;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Scrabble {@link Board} square.
@@ -46,11 +48,7 @@ public class SQ {
             wordPremium = 0;
         }
 
-        if (string != null) {
-            this.string = string;
-        } else {
-            throw new NullPointerException("string");
-        }
+        this.string = requireNonNull(string, "string");
     }
 
     public boolean isPremium() {
