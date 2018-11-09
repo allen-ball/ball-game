@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:aether="antlib:org.eclipse.aether.ant"
-         xmlns:ball="antlib:ball.util.ant"
+         xmlns:util="antlib:ball.util.ant"
          name="ball-game" basedir="." default="jar">
   <description>
     ball-game.jar
@@ -45,44 +45,44 @@
   <target name="bean-info-for"
           description="--> Invokes &lt;bean-info-for/&gt; task."
           depends="jar-classes">
-    <ball:bean-info-for classpathref="build.classpath" type="${type}"/>
+    <util:bean-info-for classpathref="build.classpath" type="${type}"/>
   </target>
 
   <target name="combinations-count"
           description="--> Invokes &lt;combinations-count/&gt; task."
           depends="jar-classes">
-    <ball:combinations-count classpathref="build.classpath"
+    <util:combinations-count classpathref="build.classpath"
                              type="${type}" count="${count}"/>
   </target>
 
   <target name="combinations-of"
           description="--> Invokes &lt;combinations-of/&gt; task."
           depends="jar-classes">
-    <ball:combinations-of classpathref="build.classpath"
+    <util:combinations-of classpathref="build.classpath"
                           type="${type}" count="${count}"/>
   </target>
 
   <target name="instance-of"
           description="--> Invokes &lt;instance-of/&gt; task."
           depends="jar-classes">
-    <ball:instance-of classpathref="build.classpath" type="${type}"/>
+    <util:instance-of classpathref="build.classpath" type="${type}"/>
   </target>
 
   <target name="members-of"
           description="--> Invokes &lt;members-of/&gt; task."
           depends="jar-classes">
-    <ball:members-of classpathref="build.classpath" type="${type}"/>
+    <util:members-of classpathref="build.classpath" type="${type}"/>
   </target>
 
   <target name="permutations-count"
           description="--> Invokes &lt;permutations-count/&gt; task."
           depends="jar-classes">
-    <ball:permutations-count classpathref="build.classpath" type="${type}"/>
+    <util:permutations-count classpathref="build.classpath" type="${type}"/>
   </target>
 
   <target name="permutations-of"
           description="--> Invokes &lt;permutations-of/&gt; task."
           depends="jar-classes">
-    <ball:permutations-of classpathref="build.classpath" type="${type}"/>
+    <util:permutations-of classpathref="build.classpath" type="${type}"/>
   </target>
 </project>
