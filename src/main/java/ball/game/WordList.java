@@ -22,7 +22,7 @@ import static java.util.Objects.requireNonNull;
 public abstract class WordList extends TreeSet<CharSequence> {
     private static final long serialVersionUID = 1127718429632938077L;
 
-    private final Locale locale;
+    /** @serial */ private final Locale locale;
 
     /**
      * Sole constructor.

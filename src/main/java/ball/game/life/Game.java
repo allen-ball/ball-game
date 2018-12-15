@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2010 - 2014 Allen D. Ball.  All rights reserved.
+ * Copyright 2010 - 2018 Allen D. Ball.  All rights reserved.
  */
 package ball.game.life;
 
@@ -17,7 +17,7 @@ import java.util.LinkedList;
 public class Game extends LinkedList<BigInteger> {
     private static final long serialVersionUID = 7650642647319679493L;
 
-    private final Automata automata;
+    /** @serial */ private final Automata automata;
 
     /**
      * @param   height          The extent of the y-axis.

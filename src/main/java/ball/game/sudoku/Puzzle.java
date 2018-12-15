@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2012 - 2016 Allen D. Ball.  All rights reserved.
+ * Copyright 2012 - 2018 Allen D. Ball.  All rights reserved.
  */
 package ball.game.sudoku;
 
@@ -20,7 +20,7 @@ import java.util.List;
 public class Puzzle extends CoordinateMap<Cell> {
     private static final long serialVersionUID = -4650945638478115982L;
 
-    private final List<CoordinateMap<Cell>> nonets;
+    /** @serial */ private final List<CoordinateMap<Cell>> nonets;
 
     /**
      * Sole constructor.

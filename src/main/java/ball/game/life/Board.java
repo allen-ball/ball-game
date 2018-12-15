@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2010 - 2014 Allen D. Ball.  All rights reserved.
+ * Copyright 2010 - 2018 Allen D. Ball.  All rights reserved.
  */
 package ball.game.life;
 
@@ -16,7 +16,7 @@ import ball.swing.table.AbstractTableModelImpl;
 public class Board extends AbstractTableModelImpl {
     private static final long serialVersionUID = -8272117924997665864L;
 
-    private final Game game;
+    /** @serial */ private final Game game;
 
     /**
      * @param   game            The {@link Game}.

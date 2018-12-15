@@ -25,9 +25,9 @@ import static java.util.Objects.requireNonNull;
 public class Bag extends ArrayList<Tile> implements Cloneable {
     private static final long serialVersionUID = -3705287411834404262L;
 
-    private final Locale locale;
-    private final Map<Character,Integer> frequencies;
-    private final Map<Character,Integer> points;
+    /** @serial */ private final Locale locale;
+    /** @serial */ private final Map<Character,Integer> frequencies;
+    /** @serial */ private final Map<Character,Integer> points;
 
     /**
      * No-argument constructor.
