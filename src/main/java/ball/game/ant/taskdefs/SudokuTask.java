@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2012 - 2016 Allen D. Ball.  All rights reserved.
+ * Copyright 2012 - 2019 Allen D. Ball.  All rights reserved.
  */
 package ball.game.ant.taskdefs;
 
@@ -14,7 +14,7 @@ import ball.util.ant.taskdefs.AntTask;
 import java.util.ServiceLoader;
 import org.apache.tools.ant.BuildException;
 
-import static ball.util.StringUtil.NIL;
+import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 /**
  * {@link.uri http://ant.apache.org/ Ant} {@link org.apache.tools.ant.Task}
@@ -40,7 +40,7 @@ public class SudokuTask extends AbstractClasspathTask {
     public void addText(String text) { parse(text); }
 
     private void parse(String string) {
-        string = string.replaceAll("[\\p{Space}]+", NIL);
+        string = string.replaceAll("[\\p{Space}]+", EMPTY);
         string = string.replaceAll("[^1-9]", ".");
 
         int i = 0;
@@ -104,7 +104,7 @@ public class SudokuTask extends AbstractClasspathTask {
         boolean modified = rule.applyTo(puzzle);
 
         if (modified) {
-            log(NIL);
+            log(EMPTY);
             log(rule.getClass().getCanonicalName());
             log(puzzle);
         }

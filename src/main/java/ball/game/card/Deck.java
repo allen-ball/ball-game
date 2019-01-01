@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2010 - 2016 Allen D. Ball.  All rights reserved.
+ * Copyright 2010 - 2019 Allen D. Ball.  All rights reserved.
  */
 package ball.game.card;
 
@@ -9,8 +9,7 @@ import java.util.ArrayList;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
-
-import static ball.util.StringUtil.isNil;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * {@link Card} deck.
@@ -34,7 +33,7 @@ public abstract class Deck extends ArrayList<Card> implements Cloneable {
             for (String key : bundle.keySet()) {
                 String value = bundle.getString(key);
 
-                if (! isNil(value)) {
+                if (! StringUtils.isEmpty(value)) {
                     for (String suit : key.split(Pattern.quote(","))) {
                         for (String rank : value.split(Pattern.quote(","))) {
                             add(new Card(Suit.parse(suit), Rank.parse(rank)));

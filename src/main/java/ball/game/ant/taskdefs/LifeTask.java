@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2010 - 2016 Allen D. Ball.  All rights reserved.
+ * Copyright 2010 - 2019 Allen D. Ball.  All rights reserved.
  */
 package ball.game.ant.taskdefs;
 
@@ -12,7 +12,7 @@ import ball.util.ant.taskdefs.AntTask;
 import java.math.BigInteger;
 import org.apache.tools.ant.BuildException;
 
-import static ball.util.StringUtil.NIL;
+import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 /**
  * {@link.uri http://ant.apache.org/ Ant} {@link org.apache.tools.ant.Task}
@@ -52,7 +52,7 @@ public class LifeTask extends AbstractClasspathTask {
             state = new BigInteger(string);
         } catch (NumberFormatException exception) {
             state = BigInteger.ZERO;
-            string = string.replaceAll("[\\p{Space}]+", NIL);
+            string = string.replaceAll("[\\p{Space}]+", EMPTY);
 
             for (int i = 0, n = string.length(); i < n; i += 1) {
                 switch (string.charAt(i)) {
@@ -80,7 +80,7 @@ public class LifeTask extends AbstractClasspathTask {
             Board board = new Board(game);
 
             for (;;) {
-                log(NIL);
+                log(EMPTY);
                 log("Generation #" + String.valueOf(game.size() - 1));
                 log(board);
 
