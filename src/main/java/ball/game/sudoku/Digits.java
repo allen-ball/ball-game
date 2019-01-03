@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2012 - 2016 Allen D. Ball.  All rights reserved.
+ * Copyright 2012 - 2019 Allen D. Ball.  All rights reserved.
  */
 package ball.game.sudoku;
 
@@ -46,7 +46,7 @@ public class Digits extends TreeSet<Integer> {
      *
      * @param   digits          The digits to add.
      *
-     * @return  {@code true} if {@code this} {@link Digits} changes;
+     * @return  {@code true} if {@link.this} {@link Digits} changes;
      *          {@code false} otherwise.
      */
     public boolean addAll(Integer... digits) {
@@ -58,7 +58,7 @@ public class Digits extends TreeSet<Integer> {
      *
      * @param   digits          The digits to remove.
      *
-     * @return  {@code true} if {@code this} {@link Digits} changes;
+     * @return  {@code true} if {@link.this} {@link Digits} changes;
      *          {@code false} otherwise.
      */
     public boolean removeAll(Integer... digits) {
@@ -70,7 +70,7 @@ public class Digits extends TreeSet<Integer> {
      *
      * @param   digits          The digits to retain.
      *
-     * @return  {@code true} if {@code this} {@link Digits} changes;
+     * @return  {@code true} if {@link.this} {@link Digits} changes;
      *          {@code false} otherwise.
      */
     public boolean retainAll(Integer... digits) {

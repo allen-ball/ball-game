@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2012 - 2018 Allen D. Ball.  All rights reserved.
+ * Copyright 2012 - 2019 Allen D. Ball.  All rights reserved.
  */
 package ball.game.sudoku;
 
@@ -98,7 +98,7 @@ public class Puzzle extends CoordinateMap<Cell> {
      * Method to test if the current {@link Cell} values constitute a legal
      * Sudoku puzzle.
      *
-     * @return  {@code true} if {@code this} {@link Puzzle} is legal;
+     * @return  {@code true} if {@link.this} {@link Puzzle} is legal;
      *          {@code false} otherwise.
      */
     public boolean isLegal() {
@@ -132,7 +132,7 @@ public class Puzzle extends CoordinateMap<Cell> {
      * Method to test if the current {@link Cell} values constitute a solved
      * Sudoku puzzle.
      *
-     * @return  {@code true} if {@code this} {@link Puzzle} is solved;
+     * @return  {@code true} if {@link.this} {@link Puzzle} is solved;
      *          {@code false} otherwise.
      */
     public boolean isSolved() {
@@ -150,7 +150,7 @@ public class Puzzle extends CoordinateMap<Cell> {
     }
 
     /**
-     * Method to apply the argument {@link Rule} to solve {@code this}
+     * Method to apply the argument {@link Rule} to solve {@link.this}
      * {@link Puzzle}.
      *
      * @param   rule            The {@link Rule} to apply.

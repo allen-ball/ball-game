@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2012 - 2016 Allen D. Ball.  All rights reserved.
+ * Copyright 2012 - 2019 Allen D. Ball.  All rights reserved.
  */
 package ball.game.sudoku;
 
@@ -19,12 +19,12 @@ public abstract class Rule {
     protected Rule() { }
 
     /**
-     * Method to apply {@code this} {@link Rule} to the argument
+     * Method to apply {@link.this} {@link Rule} to the argument
      * {@link Puzzle}.
      *
      * @param   puzzle          The {@link Puzzle} to solve.
      *
-     * @return  {@code true} if {@code this} {@link Puzzle} is modified;
+     * @return  {@code true} if {@link.this} {@link Puzzle} is modified;
      *          {@code false} otherwise.
      */
     public abstract boolean applyTo(Puzzle puzzle);

@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2012 - 2016 Allen D. Ball.  All rights reserved.
+ * Copyright 2012 - 2019 Allen D. Ball.  All rights reserved.
  */
 package ball.game.sudoku;
 
@@ -29,7 +29,7 @@ public class Cell extends Digits {
     }
 
     /**
-     * Method to determine if {@code this} {@link Cell} is solved.
+     * Method to determine if {@link.this} {@link Cell} is solved.
      *
      * @return  {@code true} if the {@link Cell} is solved; {@code false}
      *          otherwise.
@@ -37,7 +37,7 @@ public class Cell extends Digits {
     public boolean isSolved() { return (size() == 1); }
 
     /**
-     * Method to get {@code this} {@link Cell}'s solution.
+     * Method to get {@link.this} {@link Cell}'s solution.
      *
      * @return  The solution if the {@link Cell} is solved; {@code null}
      *          otherwise.
@@ -59,7 +59,7 @@ public class Cell extends Digits {
     public Integer max() { return last(); }
 
     /**
-     * Method to determine if {@code this} {@link Cell} is in the specified
+     * Method to determine if {@link.this} {@link Cell} is in the specified
      * {@link Iterable} with {@code ==}.
      *
      * @param   iterable        The {@link Iterable} of {@link Object}s to
