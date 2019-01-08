@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2014 Allen D. Ball.  All rights reserved.
+ * Copyright 2014 - 2019 Allen D. Ball.  All rights reserved.
  */
 package ball.game.scrabble;
 
@@ -16,6 +16,8 @@ import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import static javax.lang.model.element.Modifier.ABSTRACT;
 import static javax.lang.model.element.Modifier.PUBLIC;
@@ -38,13 +40,9 @@ import static javax.tools.Diagnostic.Kind.ERROR;
  */
 @ServiceProviderFor({ Processor.class })
 @For({ LetterPremium.class, WordPremium.class })
+@NoArgsConstructor @ToString
 public class PremiumProcessor extends AbstractAnnotationProcessor {
     private TypeElement supertype = null;
-
-    /**
-     * Sole constructor.
-     */
-    public PremiumProcessor() { super(); }
 
     @Override
     public void init(ProcessingEnvironment processingEnv) {
