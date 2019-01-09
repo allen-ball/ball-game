@@ -10,6 +10,10 @@ import ball.game.life.Game;
 import ball.util.ant.taskdefs.AbstractClasspathTask;
 import ball.util.ant.taskdefs.AntTask;
 import java.math.BigInteger;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.apache.tools.ant.BuildException;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
@@ -24,23 +28,15 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
  * @version $Revision$
  */
 @AntTask("life")
+@NoArgsConstructor @ToString
 public class LifeTask extends AbstractClasspathTask {
+    @Getter @Setter
     private int height = 0;
+    @Getter @Setter
     private int width = 0;
+    @Getter
     private BigInteger state0 = BigInteger.ZERO;
 
-    /**
-     * Sole constructor.
-     */
-    public LifeTask() { super(); }
-
-    public int getHeight() { return height; }
-    public void setHeight(int height) { this.height = height; }
-
-    public int getWidth() { return width; }
-    public void setWidth(int width) { this.width = width; }
-
-    public BigInteger getState0() { return state0; }
     public void setState0(String state0) { this.state0 = parse(state0); }
 
     public void addText(String text) { setState0(text); }

@@ -12,6 +12,8 @@ import ball.game.sudoku.RuleOfElimination;
 import ball.util.ant.taskdefs.AbstractClasspathTask;
 import ball.util.ant.taskdefs.AntTask;
 import java.util.ServiceLoader;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.apache.tools.ant.BuildException;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
@@ -26,13 +28,9 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
  * @version $Revision$
  */
 @AntTask("sudoku")
+@NoArgsConstructor @ToString
 public class SudokuTask extends AbstractClasspathTask {
     private final Puzzle puzzle = new Puzzle();
-
-    /**
-     * Sole constructor.
-     */
-    public SudokuTask() { super(); }
 
     public Puzzle getPuzzle() { return puzzle; }
     public void setPuzzle(String string) { parse(string); }

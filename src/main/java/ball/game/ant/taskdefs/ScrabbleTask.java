@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2014 - 2016 Allen D. Ball.  All rights reserved.
+ * Copyright 2014 - 2019 Allen D. Ball.  All rights reserved.
  */
 package ball.game.ant.taskdefs;
 
@@ -17,7 +17,13 @@ import ball.util.ant.taskdefs.NotNull;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.apache.tools.ant.BuildException;
+
+import static lombok.AccessLevel.PROTECTED;
 
 /**
  * Abstract Scrabble {@link.uri http://ant.apache.org/ Ant}
@@ -28,12 +34,8 @@ import org.apache.tools.ant.BuildException;
  * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$
  */
+@NoArgsConstructor(access = PROTECTED)
 public abstract class ScrabbleTask extends AbstractClasspathTask {
-
-    /**
-     * Sole constructor.
-     */
-    protected ScrabbleTask() { super(); }
 
     /**
      * {@link.uri http://ant.apache.org/ Ant}
@@ -43,17 +45,10 @@ public abstract class ScrabbleTask extends AbstractClasspathTask {
      * {@bean.info}
      */
     @AntTask("scrabble-words-for")
+    @NoArgsConstructor @ToString
     public static class WordsFor extends ScrabbleTask {
+        @NotNull @Getter @Setter
         private String rack = null;
-
-        /**
-         * Sole constructor.
-         */
-        public WordsFor() { super(); }
-
-        @NotNull
-        public String getRack() { return rack; }
-        public void setRack(String rack) { this.rack = rack; }
 
         @Override
         public void execute() throws BuildException {
