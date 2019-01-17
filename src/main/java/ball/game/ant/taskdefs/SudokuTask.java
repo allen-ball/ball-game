@@ -9,18 +9,24 @@ import ball.game.sudoku.Cell;
 import ball.game.sudoku.Puzzle;
 import ball.game.sudoku.Rule;
 import ball.game.sudoku.RuleOfElimination;
-import ball.util.ant.taskdefs.AbstractClasspathTask;
+import ball.util.ant.taskdefs.AnnotatedAntTask;
 import ball.util.ant.taskdefs.AntTask;
+import ball.util.ant.taskdefs.ClasspathDelegateAntTask;
+import ball.util.ant.taskdefs.ConfigurableAntTask;
 import java.util.ServiceLoader;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Task;
+import org.apache.tools.ant.util.ClasspathUtils;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 /**
- * {@link.uri http://ant.apache.org/ Ant} {@link org.apache.tools.ant.Task}
- * to solve Sudoku.
+ * {@link.uri http://ant.apache.org/ Ant} {@link Task} to solve Sudoku.
  *
  * {@bean.info}
  *
@@ -29,7 +35,11 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
  */
 @AntTask("sudoku")
 @NoArgsConstructor @ToString
-public class SudokuTask extends AbstractClasspathTask {
+public class SudokuTask extends Task implements AnnotatedAntTask,
+                                                ClasspathDelegateAntTask,
+                                                ConfigurableAntTask {
+    @Getter @Setter @Accessors(chain = true, fluent = true)
+    private ClasspathUtils.Delegate delegate = null;
     private final Puzzle puzzle = new Puzzle();
 
     public Puzzle getPuzzle() { return puzzle; }
@@ -57,8 +67,16 @@ public class SudokuTask extends AbstractClasspathTask {
     }
 
     @Override
+    public void init() throws BuildException {
+        super.init();
+        ClasspathDelegateAntTask.super.init();
+        ConfigurableAntTask.super.init();
+    }
+
+    @Override
     public void execute() throws BuildException {
         super.execute();
+        AnnotatedAntTask.super.execute();
 
         ServiceLoader<Rule> loader =
             ServiceLoader.load(Rule.class, getClassLoader());
