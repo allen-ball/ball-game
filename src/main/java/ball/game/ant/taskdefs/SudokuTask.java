@@ -28,7 +28,7 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
 /**
  * {@link.uri http://ant.apache.org/ Ant} {@link Task} to solve Sudoku.
  *
- * {@bean.info}
+ * {@ant.task}
  *
  * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$

@@ -34,7 +34,7 @@ import static lombok.AccessLevel.PROTECTED;
  * Abstract Scrabble {@link.uri http://ant.apache.org/ Ant} {@link Task}
  * base class.
  *
- * {@bean.info}
+ * {@ant.task}
  *
  * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$
@@ -65,7 +65,7 @@ public abstract class ScrabbleTask extends Task
      * {@link org.apache.tools.ant.Task} to find possible words for a
      * {@link Rack}.
      *
-     * {@bean.info}
+     * {@ant.task}
      */
     @AntTask("scrabble-words-for")
     @NoArgsConstructor @ToString
