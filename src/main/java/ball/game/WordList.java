@@ -1,16 +1,16 @@
 /*
  * $Id$
  *
- * Copyright 2014 - 2018 Allen D. Ball.  All rights reserved.
+ * Copyright 2014 - 2019 Allen D. Ball.  All rights reserved.
  */
 package ball.game;
 
-import ball.util.CharSequenceOrder;
 import java.beans.ConstructorProperties;
 import java.util.Locale;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import static java.util.Comparator.comparing;
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -31,7 +31,7 @@ public abstract class WordList extends TreeSet<CharSequence> {
      */
     @ConstructorProperties({ "locale" })
     protected WordList(Locale locale) {
-        super(CharSequenceOrder.CASE_INSENSITIVE);
+        super(comparing(t -> t.toString(), String.CASE_INSENSITIVE_ORDER));
 
         this.locale = requireNonNull(locale, "locale");
     }

@@ -1,14 +1,16 @@
 /*
  * $Id$
  *
- * Copyright 2017, 2018 Allen D. Ball.  All rights reserved.
+ * Copyright 2017 - 2019 Allen D. Ball.  All rights reserved.
  */
 package ball.game.card.poker;
 
 import ball.game.card.Card;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
@@ -20,6 +22,9 @@ import static java.util.Collections.unmodifiableList;
  * @version $Revision$
  */
 public abstract class Hand implements Comparable<Hand> {
+    private static final Comparator<Hand> COMPARATOR =
+        Comparator.<Hand>comparingInt(t -> strengthOf(t.getClass()));
+
     protected final List<Card> required = new ArrayList<>();
     protected final List<Card> remaining = new ArrayList<>();
 
@@ -73,35 +78,18 @@ public abstract class Hand implements Comparable<Hand> {
     public List<Card> getRequired() { return unmodifiableList(required); }
 
     @Override
-    public int compareTo(Hand that) {
-        int difference =
-            strengthOf(this.getClass()) - strengthOf(that.getClass());
-
-        return difference;
-    }
+    public int compareTo(Hand that) { return COMPARATOR.compare(this, that); }
 
     @Override
     public boolean equals(Object object) {
         return ((object instanceof Hand)
-                    ? equals((Hand) object)
+                    ? (this.compareTo((Hand) object) == 0)
                     : super.equals(object));
-    }
-
-    private boolean equals(Hand that) {
-        return (that != null && this.compareTo(that) == 0);
     }
 
     @Override
     public int hashCode() {
-        int code = 0;
-
-        code ^= getClass().hashCode();
-/*
-        if (getRank() != null) {
-            code ^= getRank().hashCode();
-        }
-*/
-        return code;
+        return Objects.hash(getClass() /* , getRank() */);
     }
 
     @Override

@@ -1,15 +1,16 @@
 /*
  * $Id$
  *
- * Copyright 2010 - 2017 Allen D. Ball.  All rights reserved.
+ * Copyright 2010 - 2019 Allen D. Ball.  All rights reserved.
  */
 package ball.game.card;
 
-import ball.util.ComparableUtil;
 import java.beans.ConstructorProperties;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
@@ -21,6 +22,11 @@ import java.util.regex.Pattern;
  * @version $Revision$
  */
 public class Card implements Comparable<Card> {
+    private static final Comparator<Card> COMPARATOR =
+        Comparator
+        .<Card>comparingInt(t -> t.getSuit().ordinal())
+        .thenComparing(t -> t.getRank());
+
     private final Suit suit;
     private final Rank rank;
     private final transient String string;
@@ -80,47 +86,17 @@ public class Card implements Comparable<Card> {
     }
 
     @Override
-    public int compareTo(Card that) {
-        int difference = 0;
-
-        if (difference == 0) {
-            difference =
-                ComparableUtil.compare(this.getSuit(), that.getSuit());
-        }
-
-        if (difference == 0) {
-            difference =
-                ComparableUtil.compare(this.getRank(), that.getRank());
-        }
-
-        return difference;
-    }
+    public int compareTo(Card that) { return COMPARATOR.compare(this, that); }
 
     @Override
     public boolean equals(Object object) {
         return ((object instanceof Card)
-                    ? equals((Card) object)
+                    ? (this.compareTo((Card) object) == 0)
                     : super.equals(object));
     }
 
-    private boolean equals(Card that) {
-        return (that != null && this.compareTo(that) == 0);
-    }
-
     @Override
-    public int hashCode() {
-        int code = 0;
-
-        if (getSuit() != null) {
-            code ^= getSuit().hashCode();
-        }
-
-        if (getRank() != null) {
-            code ^= getRank().hashCode();
-        }
-
-        return code;
-    }
+    public int hashCode() { return Objects.hash(getSuit(), getRank()); }
 
     @Override
     public String toString() { return string; }
