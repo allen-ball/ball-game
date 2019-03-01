@@ -1,11 +1,11 @@
 /*
  * $Id$
  *
- * Copyright 2014 - 2018 Allen D. Ball.  All rights reserved.
+ * Copyright 2014 - 2019 Allen D. Ball.  All rights reserved.
  */
 package ball.game.scrabble;
 
-import ball.util.Combinations;
+import ball.util.stream.Combinations;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -71,9 +71,8 @@ public class Rack extends ArrayList<Tile> implements Cloneable {
         LinkedList<List<Tile>> collection = new LinkedList<>();
 
         for (int count = size(); count > 0; count -= 1) {
-            for (List<Tile> list : new Combinations<Tile>(this, count)) {
-                collection.add(list);
-            }
+            Combinations.of(this, count)
+                .forEach(t -> collection.add(t));
         }
 
         return collection;
