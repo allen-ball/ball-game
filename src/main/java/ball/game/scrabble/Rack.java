@@ -8,8 +8,8 @@ package ball.game.scrabble;
 import ball.util.stream.Combinations;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.requireNonNull;
 
@@ -68,14 +68,7 @@ public class Rack extends ArrayList<Tile> implements Cloneable {
      * @see Combinations
      */
     public Collection<List<Tile>> combinations() {
-        LinkedList<List<Tile>> collection = new LinkedList<>();
-
-        for (int count = size(); count > 0; count -= 1) {
-            Combinations.of(this, count)
-                .forEach(t -> collection.add(t));
-        }
-
-        return collection;
+        return Combinations.of(this, size(), 1).collect(Collectors.toList());
     }
 
     @Override
