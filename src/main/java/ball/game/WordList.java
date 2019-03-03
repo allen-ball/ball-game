@@ -16,7 +16,7 @@ import static java.util.Objects.requireNonNull;
 /**
  * Abstract Word List base class.
  *
- * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
+ * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
 public abstract class WordList extends TreeSet<CharSequence> {

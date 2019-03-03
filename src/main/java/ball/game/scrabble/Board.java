@@ -17,7 +17,7 @@ import java.util.TreeMap;
  *
  * {@include Board.properties}
  *
- * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
+ * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
 public class Board extends CoordinateMap<SQ> {

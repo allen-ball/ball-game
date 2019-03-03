@@ -14,7 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * {@link Card} deck.
  *
- * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
+ * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
 public abstract class Deck extends ArrayList<Card> implements Cloneable {

@@ -18,7 +18,7 @@ import static java.util.Collections.unmodifiableList;
 /**
  * Abstract Poker {@link Hand} base class.
  *
- * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
+ * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
 public abstract class Hand implements Comparable<Hand> {

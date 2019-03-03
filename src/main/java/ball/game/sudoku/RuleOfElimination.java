@@ -15,7 +15,7 @@ import ball.util.CoordinateMap;
  * the solution to a {@link Cell} then it cannot be the solution to any
  * other {@link Cell} in the row, column, or 3x3 nonet.
  *
- * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
+ * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
 @ServiceProviderFor({ Rule.class })

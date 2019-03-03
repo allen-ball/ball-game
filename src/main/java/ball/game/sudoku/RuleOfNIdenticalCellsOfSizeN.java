@@ -22,7 +22,7 @@ import static java.util.Collections.frequency;
  * This idea can be extended to three identical cells of three remaining
  * options, four of four, etc...  It also works for N=1 (cell is solved).
  *
- * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
+ * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
 @ServiceProviderFor({ Rule.class })

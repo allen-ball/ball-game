@@ -12,7 +12,7 @@ import static lombok.AccessLevel.PROTECTED;
 /**
  * Sudoku {@link Puzzle} solution {@link Rule}.
  *
- * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
+ * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
 @NoArgsConstructor(access = PROTECTED)

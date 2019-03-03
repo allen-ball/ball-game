@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Two Pair {@link Hand}.
  *
- * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
+ * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
 public class TwoPair extends Pair {

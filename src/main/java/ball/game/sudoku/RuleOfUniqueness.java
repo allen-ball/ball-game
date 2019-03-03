@@ -17,7 +17,7 @@ import lombok.ToString;
  * nonet once other possible solutions for the other cells in the same row,
  * column, and nonet are removed then it must be the solution for that cell.
  *
- * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
+ * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
 @ServiceProviderFor({ Rule.class })

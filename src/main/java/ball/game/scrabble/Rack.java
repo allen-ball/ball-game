@@ -18,7 +18,7 @@ import static java.util.Objects.requireNonNull;
  *
  * {@bean.info}
  *
- * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
+ * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
 public class Rack extends ArrayList<Tile> implements Cloneable {

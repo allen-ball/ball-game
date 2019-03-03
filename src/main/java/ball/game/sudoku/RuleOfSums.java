@@ -16,7 +16,7 @@ import lombok.ToString;
  * minimum maximum possible value for any cell and removes any greater
  * numbers from consideration.
  *
- * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
+ * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
 @ServiceProviderFor({ Rule.class })

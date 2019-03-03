@@ -8,7 +8,7 @@ package ball.game.scrabble;
 /**
  * Scrabble double word square.
  *
- * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
+ * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
 @WordPremium(2)

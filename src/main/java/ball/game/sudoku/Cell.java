@@ -8,7 +8,7 @@ package ball.game.sudoku;
 /**
  * Sudoku {@link Cell}.
  *
- * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
+ * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
 public class Cell extends Digits {

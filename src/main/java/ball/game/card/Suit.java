@@ -16,7 +16,7 @@ import static ball.game.card.Color.RED;
 /**
  * {@link Card} suit {@link Enum} type.
  *
- * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
+ * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
 public enum Suit {

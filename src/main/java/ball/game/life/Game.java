@@ -11,7 +11,7 @@ import java.util.LinkedList;
 /**
  * Life {@link Game}.
  *
- * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
+ * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
 public class Game extends LinkedList<BigInteger> {

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 /**
  * Poker {@link ball.game.card.Deck}.
  *
- * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
+ * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
 @NoArgsConstructor

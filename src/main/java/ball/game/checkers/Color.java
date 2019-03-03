@@ -8,7 +8,7 @@ package ball.game.checkers;
 /**
  * Checker board and pieces' color {@link Enum} type.
  *
- * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
+ * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
 public enum Color { BLACK, RED; }

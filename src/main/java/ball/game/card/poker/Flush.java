@@ -11,7 +11,7 @@ import java.util.Collection;
 /**
  *  Flush {@link Hand}.
  *
- * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
+ * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
 public class Flush extends Hand {

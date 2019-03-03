@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
 /**
  * Scrabble Official {@link WordList} ({@link OWL21}).
  *
- * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
+ * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
 public class OWL21 extends WordList {
