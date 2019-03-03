@@ -1,13 +1,15 @@
 /*
  * $Id$
  *
- * Copyright 2012 - 2016 Allen D. Ball.  All rights reserved.
+ * Copyright 2012 - 2019 Allen D. Ball.  All rights reserved.
  */
 package ball.game.sudoku;
 
 import ball.annotation.ServiceProviderFor;
 import ball.util.CoordinateMap;
 import java.util.SortedSet;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * Sudoku simple "rule-of-sums" {@link Rule} implementation.  Calculates the
@@ -18,13 +20,8 @@ import java.util.SortedSet;
  * @version $Revision$
  */
 @ServiceProviderFor({ Rule.class })
+@NoArgsConstructor @ToString
 public class RuleOfSums extends RuleOfElimination {
-
-    /**
-     * Sole constructor.
-     */
-    public RuleOfSums() { super(); }
-
     @Override
     public boolean applyTo(Puzzle puzzle) {
         boolean modified = false;

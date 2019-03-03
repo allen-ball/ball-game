@@ -1,10 +1,12 @@
 /*
  * $Id$
  *
- * Copyright 2012 - 2016 Allen D. Ball.  All rights reserved.
+ * Copyright 2012 - 2019 Allen D. Ball.  All rights reserved.
  */
 package ball.game.sudoku;
 
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import ball.annotation.ServiceProviderFor;
 import ball.util.CoordinateMap;
 
@@ -17,13 +19,8 @@ import ball.util.CoordinateMap;
  * @version $Revision$
  */
 @ServiceProviderFor({ Rule.class })
+@NoArgsConstructor @ToString
 public class RuleOfElimination extends Rule {
-
-    /**
-     * Sole constructor.
-     */
-    public RuleOfElimination() { super(); }
-
     @Override
     public boolean applyTo(Puzzle puzzle) {
         boolean modified = false;

@@ -1,13 +1,15 @@
 /*
  * $Id$
  *
- * Copyright 2016 Allen D. Ball.  All rights reserved.
+ * Copyright 2016 - 2019 Allen D. Ball.  All rights reserved.
  */
 package ball.game.sudoku;
 
 import ball.annotation.ServiceProviderFor;
 import ball.util.CoordinateMap;
 import java.util.TreeSet;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * Sudoku "rule-of-uniqueness" {@link Rule} implementation.  If a digit is
@@ -19,13 +21,8 @@ import java.util.TreeSet;
  * @version $Revision$
  */
 @ServiceProviderFor({ Rule.class })
+@NoArgsConstructor @ToString
 public class RuleOfUniqueness extends RuleOfElimination {
-
-    /**
-     * Sole constructor.
-     */
-    public RuleOfUniqueness() { super(); }
-
     @Override
     public boolean applyTo(Puzzle puzzle) {
         boolean modified = false;

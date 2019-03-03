@@ -1,9 +1,11 @@
 /*
  * $Id$
  *
- * Copyright 2014 - 2016 Allen D. Ball.  All rights reserved.
+ * Copyright 2014 - 2019 Allen D. Ball.  All rights reserved.
  */
 package ball.game.scrabble;
+
+import lombok.NoArgsConstructor;
 
 /**
  * Artificial Intelligence ({@link AI}) {@link Player} implementation.
@@ -13,10 +15,6 @@ package ball.game.scrabble;
  * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$
  */
+@NoArgsConstructor
 public class AI extends Player {
-
-    /**
-     * Sole constructor.
-     */
-    public AI() { super(); }
 }

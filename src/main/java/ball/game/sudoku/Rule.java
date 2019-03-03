@@ -5,18 +5,18 @@
  */
 package ball.game.sudoku;
 
+import lombok.NoArgsConstructor;
+
+import static lombok.AccessLevel.PROTECTED;
+
 /**
  * Sudoku {@link Puzzle} solution {@link Rule}.
  *
  * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$
  */
+@NoArgsConstructor(access = PROTECTED)
 public abstract class Rule {
-
-    /**
-     * Sole constructor.
-     */
-    protected Rule() { }
 
     /**
      * Method to apply {@link.this} {@link Rule} to the argument
@@ -87,7 +87,4 @@ public abstract class Rule {
 
         return digits;
     }
-
-    @Override
-    public String toString() { return getClass().getSimpleName(); }
 }

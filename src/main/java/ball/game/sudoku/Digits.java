@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import lombok.NoArgsConstructor;
 
 /**
  * Sudoku {@link Digits}.
@@ -17,6 +18,7 @@ import java.util.TreeSet;
  * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
  * @version $Revision$
  */
+@NoArgsConstructor
 public class Digits extends TreeSet<Integer> {
     private static final long serialVersionUID = 3540373718233836695L;
 
@@ -35,11 +37,6 @@ public class Digits extends TreeSet<Integer> {
         ALL = Collections.unmodifiableSortedSet(digits);
         SUM = sum;
     }
-
-    /**
-     * Sole constructor.
-     */
-    public Digits() { super(); }
 
     /**
      * See {@link #addAll(Collection)}.

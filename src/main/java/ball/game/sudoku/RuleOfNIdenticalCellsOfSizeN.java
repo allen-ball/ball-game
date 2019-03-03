@@ -1,12 +1,14 @@
 /*
  * $Id$
  *
- * Copyright 2016 Allen D. Ball.  All rights reserved.
+ * Copyright 2016 - 2019 Allen D. Ball.  All rights reserved.
  */
 package ball.game.sudoku;
 
 import ball.annotation.ServiceProviderFor;
 import ball.util.CoordinateMap;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import static java.util.Collections.frequency;
 
@@ -24,13 +26,8 @@ import static java.util.Collections.frequency;
  * @version $Revision$
  */
 @ServiceProviderFor({ Rule.class })
+@NoArgsConstructor @ToString
 public class RuleOfNIdenticalCellsOfSizeN extends RuleOfElimination {
-
-    /**
-     * Sole constructor.
-     */
-    public RuleOfNIdenticalCellsOfSizeN() { super(); }
-
     @Override
     public boolean applyTo(Puzzle puzzle) {
         boolean modified = false;
