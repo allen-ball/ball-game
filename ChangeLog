@@ -2,6 +2,9 @@
 
 	* src/main/java/ball/game/card/Cards.java: Initial writing.
 
+	* src/main/java/ball/game/card/poker/Type.java:
+	Replaced Hand hierarchy with Type Enum (and Predicate).
+
 2017-12-25  Allen D. Ball  <ball@sol.local>
 
 	* src/main/java/ball/game/card/Card.java:
