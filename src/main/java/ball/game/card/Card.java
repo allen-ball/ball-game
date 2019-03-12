@@ -18,10 +18,10 @@ import java.util.regex.Pattern;
  * @version $Revision$
  */
 public class Card implements Comparable<Card> {
-    private static final Comparator<Card> COMPARATOR =
+    private static final Comparator<? super Card> COMPARATOR =
         Comparator
         .<Card>comparingInt(t -> t.getSuit().ordinal())
-        .thenComparing(t -> t.getRank());
+        .thenComparingInt(t -> t.getRank().rank());
 
     private final Suit suit;
     private final Rank rank;
