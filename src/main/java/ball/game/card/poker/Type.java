@@ -79,6 +79,15 @@ public enum Type implements Predicate<List<Card>> {
                      || (prerequisite == null || prerequisite.test(t)));
     }
 
+    /**
+     * Method that provides all the matches for {@link.this}
+     * {@link Predicate}.
+     *
+     * @param   collection      The {@link Collection} of {@link Card}s to
+     *                          analyze.
+     *
+     * @return  The {@link List} of matching combinations.
+     */
     public List<List<Card>> matches(Collection<Card> collection) {
         HashMap<Set<Card>,Set<List<Card>>> map = new HashMap<>();
 
