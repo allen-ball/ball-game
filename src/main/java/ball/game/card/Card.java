@@ -6,17 +6,13 @@
 package ball.game.card;
 
 import java.beans.ConstructorProperties;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Objects;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 /**
- * Playing card.
+ * Playing {@link Card}.
  *
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
@@ -128,58 +124,74 @@ public class Card implements Comparable<Card> {
     }
 
     /**
-     * Static method to get the {@link List} of {@link Card}s that have the
-     * matching attribute.
+     * Method to return a {@link Predicate} to test if a {@link Card} is
+     * the specified {@link Color}.
      *
-     * @param   attribute       The {@link Enum}.
-     * @param   collection      The {@link Collection} of {@link Card}s to
-     *                          examine.
+     * @param   color           The {@link Color}.
      *
-     * @return  The {@link List} of matching {@link Card}s.
+     * @return  {@link Predicate}
      */
-    public static List<Card> get(Enum<?> attribute,
-                                 Collection<Card> collection) {
-        ArrayList<Card> list = new ArrayList<>();
-
-        for (Card card : collection) {
-            if (attribute instanceof Color) {
-                if (attribute.equals(card.getColor())) {
-                    list.add(card);
-                }
-            } else if (attribute instanceof Rank) {
-                if (attribute.equals(card.getRank())) {
-                    list.add(card);
-                }
-            } else if (attribute instanceof Suit) {
-                if (attribute.equals(card.getSuit())) {
-                    list.add(card);
-                }
-            }
-        }
-
-        return list;
+    public static Predicate<Card> is(Color color) {
+        return t -> Color.is(color).test(t.getColor());
     }
 
     /**
-     * Static method to sort the {@link Collection} of {@link Card}s by an
-     * attribute.
+     * Method to return a {@link Predicate} to test if a {@link Card} is
+     * the specified {@link Rank}.
      *
-     * @param   type            The atribute {@link Enum} {@link Class}.
-     * @param   collection      The {@link Collection} of {@link Card}s to
-     *                          examine.
+     * @param   rank            The {@link Rank}.
      *
-     * @param   <E>             The attribute {@link Enum} generic type.
-     *
-     * @return  The {@link SortedMap} of sorted {@link Card}s.
+     * @return  {@link Predicate}
      */
-    public static <E extends Enum<E>> SortedMap<E,List<Card>> sortBy(Class<E> type,
-                                                                     Collection<Card> collection) {
-        TreeMap<E,List<Card>> map = new TreeMap<>();
+    public static Predicate<Card> is(Rank rank) {
+        return t -> Rank.is(rank).test(t.getRank());
+    }
 
-        for (E attribute : type.getEnumConstants()) {
-            map.put(attribute, get(attribute, collection));
-        }
+    /**
+     * Method to return a {@link Predicate} to test if a {@link Card} is
+     * the specified {@link Suit}.
+     *
+     * @param   suit            The {@link Suit}.
+     *
+     * @return  {@link Predicate}
+     */
+    public static Predicate<Card> is(Suit suit) {
+        return t -> Suit.is(suit).test(t.getSuit());
+    }
 
-        return map;
+    /**
+     * Method to return a {@link Predicate} to test if a {@link Card} is
+     * the same {@link Color} as the specified {@link Card}.
+     *
+     * @param   card            The {@link Card}.
+     *
+     * @return  {@link Predicate}
+     */
+    public static Predicate<Card> isSameColorAs(Card card) {
+        return is(card.getColor());
+    }
+
+    /**
+     * Method to return a {@link Predicate} to test if a {@link Card} is
+     * the same {@link Rank} as the specified {@link Card}.
+     *
+     * @param   card            The {@link Card}.
+     *
+     * @return  {@link Predicate}
+     */
+    public static Predicate<Card> isSameRankAs(Card card) {
+        return is(card.getRank());
+    }
+
+    /**
+     * Method to return a {@link Predicate} to test if a {@link Card} is
+     * the same {@link Suit} as the specified {@link Card}.
+     *
+     * @param   card            The {@link Card}.
+     *
+     * @return  {@link Predicate}
+     */
+    public static Predicate<Card> isSameSuitAs(Card card) {
+        return is(card.getSuit());
     }
 }

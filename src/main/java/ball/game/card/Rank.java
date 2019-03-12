@@ -1,13 +1,15 @@
 /*
  * $Id$
  *
- * Copyright 2010 - 2014 Allen D. Ball.  All rights reserved.
+ * Copyright 2010 - 2019 Allen D. Ball.  All rights reserved.
  */
 package ball.game.card;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
+import java.util.function.Predicate;
 
 /**
  * {@link Card} rank {@link Enum} type.
@@ -17,7 +19,8 @@ import java.util.TreeMap;
  */
 public enum Rank {
     JOKER,
-    ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN,
+    ACE(14),
+    TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN,
     JACK, QUEEN, KING;
 
     private static final Map<String,Rank> MAP;
@@ -34,7 +37,19 @@ public enum Rank {
         MAP = Collections.unmodifiableMap(map);
     }
 
+    private Rank(Integer rank) { this.rank = rank; }
+    private Rank() { this(null); }
+
+    private final Integer rank;
     private transient String string = null;
+
+    /**
+     * Method to get this {@link Rank} rank (separate from
+     * {@link #ordinal()}).
+     *
+     * @return  {@code rank}
+     */
+    public int rank() { return (rank != null) ? rank : ordinal(); }
 
     @Override
     public String toString() {
@@ -76,5 +91,17 @@ public enum Rank {
         }
 
         return suit;
+    }
+
+    /**
+     * Method to return a {@link Predicate} to test if a {@link Rank} is
+     * the specified {@link Rank}.
+     *
+     * @param   rank            The {@link Rank}.
+     *
+     * @return  {@link Predicate}
+     */
+    public static Predicate<Rank> is(Rank rank) {
+        return t -> Objects.equals(rank, t);
     }
 }

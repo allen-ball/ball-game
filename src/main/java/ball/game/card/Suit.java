@@ -1,14 +1,16 @@
 /*
  * $Id$
  *
- * Copyright 2010 - 2014 Allen D. Ball.  All rights reserved.
+ * Copyright 2010 - 2019 Allen D. Ball.  All rights reserved.
  */
 package ball.game.card;
 
 import java.beans.ConstructorProperties;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
+import java.util.function.Predicate;
 
 import static ball.game.card.Color.BLACK;
 import static ball.game.card.Color.RED;
@@ -74,5 +76,17 @@ public enum Suit {
         }
 
         return suit;
+    }
+
+    /**
+     * Method to return a {@link Predicate} to test if a {@link Suit} is
+     * the specified {@link Suit}.
+     *
+     * @param   suit            The {@link Suit}.
+     *
+     * @return  {@link Predicate}
+     */
+    public static Predicate<Suit> is(Suit suit) {
+        return t -> Objects.equals(suit, t);
     }
 }

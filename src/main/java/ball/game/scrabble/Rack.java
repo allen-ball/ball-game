@@ -68,7 +68,8 @@ public class Rack extends ArrayList<Tile> implements Cloneable {
      * @see Combinations
      */
     public Collection<List<Tile>> combinations() {
-        return Combinations.of(size(), 1, this).collect(Collectors.toList());
+        return (Combinations.of(size(), 1, null, this)
+                .collect(Collectors.toList()));
     }
 
     @Override
