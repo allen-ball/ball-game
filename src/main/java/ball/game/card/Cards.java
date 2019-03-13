@@ -53,8 +53,8 @@ public abstract class Cards {
               && (isSequenced(t, c -> c.getRank().rank())
                   || isSequenced(t, c -> c.getRank().ordinal())));
 
-    private static boolean isSequenced(List<Card> list,
-                                       Function<Card,Integer> mapper) {
+    private static <T> boolean isSequenced(List<T> list,
+                                           Function<T,Integer> mapper) {
         return (list.stream()
                 .map(mapper)
                 .collect(Collectors.toList())
@@ -62,8 +62,8 @@ public abstract class Cards {
                                           .map(mapper)
                                           .findFirst().orElse(0),
                                           t -> t - 1)
-                        .boxed()
                         .limit(list.size())
+                        .boxed()
                         .collect(Collectors.toList())));
     }
 
