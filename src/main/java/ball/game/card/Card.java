@@ -206,6 +206,6 @@ public class Card implements Comparable<Card> {
      * @return  {@link Predicate}
      */
     public static <T,U> Predicate<T> isSame(Function<T,U> attribute, T as) {
-        return t -> Objects.equals(accessor.apply(t), accessor.apply(as));
+        return t -> Objects.equals(attribute.apply(t), attribute.apply(as));
     }
 }
