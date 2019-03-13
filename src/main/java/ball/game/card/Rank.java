@@ -29,9 +29,9 @@ public enum Rank {
         TreeMap<String,Rank> map =
             new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
-        for (Rank suit : Rank.values()) {
-            map.put(suit.name(), suit);
-            map.put(suit.toString(), suit);
+        for (Rank rank : Rank.values()) {
+            map.put(rank.name(), rank);
+            map.put(rank.toString(), rank);
         }
 
         MAP = Collections.unmodifiableMap(map);
@@ -84,13 +84,13 @@ public enum Rank {
      * @return  The {@link Rank}.
      */
     public static Rank parse(String string) {
-        Rank suit = MAP.get(string);
+        Rank rank = MAP.get(string);
 
-        if (suit == null) {
-            suit = Enum.valueOf(Rank.class, string);
+        if (rank == null) {
+            rank = Enum.valueOf(Rank.class, string);
         }
 
-        return suit;
+        return rank;
     }
 
     /**
