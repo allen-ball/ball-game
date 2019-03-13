@@ -8,6 +8,7 @@ package ball.game.card;
 import java.beans.ConstructorProperties;
 import java.util.Comparator;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
@@ -168,7 +169,7 @@ public class Card implements Comparable<Card> {
      * @return  {@link Predicate}
      */
     public static Predicate<Card> isSameColorAs(Card card) {
-        return is(card.getColor());
+        return isSame(Card::getColor, card);
     }
 
     /**
@@ -180,7 +181,7 @@ public class Card implements Comparable<Card> {
      * @return  {@link Predicate}
      */
     public static Predicate<Card> isSameRankAs(Card card) {
-        return is(card.getRank());
+        return isSame(Card::getRank, card);
     }
 
     /**
@@ -192,6 +193,19 @@ public class Card implements Comparable<Card> {
      * @return  {@link Predicate}
      */
     public static Predicate<Card> isSameSuitAs(Card card) {
-        return is(card.getSuit());
+        return isSame(Card::getSuit, card);
+    }
+
+    /**
+     * Method to return a {@link Predicate} to test if a {@link Card} has
+     * the same attribute as the specified {@link Card}.
+     *
+     * @param   attribute       The attribute accessor {@link Function}.
+     * @param   as              The reference {@link Object}.
+     *
+     * @return  {@link Predicate}
+     */
+    public static <T,U> Predicate<T> isSame(Function<T,U> attribute, T as) {
+        return t -> Objects.equals(accessor.apply(t), accessor.apply(as));
     }
 }
