@@ -24,7 +24,7 @@ public abstract class Deck extends ArrayList<Card> implements Cloneable {
      * Sole constructor.
      */
     protected Deck() {
-        super(Suit.values().length * Rank.values().length);
+        super(Card.Suit.values().length * Card.Rank.values().length);
 
         try {
             ResourceBundle bundle =
@@ -36,7 +36,8 @@ public abstract class Deck extends ArrayList<Card> implements Cloneable {
                 if (! StringUtils.isEmpty(value)) {
                     for (String suit : key.split(Pattern.quote(","))) {
                         for (String rank : value.split(Pattern.quote(","))) {
-                            add(new Card(Suit.parse(suit), Rank.parse(rank)));
+                            add(new Card(Card.Suit.parse(suit),
+                                         Card.Rank.parse(rank)));
                         }
                     }
                 } else {

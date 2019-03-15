@@ -8,6 +8,7 @@ package ball.game.card.poker;
 import ball.game.card.Card;
 import ball.game.card.Cards;
 import ball.util.stream.Combinations;
+import ball.util.stream.Permutations;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -16,16 +17,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import static ball.game.card.Card.Rank.ACE;
+import static ball.game.card.Card.Rank.KING;
 import static ball.game.card.Cards.SAME_RANK;
 import static ball.game.card.Cards.SAME_SUIT;
 import static ball.game.card.Cards.SEQUENCE;
-import static ball.game.card.Cards.anyMatch;
-import static ball.game.card.Rank.ACE;
-import static ball.game.card.Rank.KING;
 
 /**
  * Poker hand {@link Type} {@link Enum} and {@link Predicate}.
@@ -34,49 +36,46 @@ import static ball.game.card.Rank.KING;
  * @version $Revision$
  */
 public enum Type implements Predicate<List<Card>> {
-    HighCard(0, null, 1, t -> true),
-        Pair(2, SAME_RANK, 2, SAME_RANK),
-        TwoPair(2, SAME_RANK, 4, Pair.with(Pair)),
-        ThreeOfAKind(3, SAME_RANK, 3, SAME_RANK),
-        Straight(5, SEQUENCE, 5, SEQUENCE),
-        Flush(5, SAME_SUIT, 5, SAME_SUIT),
-        FullHouse(3, SAME_RANK, 5, ThreeOfAKind.with(Pair)),
-        FourOfAKind(4, SAME_RANK, 4, SAME_RANK),
-        StraightFlush(5, SEQUENCE.and(SAME_SUIT), 5, Straight.and(Flush)),
-        RoyalFlush(5, anyMatch(ACE).and(SEQUENCE).and(SAME_SUIT),
-                   5, anyMatch(ACE).and(anyMatch(KING))),
-        FiveOfAKind(5, SAME_RANK, 5, SAME_RANK);
+    Empty(0, null, Collection::isEmpty),
+        HighCard(1, t -> true, t -> true),
+        Pair(2, SAME_RANK, SAME_RANK),
+        TwoPair(4, has(2, SAME_RANK), Pair.with(Pair)),
+        ThreeOfAKind(3, SAME_RANK, SAME_RANK),
+        Straight(5, SEQUENCE, SEQUENCE),
+        Flush(5, SAME_SUIT, SAME_SUIT),
+        FullHouse(5, has(3, SAME_RANK), ThreeOfAKind.with(Pair)),
+        FourOfAKind(4, SAME_RANK, SAME_RANK),
+        StraightFlush(5,
+                      matches(ACE, KING).negate().and(SEQUENCE).and(SAME_SUIT),
+                      matches(ACE, KING).negate().and(Straight).and(Flush)),
+        RoyalFlush(5,
+                   matches(ACE, KING).and(SEQUENCE).and(SAME_SUIT),
+                   matches(ACE, KING).and(Straight).and(Flush)),
+        FiveOfAKind(5, SAME_RANK, SAME_RANK);
 
-    private final int prefix;
-    private final Predicate<List<Card>> prerequisite;
-    private final int required;
+    private final int size;
+    private final Predicate<List<Card>> possible;
     private final Predicate<List<Card>> predicate;
 
-    private Type(int prefix, Predicate<List<Card>> prerequisite,
-                 int required, Predicate<List<Card>> predicate) {
-        this.prefix = prefix;
-        this.prerequisite = prerequisite;
-        this.required = required;
+    private Type(int size,
+                 Predicate<List<Card>> possible,
+                 Predicate<List<Card>> predicate) {
+        this.size = size;
+        this.possible = possible;
         this.predicate = Objects.requireNonNull(predicate);
+    }
+
+    private Predicate<List<Card>> possible() {
+        return t -> (possible == null || possible.test(subListTo(t, size)));
     }
 
     @Override
     public boolean test(List<Card> list) {
-        return (list.size() >= required
-                && predicate.test(list.subList(0, required)));
+        return (list.size() >= size && predicate.test(subListTo(list, size)));
     }
 
     private Predicate<List<Card>> with(Predicate<List<Card>> that) {
-        return t -> test(t) && that.test(remaining(t));
-    }
-
-    private List<Card> remaining(List<Card> list) {
-        return list.subList(required, list.size());
-    }
-
-    private Predicate<List<Card>> prerequisite() {
-        return t -> (t.size() > prefix
-                     || (prerequisite == null || prerequisite.test(t)));
+        return t -> test(t) && that.test(subListFrom(t, size));
     }
 
     /**
@@ -90,16 +89,15 @@ public enum Type implements Predicate<List<Card>> {
      */
     public List<List<Card>> matches(Collection<Card> collection) {
         HashMap<Set<Card>,Set<List<Card>>> map = new HashMap<>();
+        int size = Math.min(5, collection.size());
 
-        Combinations.of(5, Math.min(5, collection.size()),
-                        prerequisite(), collection)
+        Combinations.of(size, size, possible(), collection)
             .filter(this)
             .forEach(t -> {
-                         t.subList(required, t.size())
-                             .sort(Comparator.reverseOrder());
+                         subListFrom(t, size).sort(Comparator.reverseOrder());
 
                          map
-                             .computeIfAbsent(new HashSet<>(t.subList(0, required)),
+                             .computeIfAbsent(new HashSet<>(subListTo(t, size)),
                                               k -> new HashSet<>())
                              .add(t);
                      });
@@ -111,5 +109,55 @@ public enum Type implements Predicate<List<Card>> {
             .collect(Collectors.toList());
 
         return list;
+    }
+
+    /**
+     * Static method to analyze a {@link Collection} of {@link Card}s to
+     * determine the best poker hand.
+     *
+     * @param   collection      The {@link Collection} of {@link Card}s to
+     *                          analyze.
+     *
+     * @return  The best {@link Type}.
+     */
+    public static Type evaluate(Collection<Card> collection) {
+        List<Type> types = Stream.of(values()).collect(Collectors.toList());
+
+        Collections.reverse(types);
+
+        Optional<Type> type =
+            types.stream()
+            .filter(t -> Permutations.of(collection).anyMatch(t))
+            .findFirst();
+
+        return type.orElseThrow(IllegalStateException::new);
+    }
+
+    private static <T> Predicate<List<T>> has(int count,
+                                              Predicate<List<T>> predicate) {
+        return t -> (t.isEmpty()
+                     || predicate.test(t.subList(0,
+                                                 Math.min(count, t.size()))));
+    }
+
+    @SafeVarargs
+    @SuppressWarnings({ "varargs" })
+    private static <T> Predicate<List<T>> matches(Predicate<T>... array) {
+        return matches(Stream.of(array).collect(Collectors.toList()));
+    }
+
+    private static <T> Predicate<List<T>> matches(List<Predicate<T>> list) {
+        return t -> ((list.isEmpty() || t.isEmpty())
+                     || (list.get(0).test(t.get(0))
+                         && (matches(subListFrom(list, 1))
+                             .test(subListFrom(t, 1)))));
+    }
+
+    private static <T> List<T> subListTo(List<T> list, int to) {
+        return list.subList(0, Math.min(0, list.size()));
+    }
+
+    private static <T> List<T> subListFrom(List<T> list, int from) {
+        return list.subList(from, list.size());
     }
 }
