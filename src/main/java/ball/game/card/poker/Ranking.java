@@ -30,12 +30,12 @@ import static ball.game.card.Cards.SAME_SUIT;
 import static ball.game.card.Cards.SEQUENCE;
 
 /**
- * Poker hand {@link Type} {@link Enum} and {@link Predicate}.
+ * Poker hand {@link Ranking} {@link Enum} and {@link Predicate}.
  *
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
-public enum Type implements Predicate<List<Card>> {
+public enum Ranking implements Predicate<List<Card>> {
     Empty(0, null, Collection::isEmpty),
         HighCard(1, t -> true, t -> true),
         Pair(2, SAME_RANK, SAME_RANK),
@@ -55,14 +55,14 @@ public enum Type implements Predicate<List<Card>> {
 
     private final int size;
     private final Predicate<List<Card>> possible;
-    private final Predicate<List<Card>> predicate;
+    private final Predicate<List<Card>> is;
 
-    private Type(int size,
+    private Ranking(int size,
                  Predicate<List<Card>> possible,
-                 Predicate<List<Card>> predicate) {
+                 Predicate<List<Card>> is) {
         this.size = size;
         this.possible = possible;
-        this.predicate = Objects.requireNonNull(predicate);
+        this.is = Objects.requireNonNull(is);
     }
 
     private Predicate<List<Card>> possible() {
@@ -71,7 +71,7 @@ public enum Type implements Predicate<List<Card>> {
 
     @Override
     public boolean test(List<Card> list) {
-        return (list.size() >= size && predicate.test(subListTo(list, size)));
+        return (list.size() >= size && is.test(subListTo(list, size)));
     }
 
     private Predicate<List<Card>> with(Predicate<List<Card>> that) {
@@ -118,14 +118,14 @@ public enum Type implements Predicate<List<Card>> {
      * @param   collection      The {@link Collection} of {@link Card}s to
      *                          analyze.
      *
-     * @return  The best {@link Type}.
+     * @return  The best {@link Ranking}.
      */
-    public static Type evaluate(Collection<Card> collection) {
-        List<Type> types = Stream.of(values()).collect(Collectors.toList());
+    public static Ranking evaluate(Collection<Card> collection) {
+        List<Ranking> types = Stream.of(values()).collect(Collectors.toList());
 
         Collections.reverse(types);
 
-        Optional<Type> type =
+        Optional<Ranking> type =
             types.stream()
             .filter(t -> Permutations.of(collection).anyMatch(t))
             .findFirst();
@@ -135,9 +135,7 @@ public enum Type implements Predicate<List<Card>> {
 
     private static <T> Predicate<List<T>> has(int count,
                                               Predicate<List<T>> predicate) {
-        return t -> (t.isEmpty()
-                     || predicate.test(t.subList(0,
-                                                 Math.min(count, t.size()))));
+        return t -> (t.isEmpty() || predicate.test(subListTo(t, count)));
     }
 
     @SafeVarargs
@@ -154,7 +152,7 @@ public enum Type implements Predicate<List<Card>> {
     }
 
     private static <T> List<T> subListTo(List<T> list, int to) {
-        return list.subList(0, Math.min(0, list.size()));
+        return list.subList(0, Math.min(to, list.size()));
     }
 
     private static <T> List<T> subListFrom(List<T> list, int from) {
