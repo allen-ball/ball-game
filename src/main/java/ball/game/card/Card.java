@@ -272,10 +272,10 @@ public class Card implements Comparable<Card> {
      * {@link Card} suit {@link Enum} type.
      */
     public enum Suit implements Predicate<Card> {
-        CLUBS(Color.BLACK),
-        DIAMONDS(Color.RED),
-        HEARTS(Color.RED),
-        SPADES(Color.BLACK);
+        CLUBS(Color.BLACK),     /* black: U+2663, white: U+2667 */
+        DIAMONDS(Color.RED),    /* black: U+2666, white: U+2662 */
+        HEARTS(Color.RED),      /* black: U+2665, white: U+2661 */
+        SPADES(Color.BLACK);    /* black: U+2664, white: U+2660 */
 
         private static final Map<String,Suit> MAP;
 
