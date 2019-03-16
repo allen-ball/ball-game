@@ -58,8 +58,7 @@ public enum Ranking implements Predicate<List<Card>> {
     private final Predicate<List<Card>> is;
 
     private Ranking(int size,
-                 Predicate<List<Card>> possible,
-                 Predicate<List<Card>> is) {
+                    Predicate<List<Card>> possible, Predicate<List<Card>> is) {
         this.size = size;
         this.possible = possible;
         this.is = Objects.requireNonNull(is);
