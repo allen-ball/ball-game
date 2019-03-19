@@ -39,18 +39,18 @@ public enum Ranking implements Predicate<List<Card>> {
     Empty(0, null, Collection::isEmpty),
         HighCard(1, t -> true, t -> true),
         Pair(2, SAME_RANK, SAME_RANK),
-        TwoPair(4, has(2, SAME_RANK), Pair.with(Pair)),
+        TwoPair(4, holding(2, SAME_RANK), Pair.with(Pair)),
         ThreeOfAKind(3, SAME_RANK, SAME_RANK),
         Straight(5, SEQUENCE, SEQUENCE),
         Flush(5, SAME_SUIT, SAME_SUIT),
-        FullHouse(5, has(3, SAME_RANK), ThreeOfAKind.with(Pair)),
+        FullHouse(5, holding(3, SAME_RANK), ThreeOfAKind.with(Pair)),
         FourOfAKind(4, SAME_RANK, SAME_RANK),
         StraightFlush(5,
-                      matches(ACE, KING).negate().and(SEQUENCE).and(SAME_SUIT),
-                      matches(ACE, KING).negate().and(Straight).and(Flush)),
+                      holding(ACE, KING).negate().and(SEQUENCE).and(SAME_SUIT),
+                      holding(ACE, KING).negate().and(Straight).and(Flush)),
         RoyalFlush(5,
-                   matches(ACE, KING).and(SEQUENCE).and(SAME_SUIT),
-                   matches(ACE, KING).and(Straight).and(Flush)),
+                   holding(ACE, KING).and(SEQUENCE).and(SAME_SUIT),
+                   holding(ACE, KING).and(Straight).and(Flush)),
         FiveOfAKind(5, SAME_RANK, SAME_RANK);
 
     private final int size;
@@ -132,21 +132,21 @@ public enum Ranking implements Predicate<List<Card>> {
         return type.orElseThrow(IllegalStateException::new);
     }
 
-    private static <T> Predicate<List<T>> has(int count,
-                                              Predicate<List<T>> predicate) {
+    private static <T> Predicate<List<T>> holding(int count,
+                                                  Predicate<List<T>> predicate) {
         return t -> (t.isEmpty() || predicate.test(subListTo(t, count)));
     }
 
     @SafeVarargs
     @SuppressWarnings({ "varargs" })
-    private static <T> Predicate<List<T>> matches(Predicate<T>... array) {
-        return matches(Stream.of(array).collect(Collectors.toList()));
+    private static <T> Predicate<List<T>> holding(Predicate<T>... array) {
+        return holding(Stream.of(array).collect(Collectors.toList()));
     }
 
-    private static <T> Predicate<List<T>> matches(List<Predicate<T>> list) {
+    private static <T> Predicate<List<T>> holding(List<Predicate<T>> list) {
         return t -> ((list.isEmpty() || t.isEmpty())
                      || (list.get(0).test(t.get(0))
-                         && (matches(subListFrom(list, 1))
+                         && (holding(subListFrom(list, 1))
                              .test(subListFrom(t, 1)))));
     }
 
