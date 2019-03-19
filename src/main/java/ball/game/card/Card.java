@@ -6,15 +6,23 @@
 package ball.game.card;
 
 import java.beans.ConstructorProperties;
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
-import java.util.EnumSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+import static java.util.Arrays.asList;
+import static java.util.Collections.indexOfSubList;
+import static java.util.Collections.reverse;
+import static java.util.Collections.unmodifiableList;
+import static java.util.Collections.unmodifiableMap;
 
 /**
  * Playing {@link Card}.
@@ -26,7 +34,7 @@ public class Card implements Comparable<Card> {
     private static final Comparator<? super Card> COMPARATOR =
         Comparator
         .<Card>comparingInt(t -> t.getSuit().ordinal())
-        .thenComparingInt(t -> t.getRank().rank());
+        .thenComparingInt(t -> t.getRank().ordinal());
 
     private final Suit suit;
     private final Rank rank;
@@ -105,6 +113,21 @@ public class Card implements Comparable<Card> {
     public String toString() { return string; }
 
     /**
+     * Method to return a {@link Predicate} to test if all {@link Object}s
+     * match the specified {@link Predicate} associated with the first
+     * member of the list.
+     *
+     * @param   mapper          The mapper {@link Function}.
+     * @param   <T>             The type of {@link List} element.
+     *
+     * @return  {@link Predicate}
+     */
+    public static <T> Predicate<List<T>> same(Function<T,Predicate<T>> mapper) {
+        return t -> ((! t.isEmpty())
+                     && t.stream().allMatch(mapper.apply(t.get(0))));
+    }
+
+    /**
      * Static method to parse a {@link String} consistent with
      * {@link #toString} to a {@link Card}.
      *
@@ -145,44 +168,21 @@ public class Card implements Comparable<Card> {
         return t -> Objects.equals(attribute.apply(t), attribute.apply(as));
     }
 
+    private static <T,R> List<R> listOf(Collection<T> collection,
+                                      Function<T,R> mapper) {
+        return collection.stream().map(mapper).collect(Collectors.toList());
+    }
+
     /**
      * {@link Card} rank {@link Enum} type.
      */
     public enum Rank implements Predicate<Card> {
         JOKER,
-        ACE(14),
+        ACE,
         TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN,
         JACK, QUEEN, KING;
 
-        private static final EnumSet<Rank> FACE =
-            EnumSet.of(JACK, QUEEN, KING);
-        private static final Map<String,Rank> MAP;
-
-        static {
-            TreeMap<String,Rank> map =
-                new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-
-            for (Rank rank : Rank.values()) {
-                map.put(rank.name(), rank);
-                map.put(rank.toString(), rank);
-            }
-
-            MAP = Collections.unmodifiableMap(map);
-        }
-
-        private Rank(Integer rank) { this.rank = rank; }
-        private Rank() { this(null); }
-
-        private final Integer rank;
         private transient String string = null;
-
-        /**
-         * Method to get this {@link Rank} rank (separate from
-         * {@link #ordinal()}).
-         *
-         * @return      {@code rank}
-         */
-        public int rank() { return (rank != null) ? rank : ordinal(); }
 
         @Override
         public boolean test(Card card) {
@@ -214,6 +214,75 @@ public class Card implements Comparable<Card> {
         }
 
         /**
+         * {@include #RANK_ACE_HIGH}
+         */
+        public static final List<Rank> RANK_ACE_HIGH  =
+            unmodifiableList(asList(JOKER,
+                                    TWO, THREE, FOUR, FIVE,
+                                    SIX, SEVEN, EIGHT, NINE,
+                                    TEN, JACK, QUEEN, KING, ACE));
+
+        /**
+         * {@include #RANK_ACE_LOW}
+         */
+        public static final List<Rank> RANK_ACE_LOW =
+            unmodifiableList(asList(values()));
+
+        private static final Map<String,Rank> MAP;
+        private static final List<List<Rank>> SEQUENCES;
+
+        static {
+            TreeMap<String,Rank> map =
+                new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+
+            for (Rank rank : values()) {
+                map.put(rank.name(), rank);
+                map.put(rank.toString(), rank);
+            }
+
+            MAP = unmodifiableMap(map);
+
+            List<Rank> high = new ArrayList<>(Rank.RANK_ACE_HIGH);
+            List<Rank> low = new ArrayList<>(Rank.RANK_ACE_LOW);
+
+            reverse(high);
+            reverse(low);
+
+            SEQUENCES =
+                unmodifiableList(asList(unmodifiableList(high),
+                                        unmodifiableList(low)));
+        }
+
+        /**
+         * {@link Predicate} to test all {@link Card}s are the same
+         * {@link Rank}.
+         */
+        public static final Predicate<List<Card>> SAME = same(Card::getRank);
+
+        /**
+         * {@link Predicate} to test the {@link Card}s make up a sequence.
+         */
+        public static final Predicate<List<Card>> SEQUENCE =
+            t -> ((! t.isEmpty()) && sequence(listOf(t, Card::getRank)));
+
+        private static boolean sequence(List<Rank> list) {
+            return (SEQUENCES.stream()
+                    .anyMatch(t -> indexOfSubList(t, list) >= 0));
+        }
+
+        /**
+         * Method to return a {@link Predicate} to test if a {@link Rank} is
+         * the specified {@link Rank}.
+         *
+         * @param       rank    The {@link Rank}.
+         *
+         * @return      {@link Predicate}
+         */
+        public static Predicate<Rank> is(Rank rank) {
+            return t -> Objects.equals(rank, t);
+        }
+
+        /**
          * Static method to parse a {@link String} consistent with
          * {@link #name()} and {@link #toString()} to a {@link Rank}.
          *
@@ -230,18 +299,6 @@ public class Card implements Comparable<Card> {
 
             return rank;
         }
-
-        /**
-         * Method to return a {@link Predicate} to test if a {@link Rank} is
-         * the specified {@link Rank}.
-         *
-         * @param       rank    The {@link Rank}.
-         *
-         * @return      {@link Predicate}
-         */
-        public static Predicate<Rank> is(Rank rank) {
-            return t -> Objects.equals(rank, t);
-        }
     }
 
     /**
@@ -254,6 +311,12 @@ public class Card implements Comparable<Card> {
         public boolean test(Card card) {
             return is(this).test(card.getColor());
         }
+
+        /**
+         * {@link Predicate} to test all {@link Card}s are the same
+         * {@link Color}.
+         */
+        public static final Predicate<List<Card>> SAME = same(Card::getColor);
 
         /**
          * Method to return a {@link Predicate} to test if a {@link Color} is
@@ -278,18 +341,6 @@ public class Card implements Comparable<Card> {
         SPADES(Color.BLACK);    /* black: U+2664, white: U+2660 */
 
         private static final Map<String,Suit> MAP;
-
-        static {
-            TreeMap<String,Suit> map =
-                new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-
-            for (Suit suit : Suit.values()) {
-                map.put(suit.name(), suit);
-                map.put(suit.toString(), suit);
-            }
-
-            MAP = Collections.unmodifiableMap(map);
-        }
 
         private final Color color;
         private transient String string = null;
@@ -318,6 +369,36 @@ public class Card implements Comparable<Card> {
             return string;
         }
 
+        static {
+            TreeMap<String,Suit> map =
+                new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+
+            for (Suit suit : values()) {
+                map.put(suit.name(), suit);
+                map.put(suit.toString(), suit);
+            }
+
+            MAP = unmodifiableMap(map);
+        }
+
+        /**
+         * {@link Predicate} to test all {@link Card}s are the same
+         * {@link Suit}.
+         */
+        public static final Predicate<List<Card>> SAME = same(Card::getSuit);
+
+        /**
+         * Method to return a {@link Predicate} to test if a {@link Suit} is
+         * the specified {@link Suit}.
+         *
+         * @param       suit    The {@link Suit}.
+         *
+         * @return      {@link Predicate}
+         */
+        public static Predicate<Suit> is(Suit suit) {
+            return t -> Objects.equals(suit, t);
+        }
+
         /**
          * Static method to parse a {@link String} consistent with
          * {@link #name()} and {@link #toString()} to a {@link Suit}.
@@ -334,18 +415,6 @@ public class Card implements Comparable<Card> {
             }
 
             return suit;
-        }
-
-        /**
-         * Method to return a {@link Predicate} to test if a {@link Suit} is
-         * the specified {@link Suit}.
-         *
-         * @param       suit    The {@link Suit}.
-         *
-         * @return      {@link Predicate}
-         */
-        public static Predicate<Suit> is(Suit suit) {
-            return t -> Objects.equals(suit, t);
         }
     }
 }

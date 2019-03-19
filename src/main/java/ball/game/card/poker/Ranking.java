@@ -5,8 +5,9 @@
  */
 package ball.game.card.poker;
 
+import ball.game.card.Card.Rank;
+import ball.game.card.Card.Suit;
 import ball.game.card.Card;
-import ball.game.card.Cards;
 import ball.util.stream.Combinations;
 import ball.util.stream.Permutations;
 import java.util.Collection;
@@ -25,9 +26,7 @@ import java.util.stream.Stream;
 
 import static ball.game.card.Card.Rank.ACE;
 import static ball.game.card.Card.Rank.KING;
-import static ball.game.card.Cards.SAME_RANK;
-import static ball.game.card.Cards.SAME_SUIT;
-import static ball.game.card.Cards.SEQUENCE;
+import static ball.game.card.Card.Rank.SEQUENCE;
 
 /**
  * Poker hand {@link Ranking} {@link Enum} and {@link Predicate}.
@@ -38,20 +37,20 @@ import static ball.game.card.Cards.SEQUENCE;
 public enum Ranking implements Predicate<List<Card>> {
     Empty(0, null, Collection::isEmpty),
         HighCard(1, t -> true, t -> true),
-        Pair(2, SAME_RANK, SAME_RANK),
-        TwoPair(4, holding(2, SAME_RANK), Pair.with(Pair)),
-        ThreeOfAKind(3, SAME_RANK, SAME_RANK),
+        Pair(2, Rank.SAME, Rank.SAME),
+        TwoPair(4, holding(2, Rank.SAME), Pair.with(Pair)),
+        ThreeOfAKind(3, Rank.SAME, Rank.SAME),
         Straight(5, SEQUENCE, SEQUENCE),
-        Flush(5, SAME_SUIT, SAME_SUIT),
-        FullHouse(5, holding(3, SAME_RANK), ThreeOfAKind.with(Pair)),
-        FourOfAKind(4, SAME_RANK, SAME_RANK),
+        Flush(5, Suit.SAME, Suit.SAME),
+        FullHouse(5, holding(3, Rank.SAME), ThreeOfAKind.with(Pair)),
+        FourOfAKind(4, Rank.SAME, Rank.SAME),
         StraightFlush(5,
-                      holding(ACE, KING).negate().and(SEQUENCE).and(SAME_SUIT),
+                      holding(ACE, KING).negate().and(SEQUENCE).and(Suit.SAME),
                       holding(ACE, KING).negate().and(Straight).and(Flush)),
         RoyalFlush(5,
-                   holding(ACE, KING).and(SEQUENCE).and(SAME_SUIT),
+                   holding(ACE, KING).and(SEQUENCE).and(Suit.SAME),
                    holding(ACE, KING).and(Straight).and(Flush)),
-        FiveOfAKind(5, SAME_RANK, SAME_RANK);
+        FiveOfAKind(5, Rank.SAME, Rank.SAME);
 
     private final int size;
     private final Predicate<List<Card>> possible;
