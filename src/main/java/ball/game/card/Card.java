@@ -113,21 +113,6 @@ public class Card implements Comparable<Card> {
     public String toString() { return string; }
 
     /**
-     * Method to return a {@link Predicate} to test if all {@link Object}s
-     * match the specified {@link Predicate} associated with the first
-     * member of the list.
-     *
-     * @param   mapper          The mapper {@link Function}.
-     * @param   <T>             The type of {@link List} element.
-     *
-     * @return  {@link Predicate}
-     */
-    public static <T> Predicate<List<T>> same(Function<T,Predicate<T>> mapper) {
-        return t -> ((! t.isEmpty())
-                     && t.stream().allMatch(mapper.apply(t.get(0))));
-    }
-
-    /**
      * Static method to parse a {@link String} consistent with
      * {@link #toString} to a {@link Card}.
      *
@@ -153,23 +138,13 @@ public class Card implements Comparable<Card> {
         return card;
     }
 
-    /**
-     * Method to return a {@link Predicate} to test if a {@link Object} has
-     * the same attribute as the specified {@link Object}.
-     *
-     * @param   attribute       The attribute accessor {@link Function}.
-     * @param   as              The reference {@link Object}.
-     * @param   <T>             The type of {@link Object}.
-     * @param   <U>             The type of attribute.
-     *
-     * @return  {@link Predicate}
-     */
-    public static <T,U> Predicate<T> isSame(Function<T,U> attribute, T as) {
-        return t -> Objects.equals(attribute.apply(t), attribute.apply(as));
+    private static <T> Predicate<List<T>> same(Function<T,Predicate<T>> mapper) {
+        return t -> ((! t.isEmpty())
+                     && t.stream().allMatch(mapper.apply(t.get(0))));
     }
 
     private static <T,R> List<R> listOf(Collection<T> collection,
-                                      Function<T,R> mapper) {
+                                        Function<T,R> mapper) {
         return collection.stream().map(mapper).collect(Collectors.toList());
     }
 
@@ -179,8 +154,8 @@ public class Card implements Comparable<Card> {
     public enum Rank implements Predicate<Card> {
         JOKER,
         ACE,
-        TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN,
-        JACK, QUEEN, KING;
+        TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE,
+        TEN, JACK, QUEEN, KING;
 
         private transient String string = null;
 
@@ -335,18 +310,21 @@ public class Card implements Comparable<Card> {
      * {@link Card} suit {@link Enum} type.
      */
     public enum Suit implements Predicate<Card> {
-        CLUBS(Color.BLACK),     /* black: U+2663, white: U+2667 */
-        DIAMONDS(Color.RED),    /* black: U+2666, white: U+2662 */
-        HEARTS(Color.RED),      /* black: U+2665, white: U+2661 */
-        SPADES(Color.BLACK);    /* black: U+2664, white: U+2660 */
+        CLUBS(Color.BLACK, "\u2667" /* U+2663 */),
+        DIAMONDS(Color.RED, "\u2662" /* U+2666 */),
+        HEARTS(Color.RED, "\u2661" /* U+2665 */),
+        SPADES(Color.BLACK, "\u2664" /* U+2660 */);
 
         private static final Map<String,Suit> MAP;
 
         private final Color color;
-        private transient String string = null;
+        private final String string;
 
-        @ConstructorProperties( { "color" } )
-        private Suit(Color color) { this.color = color; }
+        @ConstructorProperties( { "color", "" } )
+        private Suit(Color color, String string) {
+            this.color = color;
+            this.string = string;
+        }
 
         /**
          * Method to get the {@link Suit} {@link Color}.
@@ -361,13 +339,7 @@ public class Card implements Comparable<Card> {
         }
 
         @Override
-        public String toString() {
-            if (string == null) {
-                string = name().substring(0, 1);
-            }
-
-            return string;
-        }
+        public String toString() { return string; }
 
         static {
             TreeMap<String,Suit> map =
@@ -375,6 +347,7 @@ public class Card implements Comparable<Card> {
 
             for (Suit suit : values()) {
                 map.put(suit.name(), suit);
+                map.put(suit.name().substring(0, 1), suit);
                 map.put(suit.toString(), suit);
             }
 
