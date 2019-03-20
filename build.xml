@@ -26,6 +26,14 @@
     <life height="${height}" width="${width}" state0="${state0}"/>
   </target>
 
+  <target name="poker-hand-evaluate"
+          description="--> Invokes &lt;poker-hand-evaluate/&gt; task."
+          depends="jar-classes">
+    <taskdef classpathref="build.classpath"
+             resource="ball/game/ant/defaults.properties"/>
+    <poker-hand-evaluate cards="${cards}"/>
+  </target>
+
   <target name="scrabble-words-for"
           description="--> Invokes &lt;scrabble-words-for/&gt; task."
           depends="jar-classes">

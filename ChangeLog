@@ -1,5 +1,7 @@
 2019-03-20  Allen D. Ball  <ball@sol.local>
 
+	* Added <poker-hand-evaluate/> build target and Ant Task.
+
 	* src/main/java/ball/game/card/poker/Evaluator.java:
 	Initial writing.
 
