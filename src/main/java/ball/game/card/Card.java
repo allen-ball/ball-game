@@ -189,18 +189,18 @@ public class Card implements Comparable<Card> {
         }
 
         /**
-         * {@include #RANK_ACE_HIGH}
+         * {@include #ACE_HIGH}
          */
-        public static final List<Rank> RANK_ACE_HIGH  =
+        public static final List<Rank> ACE_HIGH  =
             unmodifiableList(asList(JOKER,
                                     TWO, THREE, FOUR, FIVE,
                                     SIX, SEVEN, EIGHT, NINE,
                                     TEN, JACK, QUEEN, KING, ACE));
 
         /**
-         * {@include #RANK_ACE_LOW}
+         * {@include #ACE_LOW}
          */
-        public static final List<Rank> RANK_ACE_LOW =
+        public static final List<Rank> ACE_LOW =
             unmodifiableList(asList(values()));
 
         private static final Map<String,Rank> MAP;
@@ -217,8 +217,8 @@ public class Card implements Comparable<Card> {
 
             MAP = unmodifiableMap(map);
 
-            List<Rank> high = new ArrayList<>(Rank.RANK_ACE_HIGH);
-            List<Rank> low = new ArrayList<>(Rank.RANK_ACE_LOW);
+            List<Rank> high = new ArrayList<>(Rank.ACE_HIGH);
+            List<Rank> low = new ArrayList<>(Rank.ACE_LOW);
 
             reverse(high);
             reverse(low);

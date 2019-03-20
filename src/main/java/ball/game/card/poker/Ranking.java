@@ -8,18 +8,13 @@ package ball.game.card.poker;
 import ball.game.card.Card.Rank;
 import ball.game.card.Card.Suit;
 import ball.game.card.Card;
-import ball.util.stream.Combinations;
-import ball.util.stream.Permutations;
+import ball.util.Comparators;
+import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -52,83 +47,40 @@ public enum Ranking implements Predicate<List<Card>> {
                    holding(ACE, KING).and(Straight).and(Flush)),
         FiveOfAKind(5, Rank.SAME, Rank.SAME);
 
-    private final int size;
+    private final int required;
     private final Predicate<List<Card>> possible;
     private final Predicate<List<Card>> is;
 
-    private Ranking(int size,
+    private Ranking(int required,
                     Predicate<List<Card>> possible, Predicate<List<Card>> is) {
-        this.size = size;
+        this.required = required;
         this.possible = possible;
         this.is = Objects.requireNonNull(is);
     }
 
-    private Predicate<List<Card>> possible() {
-        return t -> (possible == null || possible.test(subListTo(t, size)));
+    public int required() { return required; }
+
+    /**
+     * Method to return a {@link Predicate} to test if the {@link List} of
+     * {@link Card} is a possible {@link Ranking}.
+     *
+     * @return  A {@link Predicate} that returns {@code false} if the hand
+     *          cannot be {@link.this} {@link Ranking}; {@code true}
+     *          otherwise.
+     */
+    public Predicate<List<Card>> possible() {
+        return t -> (possible == null
+                     || possible.test(subListTo(t, required())));
     }
 
     @Override
     public boolean test(List<Card> list) {
-        return (list.size() >= size && is.test(subListTo(list, size)));
+        return (list.size() >= required()
+                && is.test(subListTo(list, required())));
     }
 
     private Predicate<List<Card>> with(Predicate<List<Card>> that) {
-        return t -> test(t) && that.test(subListFrom(t, size));
-    }
-
-    /**
-     * Method that provides all the matches for {@link.this}
-     * {@link Predicate}.
-     *
-     * @param   collection      The {@link Collection} of {@link Card}s to
-     *                          analyze.
-     *
-     * @return  The {@link List} of matching combinations.
-     */
-    public List<List<Card>> matches(Collection<Card> collection) {
-        HashMap<Set<Card>,Set<List<Card>>> map = new HashMap<>();
-        int size = Math.min(5, collection.size());
-
-        Combinations.of(size, size, possible(), collection)
-            .filter(this)
-            .forEach(t -> {
-                         subListFrom(t, size).sort(Comparator.reverseOrder());
-
-                         map
-                             .computeIfAbsent(new HashSet<>(subListTo(t, size)),
-                                              k -> new HashSet<>())
-                             .add(t);
-                     });
-
-        List<List<Card>> list =
-            map.values()
-            .stream()
-            .flatMap(t -> t.stream())
-            .collect(Collectors.toList());
-
-        return list;
-    }
-
-    /**
-     * Static method to analyze a {@link Collection} of {@link Card}s to
-     * determine the best poker hand.
-     *
-     * @param   collection      The {@link Collection} of {@link Card}s to
-     *                          analyze.
-     *
-     * @return  The best {@link Ranking}.
-     */
-    public static Ranking evaluate(Collection<Card> collection) {
-        List<Ranking> types = Stream.of(values()).collect(Collectors.toList());
-
-        Collections.reverse(types);
-
-        Optional<Ranking> type =
-            types.stream()
-            .filter(t -> Permutations.of(collection).anyMatch(t))
-            .findFirst();
-
-        return type.orElseThrow(IllegalStateException::new);
+        return t -> test(t) && that.test(subListFrom(t, required()));
     }
 
     private static <T> Predicate<List<T>> holding(int count,
@@ -156,4 +108,11 @@ public enum Ranking implements Predicate<List<Card>> {
     private static <T> List<T> subListFrom(List<T> list, int from) {
         return list.subList(from, list.size());
     }
+
+    /**
+     * {@link Comparator} that orders {@link Ranking}s weakest to
+     * strongest.
+     */
+    public static Comparator<Ranking> COMPARATOR =
+        Comparators.orderedBy(Arrays.asList(values()));
 }
