@@ -6,7 +6,7 @@
 package ball.game.ant.taskdefs;
 
 import ball.game.card.Card;
-import ball.game.card.poker.HandEvaluator;
+import ball.game.card.poker.Evaluator;
 import ball.util.ant.taskdefs.AnnotatedAntTask;
 import ball.util.ant.taskdefs.AntTask;
 import ball.util.ant.taskdefs.ClasspathDelegateAntTask;
@@ -81,7 +81,7 @@ public abstract class CardTask extends Task
             super.execute();
 
             try {
-                HandEvaluator evaluator = new HandEvaluatorImpl(getCards());
+                Evaluator evaluator = new EvaluatorImpl(getCards());
 
                 log(String.valueOf(evaluator.getRanking())
                     + ": " + String.valueOf(evaluator.getHand()));
@@ -93,8 +93,8 @@ public abstract class CardTask extends Task
             }
         }
 
-        private class HandEvaluatorImpl extends HandEvaluator {
-            public HandEvaluatorImpl(Collection<Card> collection) {
+        private class EvaluatorImpl extends Evaluator {
+            public EvaluatorImpl(Collection<Card> collection) {
                 super(collection);
             }
 

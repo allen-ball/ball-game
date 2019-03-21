@@ -58,6 +58,25 @@ public enum Ranking implements Predicate<List<Card>> {
         this.is = Objects.requireNonNull(is);
     }
 
+    /**
+     * Method to find the best possible {@link.this} {@link Ranking} hand in
+     * the {@link Collection}.
+     */
+    public List<Card> find(Collection<Card> collection) {
+        Evaluator evaluator = new Evaluator(collection, this);
+        List<Card> hand =
+            evaluator.getScoring().isEmpty()
+                ? evaluator.getScoring()
+                : evaluator.getHand();
+
+        return hand;
+    }
+
+    /**
+     * Returns the number of {@link Card} for {@link.this} {@link Ranking}.
+     *
+     * @return  The number of {@link Card}s required.
+     */
     public int required() { return required; }
 
     /**

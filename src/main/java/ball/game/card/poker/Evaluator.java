@@ -21,13 +21,12 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
- * Poker {@link HandEvaluator}
+ * Poker hand {@link Evaluator}
  *
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
-public class HandEvaluator implements Predicate<List<Card>>,
-                                      Consumer<List<Card>> {
+public class Evaluator implements Predicate<List<Card>>, Consumer<List<Card>> {
 
     /**
      * {@link Card} {@link Comparator}
@@ -51,16 +50,27 @@ public class HandEvaluator implements Predicate<List<Card>>,
     private List<Card> scoring = Collections.emptyList();
 
     /**
-     * Sole constructor.
+     * Sole public constructor.
      *
      * @param   collection      The {@link Collection} of {@link Card}s to
      *                          evaluate.
      */
-    public HandEvaluator(Collection<Card> collection) {
+    public Evaluator(Collection<Card> collection) {
+        this(collection, Ranking.values());
+    }
+
+    /**
+     * Protected constructor to search for specific {@link Ranking}(s).
+     *
+     * @param   collection      The {@link Collection} of {@link Card}s to
+     *                          evaluate.
+     * @param   rankings        The {@link Ranking}s to look for.
+     */
+    protected Evaluator(Collection<Card> collection, Ranking... rankings) {
         hand = new ArrayList<>(collection);
         hand.sort(CARD.reversed());
 
-        orBetter = new ArrayList<>(Arrays.asList(Ranking.values()));
+        orBetter = new ArrayList<>(Arrays.asList(rankings));
         Collections.reverse(orBetter);
 
         int size = Math.min(5, hand.size());
