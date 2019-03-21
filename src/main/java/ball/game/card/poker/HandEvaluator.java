@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Poker {@link HandEvaluator}
@@ -30,11 +31,14 @@ public class HandEvaluator implements Predicate<List<Card>>,
     private static final Comparator<Card> CARD =
         Comparator.comparing(t -> t.getRank(),
                              Comparators.orderedBy(Rank.ACE_HIGH));
-    private static final Comparator<List<Card>> HAND = new HandComparator();
+    private static final Comparator<List<Card>> HAND =
+        (l, r) -> (IntStream.range(0, Math.min(l.size(), r.size()))
+                   .map(t -> CARD.compare(l.get(t), r.get(t)))
+                   .filter(t -> t != 0)
+                   .findFirst().orElse(Integer.compare(l.size(), r.size())));
 
     private final List<Card> hand;
-    private final List<Ranking> orBetter =
-        new ArrayList<>(Arrays.asList(Ranking.values()));
+    private final List<Ranking> orBetter;
     private Ranking ranking = Ranking.Empty;
     private List<Card> scoring = Collections.emptyList();
 
@@ -46,8 +50,9 @@ public class HandEvaluator implements Predicate<List<Card>>,
      */
     public HandEvaluator(Collection<Card> collection) {
         hand = new ArrayList<>(collection);
+        hand.sort(CARD.reversed());
 
-        Collections.sort(hand, CARD.reversed());
+        orBetter = new ArrayList<>(Arrays.asList(Ranking.values()));
         Collections.reverse(orBetter);
 
         int size = Math.min(5, hand.size());
@@ -62,6 +67,8 @@ public class HandEvaluator implements Predicate<List<Card>>,
         for (int i = 0, n = scoring.size(); i < n; i += 1) {
             Collections.swap(hand, i, hand.indexOf(scoring.get(i)));
         }
+
+        hand.subList(scoring.size(), hand.size()).sort(CARD.reversed());
     }
 
     /**
@@ -124,32 +131,5 @@ public class HandEvaluator implements Predicate<List<Card>>,
     @Override
     public String toString() {
         return getRanking().name() + ":" + getScoring() + orBetter;
-    }
-
-    private static class HandComparator implements Comparator<List<Card>> {
-        public HandComparator() { }
-
-        @Override
-        public int compare(List<Card> left, List<Card> right) {
-            int comparison = 0;
-
-            if (! (left.isEmpty() || right.isEmpty())) {
-                comparison =
-                    CARD.compare(left.get(0), right.get(0));
-
-                if (comparison == 0) {
-                    comparison =
-                        compare(left.subList(1, left.size()),
-                                right.subList(1, right.size()));
-                }
-            } else {
-                comparison = Integer.compare(left.size(), right.size());
-            }
-
-            return comparison;
-        }
-
-        @Override
-        public String toString() { return super.toString(); }
     }
 }
