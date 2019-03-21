@@ -61,6 +61,13 @@ public enum Ranking implements Predicate<List<Card>> {
     /**
      * Method to find the best possible {@link.this} {@link Ranking} hand in
      * the {@link Collection}.
+     *
+     * @param   collection      The {@link Collection} of {@link Card}s to
+     *                          evaluate.
+     *
+     * @return  The best sorted hand as a {@link List} of {@link Card}s if
+     *          a combination mathiching {@link.this} {@link Ranking} is
+     *          found; the empty {@link List} otherwise.
      */
     public List<Card> find(Collection<Card> collection) {
         Evaluator evaluator = new Evaluator(collection, this);
