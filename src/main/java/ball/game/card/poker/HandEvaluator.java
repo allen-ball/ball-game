@@ -28,10 +28,18 @@ import java.util.stream.IntStream;
  */
 public class HandEvaluator implements Predicate<List<Card>>,
                                       Consumer<List<Card>> {
-    private static final Comparator<Card> CARD =
+
+    /**
+     * {@link Card} {@link Comparator}
+     */
+    public static final Comparator<Card> CARD =
         Comparator.comparing(t -> t.getRank(),
                              Comparators.orderedBy(Rank.ACE_HIGH));
-    private static final Comparator<List<Card>> HAND =
+
+    /**
+     * Hand ({@link Card} {@link List}) {@link Comparator}
+     */
+    public static final Comparator<List<Card>> HAND =
         (l, r) -> (IntStream.range(0, Math.min(l.size(), r.size()))
                    .map(t -> CARD.compare(l.get(t), r.get(t)))
                    .filter(t -> t != 0)
