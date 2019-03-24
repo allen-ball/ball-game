@@ -27,6 +27,8 @@ import static java.util.Collections.unmodifiableMap;
 /**
  * Playing {@link Card}.
  *
+ * {@bean.info}
+ *
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
