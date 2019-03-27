@@ -1,3 +1,7 @@
+2019-03-27  Allen D. Ball  <ball@sol.local>
+
+	* pom.xml: Released version 1.0.0.
+
 2019-03-20  Allen D. Ball  <ball@sol.local>
 
 	* Added <poker-hand-evaluate/> build target and Ant Task.
