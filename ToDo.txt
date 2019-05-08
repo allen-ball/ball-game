@@ -1,9 +1,0 @@
-$Id$
-
-* ball.game.card.Card: Use Unicde characters for suits.
-
-
-Local Variables:
-mode: auto-fill
-fill-column: 78
-End:
