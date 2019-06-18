@@ -43,7 +43,7 @@ import static lombok.AccessLevel.PROTECTED;
 public abstract class ScrabbleTask extends Task
                                    implements AnnotatedAntTask,
                                               ClasspathDelegateAntTask,
-                                              ConfigurableAntTask  {
+                                              ConfigurableAntTask {
     @Getter @Setter @Accessors(chain = true, fluent = true)
     private ClasspathUtils.Delegate delegate = null;
 
@@ -61,9 +61,8 @@ public abstract class ScrabbleTask extends Task
     }
 
     /**
-     * {@link.uri http://ant.apache.org/ Ant}
-     * {@link org.apache.tools.ant.Task} to find possible words for a
-     * {@link Rack}.
+     * {@link.uri http://ant.apache.org/ Ant} {@link Task} to find possible
+     * words for a {@link Rack}.
      *
      * {@ant.task}
      */
