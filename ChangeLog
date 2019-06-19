@@ -1,3 +1,7 @@
+2019-06-19  Allen D. Ball  <ball@sol.local>
+
+	* src/main/java/ball/game/crossword/: Interim check-in.
+
 2019-06-18  Allen D. Ball  <ball@sol.local>
 
 	* pom.xml: Started development of 1.1-SNAPSHOT.

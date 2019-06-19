@@ -50,6 +50,14 @@
     <sudoku puzzle="${puzzle}"/>
   </target>
 
+  <target name="xd-load"
+          description="--> Invokes &lt;xd-load/&gt; task."
+          depends="jar-classes">
+    <taskdef classpathref="build.classpath"
+             resource="ball/game/ant/defaults.properties"/>
+    <xd-load file="${file}"/>
+  </target>
+
   <target name="bean-info-for"
           description="--> Invokes &lt;bean-info-for/&gt; task."
           depends="jar-classes">
