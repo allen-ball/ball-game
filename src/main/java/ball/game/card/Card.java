@@ -319,6 +319,19 @@ public class Card implements Comparable<Card> {
 
         private static final Map<String,Suit> MAP;
 
+        static {
+            TreeMap<String,Suit> map =
+                new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+
+            for (Suit suit : values()) {
+                map.put(suit.name(), suit);
+                map.put(suit.name().substring(0, 1), suit);
+                map.put(suit.toString(), suit);
+            }
+
+            MAP = unmodifiableMap(map);
+        }
+
         private final Color color;
         private final String string;
 
@@ -342,19 +355,6 @@ public class Card implements Comparable<Card> {
 
         @Override
         public String toString() { return string; }
-
-        static {
-            TreeMap<String,Suit> map =
-                new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-
-            for (Suit suit : values()) {
-                map.put(suit.name(), suit);
-                map.put(suit.name().substring(0, 1), suit);
-                map.put(suit.toString(), suit);
-            }
-
-            MAP = unmodifiableMap(map);
-        }
 
         /**
          * {@link Predicate} to test all {@link Card}s are the same

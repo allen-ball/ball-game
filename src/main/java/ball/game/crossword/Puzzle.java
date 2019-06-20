@@ -21,11 +21,9 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
@@ -43,20 +41,24 @@ import static org.apache.commons.lang3.StringUtils.SPACE;
  * @version $Revision$
  */
 public class Puzzle extends CoordinateMap<Cell> {
-    private static final long serialVersionUID = -4620118038566819736L;
+    private static final long serialVersionUID = 6997638707307424791L;
 
     private static final List<String> HEADERS =
         Arrays.asList("Title", "Author", "Editor", "Special", "Rebus", "Date");
     private static final List<String> BOUNDARY = Arrays.asList(EMPTY, EMPTY);
 
     private static final String COLON = ":";
+    private static final String DOT = ".";
+    private static final String TILDE = "~";
 
     /** @serial */
     private final LinkedHashMap<String,String> headers = new LinkedHashMap<>();
     /** @serial */
     private final List<Coordinate> indices;
     /** @serial */
-    private final ArrayList<String> clues = new ArrayList<>();
+    private final Map<Label,Solution> answers;
+    /** @serial */
+    private final TreeMap<Label,String> clues = new TreeMap<>();
     /** @serial */
     private final ArrayList<String> notes = new ArrayList<>();
 
@@ -118,26 +120,49 @@ public class Puzzle extends CoordinateMap<Cell> {
             .filter(t -> t.size() > 1)
             .collect(Collectors.toList());
 
-        indices =
+        this.indices =
             list.stream()
             .map(t -> t.getCoordinate())
             .collect(Collectors.toCollection(TreeSet::new))
             .stream()
             .collect(Collectors.toList());
-list.stream()
-    .forEach(t -> System.out.println(t.label().toString()
-                                     + " " + t.getCoordinate().toString()
-                                     + " " + t.toString()));
-        this.clues.addAll(clues);
+
+        this.answers =
+            list.stream()
+            .collect(Collectors.toMap(k -> k.label(), v -> v));
+
+        for (String string : clues) {
+            if (StringUtils.isNotBlank(string)) {
+                String[] substrings = string.split("[. ]+", 2);
+
+                Label label = Label.parse(substrings[0]);
+
+                substrings = substrings[1].split("[~]", 2);
+
+                this.clues.put(label, substrings[0].trim());
+
+                if (substrings.length > 1) {
+                    String solution = substrings[1];
+                    /*
+                     * To-Do: Verify solution.
+                     */
+                }
+            }
+        }
+
         this.notes.addAll(notes);
+
+        this.answers.keySet()
+            .stream()
+            .forEach(t -> this.clues.computeIfAbsent(t, k -> "TBD"));
     }
 
     public Map<String,String> headers() {
         return Collections.unmodifiableMap(headers);
     }
 
-    public List<String> clues() {
-        return Collections.unmodifiableList(clues);
+    public Map<Label,String> clues() {
+        return Collections.unmodifiableMap(clues);
     }
 
     public List<String> notes() {
@@ -204,18 +229,28 @@ list.stream()
         }
 
         out.println(EMPTY);
-        out.println(EMPTY);
 
-        for (String clue : clues) {
-            out.println(clue);
+        Direction last = null;
+
+        for (Map.Entry<Label,String> entry : clues.entrySet()) {
+            if (! entry.getKey().getDirection().equals(last)) {
+                out.println(EMPTY);
+            }
+
+            last = entry.getKey().getDirection();
+
+            out.println(entry.getKey().toString() + DOT
+                        + SPACE + entry.getValue()
+                        + SPACE + TILDE + SPACE
+                        + answers.get(entry.getKey()));
         }
 
         if (! notes.isEmpty()) {
             out.println(EMPTY);
             out.println(EMPTY);
 
-            for (String clue : clues) {
-                out.println(clue);
+            for (String note : notes) {
+                out.println(note);
             }
         }
     }
@@ -279,46 +314,6 @@ list.stream()
         }
 
         return puzzle;
-    }
-
-    private static class Label implements Comparable<Label> {
-        private static final Comparator<? super Label> COMPARATOR =
-            Comparator
-            .<Label>comparingInt(t -> t.direction.ordinal())
-            .thenComparingInt(t -> t.index);
-
-        private final Direction direction;
-        private final int index;
-
-        public Label(Direction direction, int index) {
-            this.direction = Objects.requireNonNull(direction);
-            this.index = index;
-        }
-
-        public Direction getDirection() { return direction; }
-
-        public int getIndex() { return index; }
-
-        @Override
-        public int compareTo(Label that) {
-            return COMPARATOR.compare(this, that);
-        }
-
-        @Override
-        public boolean equals(Object object) {
-            return ((object instanceof Label)
-                        ? (this.compareTo((Label) object) == 0)
-                        : super.equals(object));
-        }
-
-        @Override
-        public int hashCode() { return Objects.hash(direction, index); }
-
-        @Override
-        public String toString() {
-            return (getDirection().toString().substring(0, 1)
-                    + String.valueOf(index));
-        }
     }
 
     private class Solution extends CoordinateMap<Cell> {

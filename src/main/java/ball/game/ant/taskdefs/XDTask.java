@@ -5,6 +5,7 @@
  */
 package ball.game.ant.taskdefs;
 
+import ball.activation.ReaderWriterDataSource;
 import ball.game.crossword.Puzzle;
 import ball.util.ant.taskdefs.AnnotatedAntTask;
 import ball.util.ant.taskdefs.AntTask;
@@ -12,8 +13,6 @@ import ball.util.ant.taskdefs.ClasspathDelegateAntTask;
 import ball.util.ant.taskdefs.ConfigurableAntTask;
 import ball.util.ant.taskdefs.NotNull;
 import java.io.File;
-import java.util.Collection;
-import java.util.Map;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -75,26 +74,12 @@ public abstract class XDTask extends Task implements AnnotatedAntTask,
 
             try {
                 Puzzle puzzle = Puzzle.load(getFile().getAbsolutePath());
+                ReaderWriterDataSource ds =
+                    new ReaderWriterDataSource(null, null);
 
-                for (Map.Entry<?,?> entry : puzzle.headers().entrySet()) {
-                    log(entry.getKey() + ": " + entry.getValue());
-                }
+                puzzle.writeTo(ds.getPrintWriter());
 
-                log(EMPTY);
-                log(EMPTY);
-                log(puzzle);
-
-                log(EMPTY);
-                log(EMPTY);
-                log(puzzle.clues());
-
-                Collection<?> notes = puzzle.notes();
-
-                if (! notes.isEmpty()) {
-                    log(EMPTY);
-                    log(EMPTY);
-                    log(puzzle.notes());
-                }
+                log(ds);
             } catch (BuildException exception) {
                 throw exception;
             } catch (Throwable throwable) {
