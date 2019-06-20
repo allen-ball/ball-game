@@ -53,6 +53,7 @@ public class Puzzle extends CoordinateMap<Cell> {
 
     /** @serial */
     private final LinkedHashMap<String,String> headers = new LinkedHashMap<>();
+    /** @serial */
     private final List<Coordinate> indices;
     /** @serial */
     private final ArrayList<String> clues = new ArrayList<>();
