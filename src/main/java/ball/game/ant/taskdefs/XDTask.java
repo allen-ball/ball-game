@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2014 - 2019 Allen D. Ball.  All rights reserved.
+ * Copyright 2019 Allen D. Ball.  All rights reserved.
  */
 package ball.game.ant.taskdefs;
 
