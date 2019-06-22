@@ -134,7 +134,6 @@ public class Puzzle extends CoordinateMap<Cell> {
         for (String string : clues) {
             if (StringUtils.isNotBlank(string)) {
                 String[] substrings = string.split("[. ]+", 2);
-
                 Label label = Label.parse(substrings[0]);
 
                 substrings = substrings[1].split("[~]", 2);
