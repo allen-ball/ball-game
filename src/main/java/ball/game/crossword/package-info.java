@@ -12,7 +12,7 @@
  * {@link.uri https://www.nytimes.com/2018/12/18/crosswords/new-york-times-crossword-contributors-to-see-pay-raise-after-jan-1.html target=newtab article}
  * provided this author's inspiration.
  *
- * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
+ * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  */
 @Manifest.Section
 package ball.game.crossword;

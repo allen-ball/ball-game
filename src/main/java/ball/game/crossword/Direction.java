@@ -13,7 +13,7 @@ import static java.util.Collections.unmodifiableMap;
 /**
  * Crossword clue {@link Direction}.
  *
- * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
+ * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
 public enum Direction {
