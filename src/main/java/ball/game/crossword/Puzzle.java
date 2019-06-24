@@ -20,19 +20,23 @@ import java.io.UncheckedIOException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import org.apache.commons.lang3.StringUtils;
+import java.util.stream.Stream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.SPACE;
+import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 /**
  * Crossword {@link Puzzle}.
@@ -41,10 +45,8 @@ import static org.apache.commons.lang3.StringUtils.SPACE;
  * @version $Revision$
  */
 public class Puzzle extends CoordinateMap<Cell> {
-    private static final long serialVersionUID = 6997638707307424791L;
+    private static final long serialVersionUID = -601957074086831493L;
 
-    private static final List<String> HEADERS =
-        Arrays.asList("Title", "Author", "Editor", "Special", "Rebus", "Date");
     private static final List<String> BOUNDARY = Arrays.asList(EMPTY, EMPTY);
 
     private static final String COLON = ":";
@@ -52,33 +54,58 @@ public class Puzzle extends CoordinateMap<Cell> {
     private static final String TILDE = "~";
 
     /** @serial */
-    private final LinkedHashMap<String,String> headers = new LinkedHashMap<>();
+    private final Map<String,String> headers;
     /** @serial */
     private final List<Coordinate> indices;
     /** @serial */
-    private final Map<Label,Solution> answers;
+    private final SortedMap<Label,Answer> answers;
     /** @serial */
-    private final TreeMap<Label,String> clues = new TreeMap<>();
+    private final SortedMap<Label,String> clues;
     /** @serial */
-    private final ArrayList<String> notes = new ArrayList<>();
+    private final List<String> notes;
 
+    /**
+     * Private constructor for {@link #copy()}.
+     *
+     * @param   headers         The source {@link Puzzle}.
+     */
+    private Puzzle(Puzzle puzzle) {
+        super(Cell.class);
+
+        this.headers = puzzle.headers;
+        this.indices = puzzle.indices;
+        this.answers = puzzle.answers;
+        this.clues = puzzle.clues;
+        this.notes = puzzle.notes;
+
+        puzzle.entrySet()
+            .stream()
+            .forEach(t -> put(t.getKey(), t.getValue()));
+    }
+
+    /**
+     * Private constructor for {@link #load(String)}.
+     *
+     * @param   headers         The {@link List} of header {@link String}s.
+     * @param   grid            The {@link List} of grid row
+     *                          {@link String}s.
+     * @param   clues           The {@link List} of clue {@link String}s.
+     * @param   notes           The {@link List} of note {@link String}s.
+     */
     private Puzzle(List<String> headers, List<String> grid,
                    List<String> clues, List<String> notes) {
         super(Cell.class);
 
-        for (String key : HEADERS) {
-            this.headers.put(key, EMPTY);
-        }
-
-        for (String string : headers) {
-            String[] strings = string.split(Pattern.quote(COLON), 2);
-
-            this.headers.put(strings[0].trim(),
-                             (strings.length > 0) ? strings[1].trim() : EMPTY);
-        }
-
-        this.headers.remove(EMPTY);
-        this.headers.values().removeAll(Arrays.asList(EMPTY, null));
+        this.headers =
+            headers.stream()
+            .filter(t -> isNotBlank(t))
+            .map(t -> t.split(Pattern.quote(COLON), 2))
+            .filter(t -> isNotBlank(t[0]))
+            .collect(Collectors.toMap(k -> k[0].trim(),
+                                      v -> (v.length > 1) ? v[1].trim() : EMPTY,
+                                      (v0, v1) -> isNotBlank(v0) ? v0 : v1,
+                                      OrderedHeaders::new));
+        this.headers.values().removeIf(t -> isBlank(t));
 
         for (String line : grid) {
             List<Cell> row = Cell.getRowFrom(line.trim());
@@ -95,69 +122,82 @@ public class Puzzle extends CoordinateMap<Cell> {
             Collections.copy(row(getRowCount() - 1).asList(), row);
         }
 
-        List<Solution> list = new ArrayList<>();
-        List<CoordinateMap<Cell>> lines =
-            new ArrayList<>(getRowCount() + getColumnCount());
+        List<CoordinateMap<Cell>> groups = groups();
 
-        lines.addAll(rows());
-        lines.addAll(columns());
+        this.indices =
+            groups.stream()
+            .map(t -> t.firstKey())
+            .collect(Collectors.toCollection(TreeSet::new))
+            .stream()
+            .collect(Collectors.toList());
 
-        for (CoordinateMap<Cell> line : lines) {
-            list.add(new Solution());
+        this.answers =
+            groups.stream()
+            .collect(Collectors.toMap(k -> labelFor(k),
+                                      v -> new Answer(v.keySet()),
+                                      (v0, v1) -> v0, TreeMap::new));
+
+        this.clues =
+            clues.stream()
+            .filter(t -> isNotBlank(t))
+            .map(t -> t.split("[. ]+", 2))
+            .collect(Collectors.toMap(k -> Label.parse(k[0]),
+                                      v -> v[1].split("[~]", 2)[0].trim(),
+                                      (v0, v1) -> isNotBlank(v0) ? v0 : v1,
+                                      TreeMap::new));
+        this.answers.keySet()
+            .stream()
+            .forEach(t -> this.clues.computeIfAbsent(t, k -> "TBD"));
+
+        this.notes =
+            (notes != null)
+                ? notes.stream().collect(Collectors.toList())
+                : Collections.emptyList();
+    }
+
+    private List<CoordinateMap<Cell>> groups() {
+        List<CoordinateMap<Cell>> list = new ArrayList<>();
+
+        for (CoordinateMap<Cell> line :
+                 Stream.concat(rows().stream(), columns().stream())
+                 .collect(Collectors.toList())) {
+            list.add(new CoordinateMap<Cell>(Cell.class));
 
             for (Map.Entry<Coordinate,Cell> entry : line.entrySet()) {
                 if (! entry.getValue().isBlock()) {
                     list.get(list.size() - 1)
                         .put(entry.getKey(), entry.getValue());
                 } else {
-                    list.add(new Solution());
+                    list.add(new CoordinateMap<Cell>(Cell.class));
                 }
             }
         }
 
-        list =
-            list.stream()
-            .filter(t -> t.size() > 1)
-            .collect(Collectors.toList());
+        list.removeIf(t -> ! (t.size() > 1));
 
-        this.indices =
-            list.stream()
-            .map(t -> t.getCoordinate())
-            .collect(Collectors.toCollection(TreeSet::new))
-            .stream()
-            .collect(Collectors.toList());
+        return list;
+    }
 
-        this.answers =
-            list.stream()
-            .collect(Collectors.toMap(k -> k.label(), v -> v));
+    private Label labelFor(CoordinateMap<Cell> map) {
+        Direction direction = null;
 
-        for (String string : clues) {
-            if (StringUtils.isNotBlank(string)) {
-                String[] substrings = string.split("[. ]+", 2);
-                Label label = Label.parse(substrings[0]);
-
-                substrings = substrings[1].split("[~]", 2);
-
-                this.clues.put(label, substrings[0].trim());
-
-                if (substrings.length > 1) {
-                    String solution = substrings[1];
-                    /*
-                     * To-Do: Verify solution.
-                     */
-                }
-            }
+        if (map.getRowCount() > 1) {
+            direction = Direction.DOWN;
+        } else if (map.getColumnCount() > 1) {
+            direction = Direction.ACROSS;
+        } else {
+            throw new IllegalArgumentException();
         }
 
-        this.notes.addAll(notes);
-
-        this.answers.keySet()
-            .stream()
-            .forEach(t -> this.clues.computeIfAbsent(t, k -> "TBD"));
+        return new Label(direction, indices.indexOf(map.firstKey()) + 1);
     }
 
     public Map<String,String> headers() {
         return Collections.unmodifiableMap(headers);
+    }
+
+    public Map<Label,Answer> answers() {
+        return Collections.unmodifiableMap(answers);
     }
 
     public Map<Label,String> clues() {
@@ -167,6 +207,50 @@ public class Puzzle extends CoordinateMap<Cell> {
     public List<String> notes() {
         return Collections.unmodifiableList(notes);
     }
+
+    /**
+     * Method to set the solution in a {@link Puzzle}.
+     *
+     * @param   coordinate      The {@link Coordinate} of the {@link Cell}..
+     * @param   solution        The solution {@link Character}.
+     *
+     * @throws  IllegalArgumentException
+     *                          If any of the {@link Cell}s are already with
+     *                          a different {@link Character} than specified
+     *                          in the {@link String}.
+     */
+    public void setSolution(Coordinate coordinate, Character solution) {
+        Cell cell = get(coordinate);
+
+        if (cell == null) {
+            throw new IllegalStateException();
+        }
+
+        if (! cell.isSolved()) {
+            cell.setSolution(solution);
+        } else {
+            if (! solution.equals(cell.getSolution())) {
+                throw new IllegalArgumentException();
+            }
+        }
+    }
+
+    /**
+     * Method to determine if {@link.this} {@link Puzzle} is solved.
+     *
+     * @return      {@code true} if the {@link Puzzle} is complete;
+     *              {@code false} otherwise.
+     */
+    public boolean isSolved() {
+        return values().stream().allMatch(Cell::isSolved);
+    }
+
+    /**
+     * Method to return a shallow copy of {@link.this} {@link Puzzle}.
+     *
+     * @return  A shallow copy.
+     */
+    public Puzzle copy() { return new Puzzle(this); }
 
     /**
      * Method to write {@link Puzzle} to an {@link OutputStream} in
@@ -206,13 +290,9 @@ public class Puzzle extends CoordinateMap<Cell> {
      * @throws  IOException     If the {@link Puzzle} cannot be written.
      */
     public void writeTo(PrintWriter out) throws IOException {
-        Map<String,String> headers = headers();
-
-        for (String key : headers.keySet()) {
-            String value = headers.get(key);
-
-            if (! StringUtils.isEmpty(value)) {
-                out.println(key + COLON + SPACE + value);
+        for (Map.Entry<String,String> entry : headers().entrySet()) {
+            if (isNotBlank(entry.getValue())) {
+                out.println(entry.getKey() + COLON + SPACE + entry.getValue());
             }
         }
 
@@ -241,7 +321,7 @@ public class Puzzle extends CoordinateMap<Cell> {
             out.println(entry.getKey().toString() + DOT
                         + SPACE + entry.getValue()
                         + SPACE + TILDE + SPACE
-                        + answers.get(entry.getKey()));
+                        + answers.get(entry.getKey()).getSolution(this));
         }
 
         if (! notes.isEmpty()) {
@@ -315,35 +395,95 @@ public class Puzzle extends CoordinateMap<Cell> {
         return puzzle;
     }
 
-    private class Solution extends CoordinateMap<Cell> {
-        private static final long serialVersionUID = -1328439848464058419L;
+    private static class OrderedHeaders extends LinkedHashMap<String,String> {
+        private static final long serialVersionUID = 6300431553107515101L;
 
-        public Solution() { super(Cell.class); }
+        private static final List<String> HEADERS =
+            Arrays.asList("Title", "Author", "Editor",
+                          "Special", "Rebus", "Date");
 
-        public Label label() {
-            return new Label(getDirection(),
-                             indices.indexOf(getCoordinate()) + 1);
+        public OrderedHeaders() {
+            super();
+
+            for (String key : HEADERS) {
+                put(key, EMPTY);
+            }
+        }
+    }
+
+    /**
+     * {@link Puzzle} {@link Answer}
+     */
+    public static class Answer extends ArrayList<Coordinate> {
+        private static final long serialVersionUID = -4645017537649588580L;
+
+        /**
+         * Sole constructor.
+         *
+         * @param       collection
+         *                      The {@link Collection} of
+         *                      {@link Coordinate}s
+         *                      where {@link.this} {@link Answer} is located
+         *                      in a {@link Puzzle}.
+         */
+        protected Answer(Collection<Coordinate> collection) {
+            super(collection);
         }
 
-        public Direction getDirection() {
-            Direction direction = null;
+        /**
+         * Method to get the {@link Answer} in a {@link Puzzle}.
+         *
+         * @param       puzzle  The {@link Puzzle}.
+         *
+         * @return      The {@link String} representation of the
+         *              {@link Answer}.
+         */
+        public String getSolution(Puzzle puzzle) {
+            return (stream()
+                    .map(t -> puzzle.get(t))
+                    .map(Object::toString)
+                    .collect(Collectors.joining()));
+        }
 
-            if (getRowCount() == 1) {
-                direction = Direction.ACROSS;
-            } else /* if (getColumnCount() == 1) */ {
-                direction = Direction.DOWN;
+        /**
+         * Method to set the {@link Answer} in a {@link Puzzle}.
+         *
+         * @param       puzzle  The {@link Puzzle}.
+         * @param       answer  The answer {@link String}.
+         */
+        public void setSolution(Puzzle puzzle, String answer) {
+            if (answer.length() != size()) {
+                throw new IllegalArgumentException();
             }
 
-            return direction;
+            for (int i = 0; i < size(); i += 1) {
+                puzzle.setSolution(get(i), answer.charAt(i));
+            }
         }
 
-        public Coordinate getCoordinate() { return firstKey(); }
+        /**
+         * Method to determine if {@link.this} {@link Answer} is solved.
+         *
+         * @param       puzzle  The {@link Puzzle}.
+         *
+         * @return      {@code true} if the {@link Answer} is complete;
+         *              {@code false} otherwise.
+         */
+        public boolean isSolved(Puzzle puzzle) {
+            return stream().map(t -> puzzle.get(t)).allMatch(Cell::isSolved);
+        }
 
-        @Override
-        public String toString() {
-            return (values().stream()
-                    .map(t -> t.toString())
-                    .collect(Collectors.joining()));
+        /**
+         * Method to determine if {@link.this} {@link Answer} is partially
+         * solved.
+         *
+         * @param       puzzle  The {@link Puzzle}.
+         *
+         * @return      {@code true} if the {@link Answer} is partially
+         *              complete; {@code false} otherwise.
+         */
+        public boolean isPartial(Puzzle puzzle) {
+            return stream().map(t -> puzzle.get(t)).anyMatch(Cell::isSolved);
         }
     }
 }
