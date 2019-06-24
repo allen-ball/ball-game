@@ -413,7 +413,7 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
      * {@link Puzzle} {@link Solution}
      */
     public static class Solution extends ArrayList<Coordinate> {
-        private static final long serialVersionUID = -5859711239104123639L;
+        private static final long serialVersionUID = 2078254299867235881L;
 
         /**
          * Sole constructor.
@@ -433,10 +433,9 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
          *
          * @param       puzzle  The {@link Puzzle}.
          *
-         * @return      The {@link String} representation of the
-         *              {@link Solution}.
+         * @return      The {@link Solution} {@link CharSequence}.
          */
-        public String getSolution(Puzzle puzzle) {
+        public CharSequence getSolution(Puzzle puzzle) {
             return (stream()
                     .map(t -> puzzle.get(t))
                     .map(Object::toString)
@@ -448,9 +447,9 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
          *
          * @param       puzzle  The {@link Puzzle}.
          * @param       solution
-         *                      The solution {@link String}.
+         *                      The solution {@link CharSequence}.
          */
-        public void setSolution(Puzzle puzzle, String solution) {
+        public void setSolution(Puzzle puzzle, CharSequence solution) {
             if (solution.length() != size()) {
                 throw new IllegalArgumentException();
             }
