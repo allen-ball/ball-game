@@ -75,9 +75,7 @@ public class Evaluator implements Predicate<List<Card>>, Consumer<List<Card>> {
 
         int size = Math.min(5, hand.size());
 
-        orBetter.removeAll(orBetter.stream()
-                           .filter(t -> t.required() > size)
-                           .collect(Collectors.toSet()));
+        orBetter.removeIf(t -> t.required() > size);
 
         Combinations.of(size, size, this, hand)
             .forEach(this);
