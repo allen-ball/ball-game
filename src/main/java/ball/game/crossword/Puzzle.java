@@ -44,8 +44,8 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
-public class Puzzle extends CoordinateMap<Cell> {
-    private static final long serialVersionUID = -601957074086831493L;
+public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
+    private static final long serialVersionUID = 4904996395112191828L;
 
     private static final List<String> BOUNDARY = Arrays.asList(EMPTY, EMPTY);
 
@@ -58,14 +58,14 @@ public class Puzzle extends CoordinateMap<Cell> {
     /** @serial */
     private final List<Coordinate> indices;
     /** @serial */
-    private final SortedMap<Label,Answer> answers;
+    private final SortedMap<Label,Solution> solutions;
     /** @serial */
     private final SortedMap<Label,String> clues;
     /** @serial */
     private final List<String> notes;
 
     /**
-     * Private constructor for {@link #copy()}.
+     * Private constructor for {@link #clone()}.
      *
      * @param   headers         The source {@link Puzzle}.
      */
@@ -74,7 +74,7 @@ public class Puzzle extends CoordinateMap<Cell> {
 
         this.headers = puzzle.headers;
         this.indices = puzzle.indices;
-        this.answers = puzzle.answers;
+        this.solutions = puzzle.solutions;
         this.clues = puzzle.clues;
         this.notes = puzzle.notes;
 
@@ -131,10 +131,10 @@ public class Puzzle extends CoordinateMap<Cell> {
             .stream()
             .collect(Collectors.toList());
 
-        this.answers =
+        this.solutions =
             groups.stream()
             .collect(Collectors.toMap(k -> labelFor(k),
-                                      v -> new Answer(v.keySet()),
+                                      v -> new Solution(v.keySet()),
                                       (v0, v1) -> v0, TreeMap::new));
 
         this.clues =
@@ -145,7 +145,7 @@ public class Puzzle extends CoordinateMap<Cell> {
                                       v -> v[1].split("[~]", 2)[0].trim(),
                                       (v0, v1) -> isNotBlank(v0) ? v0 : v1,
                                       TreeMap::new));
-        this.answers.keySet()
+        this.solutions.keySet()
             .stream()
             .forEach(t -> this.clues.computeIfAbsent(t, k -> "TBD"));
 
@@ -196,8 +196,8 @@ public class Puzzle extends CoordinateMap<Cell> {
         return Collections.unmodifiableMap(headers);
     }
 
-    public Map<Label,Answer> answers() {
-        return Collections.unmodifiableMap(answers);
+    public Map<Label,Solution> solutions() {
+        return Collections.unmodifiableMap(solutions);
     }
 
     public Map<Label,String> clues() {
@@ -212,14 +212,14 @@ public class Puzzle extends CoordinateMap<Cell> {
      * Method to set the solution in a {@link Puzzle}.
      *
      * @param   coordinate      The {@link Coordinate} of the {@link Cell}..
-     * @param   solution        The solution {@link Character}.
+     * @param   character       The solution {@link Character}.
      *
      * @throws  IllegalArgumentException
      *                          If any of the {@link Cell}s are already with
      *                          a different {@link Character} than specified
      *                          in the {@link String}.
      */
-    public void setSolution(Coordinate coordinate, Character solution) {
+    public void setSolution(Coordinate coordinate, Character character) {
         Cell cell = get(coordinate);
 
         if (cell == null) {
@@ -227,9 +227,9 @@ public class Puzzle extends CoordinateMap<Cell> {
         }
 
         if (! cell.isSolved()) {
-            cell.setSolution(solution);
+            cell.setSolution(character);
         } else {
-            if (! solution.equals(cell.getSolution())) {
+            if (! character.equals(cell.getSolution())) {
                 throw new IllegalArgumentException();
             }
         }
@@ -244,13 +244,6 @@ public class Puzzle extends CoordinateMap<Cell> {
     public boolean isSolved() {
         return values().stream().allMatch(Cell::isSolved);
     }
-
-    /**
-     * Method to return a shallow copy of {@link.this} {@link Puzzle}.
-     *
-     * @return  A shallow copy.
-     */
-    public Puzzle copy() { return new Puzzle(this); }
 
     /**
      * Method to write {@link Puzzle} to an {@link OutputStream} in
@@ -321,7 +314,7 @@ public class Puzzle extends CoordinateMap<Cell> {
             out.println(entry.getKey().toString() + DOT
                         + SPACE + entry.getValue()
                         + SPACE + TILDE + SPACE
-                        + answers.get(entry.getKey()).getSolution(this));
+                        + solutions.get(entry.getKey()).getSolution(this));
         }
 
         if (! notes.isEmpty()) {
@@ -332,6 +325,11 @@ public class Puzzle extends CoordinateMap<Cell> {
                 out.println(note);
             }
         }
+    }
+
+    @Override
+    public Puzzle clone() throws CloneNotSupportedException {
+        return new Puzzle(this);
     }
 
     @Override
@@ -412,10 +410,10 @@ public class Puzzle extends CoordinateMap<Cell> {
     }
 
     /**
-     * {@link Puzzle} {@link Answer}
+     * {@link Puzzle} {@link Solution}
      */
-    public static class Answer extends ArrayList<Coordinate> {
-        private static final long serialVersionUID = -4645017537649588580L;
+    public static class Solution extends ArrayList<Coordinate> {
+        private static final long serialVersionUID = -5859711239104123639L;
 
         /**
          * Sole constructor.
@@ -423,20 +421,20 @@ public class Puzzle extends CoordinateMap<Cell> {
          * @param       collection
          *                      The {@link Collection} of
          *                      {@link Coordinate}s
-         *                      where {@link.this} {@link Answer} is located
-         *                      in a {@link Puzzle}.
+         *                      where {@link.this} {@link Solution} is
+         *                      located in a {@link Puzzle}.
          */
-        protected Answer(Collection<Coordinate> collection) {
+        protected Solution(Collection<Coordinate> collection) {
             super(collection);
         }
 
         /**
-         * Method to get the {@link Answer} in a {@link Puzzle}.
+         * Method to get the {@link Solution} in a {@link Puzzle}.
          *
          * @param       puzzle  The {@link Puzzle}.
          *
          * @return      The {@link String} representation of the
-         *              {@link Answer}.
+         *              {@link Solution}.
          */
         public String getSolution(Puzzle puzzle) {
             return (stream()
@@ -446,27 +444,28 @@ public class Puzzle extends CoordinateMap<Cell> {
         }
 
         /**
-         * Method to set the {@link Answer} in a {@link Puzzle}.
+         * Method to set the {@link Solution} in a {@link Puzzle}.
          *
          * @param       puzzle  The {@link Puzzle}.
-         * @param       answer  The answer {@link String}.
+         * @param       solution
+         *                      The solution {@link String}.
          */
-        public void setSolution(Puzzle puzzle, String answer) {
-            if (answer.length() != size()) {
+        public void setSolution(Puzzle puzzle, String solution) {
+            if (solution.length() != size()) {
                 throw new IllegalArgumentException();
             }
 
             for (int i = 0; i < size(); i += 1) {
-                puzzle.setSolution(get(i), answer.charAt(i));
+                puzzle.setSolution(get(i), solution.charAt(i));
             }
         }
 
         /**
-         * Method to determine if {@link.this} {@link Answer} is solved.
+         * Method to determine if {@link.this} {@link Solution} is solved.
          *
          * @param       puzzle  The {@link Puzzle}.
          *
-         * @return      {@code true} if the {@link Answer} is complete;
+         * @return      {@code true} if the {@link Solution} is complete;
          *              {@code false} otherwise.
          */
         public boolean isSolved(Puzzle puzzle) {
@@ -474,12 +473,12 @@ public class Puzzle extends CoordinateMap<Cell> {
         }
 
         /**
-         * Method to determine if {@link.this} {@link Answer} is partially
+         * Method to determine if {@link.this} {@link Solution} is partially
          * solved.
          *
          * @param       puzzle  The {@link Puzzle}.
          *
-         * @return      {@code true} if the {@link Answer} is partially
+         * @return      {@code true} if the {@link Solution} is partially
          *              complete; {@code false} otherwise.
          */
         public boolean isPartial(Puzzle puzzle) {
