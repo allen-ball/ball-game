@@ -7,7 +7,6 @@ package ball.game;
 
 import java.beans.ConstructorProperties;
 import java.util.Locale;
-import java.util.SortedSet;
 import java.util.TreeSet;
 
 import static java.util.Comparator.comparing;
@@ -20,7 +19,7 @@ import static java.util.Objects.requireNonNull;
  * @version $Revision$
  */
 public abstract class WordList extends TreeSet<CharSequence> {
-    private static final long serialVersionUID = 1127718429632938077L;
+    private static final long serialVersionUID = -7167327382151879649L;
 
     /** @serial */ private final Locale locale;
 
@@ -42,26 +41,6 @@ public abstract class WordList extends TreeSet<CharSequence> {
      * @return  The {@link Locale} for this {@link WordList}.
      */
     public Locale getLocale() { return locale; }
-
-    /**
-     * Method to get subset of words of a specified length.
-     *
-     * @param   length          The length.
-     *
-     * @return  The {@link SortedSet} of this {@link WordList} of the
-     *          specified length.
-     */
-    public SortedSet<CharSequence> subSet(int length) {
-        TreeSet<CharSequence> set = new TreeSet<CharSequence>();
-
-        for (CharSequence sequence : this) {
-            if (sequence.length() == length) {
-                set.add(sequence);
-            }
-        }
-
-        return set;
-    }
 
     @Override
     public CharSequence[] toArray() { return toArray(new CharSequence[] { }); }
