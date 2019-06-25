@@ -1,5 +1,7 @@
 2019-06-25  Allen D. Ball  <ball@sol.local>
 
+	* Added <xd-solve/> build target and Ant Task.
+
 	* src/main/java/ball/game/crossword/Puzzle.java:
 	Interim check-in: Started solve(Set<CharSequence>)
 	implementation.

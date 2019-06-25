@@ -58,6 +58,14 @@
     <xd-load file="${file}"/>
   </target>
 
+  <target name="xd-solve"
+          description="--> Invokes &lt;xd-solve/&gt; task."
+          depends="jar-classes">
+    <taskdef classpathref="build.classpath"
+             resource="ball/game/ant/defaults.properties"/>
+    <xd-solve file="${file}"/>
+  </target>
+
   <target name="bean-info-for"
           description="--> Invokes &lt;bean-info-for/&gt; task."
           depends="jar-classes">

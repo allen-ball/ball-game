@@ -13,6 +13,9 @@ import ball.util.ant.taskdefs.ClasspathDelegateAntTask;
 import ball.util.ant.taskdefs.ConfigurableAntTask;
 import ball.util.ant.taskdefs.NotNull;
 import java.io.File;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.stream.Stream;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -67,13 +70,15 @@ public abstract class XDTask extends Task implements AnnotatedAntTask,
     public static class Load extends XDTask {
         @NotNull @Getter @Setter
         private File file = null;
+        protected Puzzle puzzle = null;
 
         @Override
         public void execute() throws BuildException {
             super.execute();
 
             try {
-                Puzzle puzzle = Puzzle.load(getFile().getAbsolutePath());
+                puzzle = Puzzle.load(getFile().getAbsolutePath());
+
                 ReaderWriterDataSource ds =
                     new ReaderWriterDataSource(null, null);
 
@@ -86,6 +91,46 @@ public abstract class XDTask extends Task implements AnnotatedAntTask,
                 throwable.printStackTrace();
                 throw new BuildException(throwable);
             }
+        }
+    }
+
+    /**
+     * {@link.uri http://ant.apache.org/ Ant} {@link Task} to load a
+     * {@link Puzzle} from an
+     * {@link.uri https://github.com/century-arcade/xd target=newtab XD}
+     * {@link File} and return a {@link Stream} of possible solutions.
+     *
+     * {@bean.info}
+     */
+    @AntTask("xd-solve")
+    @NoArgsConstructor @ToString
+    public static class Solve extends Load {
+        @Override
+        public void execute() throws BuildException {
+            super.execute();
+
+            try {
+                Stream<Puzzle> stream = puzzle.solve(getWordList());
+                Iterator<Puzzle> iterator = stream.iterator();
+
+                while (iterator.hasNext()) {
+                    log("");
+
+                    Puzzle solution = iterator.next();
+
+                    /* log(solution.isSolved() ? "COMPLETE" : "PARTIAL"); */
+                    log(solution);
+                }
+            } catch (BuildException exception) {
+                throw exception;
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
+                throw new BuildException(throwable);
+            }
+        }
+
+        private Set<CharSequence> getWordList() {
+            return new ball.game.scrabble.Game().getWordList();
         }
     }
 }
