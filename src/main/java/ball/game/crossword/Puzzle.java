@@ -25,9 +25,11 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.function.Supplier;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -45,7 +47,7 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
  * @version $Revision$
  */
 public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
-    private static final long serialVersionUID = 4904996395112191828L;
+    private static final long serialVersionUID = 300642562107408340L;
 
     private static final List<String> BOUNDARY = Arrays.asList(EMPTY, EMPTY);
 
@@ -325,6 +327,42 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
                 out.println(note);
             }
         }
+    }
+
+    /**
+     * Method to solve a {@link Puzzle}.
+     *
+     * @param   dictionary      The {@link Set} of possible solutions.
+     *
+     * @return  A {@link Stream} of possible solutions.
+     */
+    public Stream<Puzzle> solve(Set<CharSequence> dictionary) {
+        return Stream.of(this);
+    }
+
+    private Supplier<Puzzle> supplierFor(Solution solution,
+                                         CharSequence sequence) {
+        return () -> newPuzzle(solution, sequence);
+    }
+
+    private Puzzle newPuzzle(Solution solution, CharSequence sequence) {
+        Puzzle puzzle = null;
+
+        try {
+            puzzle = clone();
+
+            for (int i = 0; i < solution.size(); i += 1) {
+                put(solution.get(i), get(solution.get(i)).clone());
+            }
+
+            solution.setSolution(this, sequence);
+        } catch (RuntimeException exception) {
+            throw exception;
+        } catch (Exception exception) {
+            throw new IllegalStateException(exception);
+        }
+
+        return puzzle;
     }
 
     @Override

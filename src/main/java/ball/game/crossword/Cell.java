@@ -20,7 +20,7 @@ import static java.lang.Character.toUpperCase;
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
-public class Cell {
+public class Cell implements Cloneable {
     private static final Block BLOCK = new Block();
 
     private final Boolean special;
@@ -42,6 +42,11 @@ public class Cell {
 
     public Character getSolution() { return solution; }
     public void setSolution(Character solution) { this.solution = solution; }
+
+    @Override
+    public Cell clone() throws CloneNotSupportedException {
+        return (Cell) super.clone();
+    }
 
     @Override
     public String toString() {
