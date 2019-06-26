@@ -24,24 +24,27 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.IdentityHashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.SortedMap;
 import java.util.Spliterator;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toCollection;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.SPACE;
 import static org.apache.commons.lang3.StringUtils.isBlank;
@@ -54,7 +57,7 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
  * @version $Revision$
  */
 public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
-    private static final long serialVersionUID = -986536680348801165L;
+    private static final long serialVersionUID = 8195770188830550508L;
 
     private static final List<String> BOUNDARY = Arrays.asList(EMPTY, EMPTY);
 
@@ -68,9 +71,11 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
     /** @serial */
     private final List<Coordinate> indices;
     /** @serial */
-    private final SortedMap<Label,Solution> solutions;
+    private final Map<Label,Solution> solutions;
     /** @serial */
-    private final SortedMap<Label,String> clues;
+    private final IdentityHashMap<Solution,List<Solution>> xref;
+    /** @serial */
+    private final Map<Label,String> clues;
     /** @serial */
     private final List<String> notes;
 
@@ -103,8 +108,9 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
      */
     private Puzzle(Puzzle parent) {
         this(parent,
-             parent.headers, parent.indices,
-             parent.solutions, parent.clues, parent.notes);
+             parent.headers,
+             parent.indices, parent.solutions, parent.xref,
+             parent.clues, parent.notes);
 
         this.putAll(parent);
     }
@@ -121,9 +127,9 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
     private Puzzle(List<String> headers, List<String> grid,
                    List<String> clues, List<String> notes) {
         this(null,
-             new OrderedHeaders(headers), new ArrayList<>(),
-             new TreeMap<>(), new TreeMap<>(),
-             (notes != null) ? notes : new LinkedList<>());
+             new OrderedHeaders(headers),
+             new ArrayList<>(), new TreeMap<>(), new IdentityHashMap<>(),
+             new TreeMap<>(), (notes != null) ? notes : new LinkedList<>());
         /*
          * Populate the grid.
          */
@@ -147,8 +153,9 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
         List<CoordinateMap<Cell>> groups = new LinkedList<>();
 
         for (CoordinateMap<Cell> line :
-                 Stream.concat(rows().stream(), columns().stream())
-                 .collect(Collectors.toList())) {
+                 Stream.concat(rows().stream(),
+                               columns().stream())
+                 .collect(toList())) {
             groups.add(new CoordinateMap<Cell>(Cell.class));
 
             for (Map.Entry<Coordinate,Cell> entry : line.entrySet()) {
@@ -168,19 +175,30 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
         TreeSet<Coordinate> indices =
             groups.stream()
             .map(t -> t.firstKey())
-            .collect(Collectors.toCollection(TreeSet::new));
+            .collect(toCollection(TreeSet::new));
 
         this.indices.addAll(indices);
         /*
-         * Populate the solutions map.
+         * Populate the solutions and xref maps.
          */
         TreeMap<Label,Solution> solutions =
             groups.stream()
-            .collect(Collectors.toMap(k -> labelFor(k),
-                                      v -> new Solution(v.keySet()),
-                                      (v0, v1) -> v0, TreeMap::new));
+            .collect(toMap(k -> labelFor(k), v -> new Solution(v.keySet()),
+                           (v0, v1) -> v0, TreeMap::new));
 
         this.solutions.putAll(solutions);
+
+        Collection<Solution> values = this.solutions.values();
+        IdentityHashMap<Solution,List<Solution>> xref =
+            values.stream()
+            .collect(toMap(k -> k,
+                           v -> (values.stream()
+                                 .filter(t -> t != v)
+                                 .filter(t -> (! Collections.disjoint(t, v)))
+                                 .collect(toList())),
+                           (v0, v1) -> v0, IdentityHashMap::new));
+
+        this.xref.putAll(xref);
         /*
          * Populate the clues map.
          */
@@ -219,16 +237,16 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
 
     private Puzzle(Puzzle parent,
                    Map<String,String> headers,
-                   List<Coordinate> indices,
-                   SortedMap<Label,Solution> solutions,
-                   SortedMap<Label,String> clues,
-                   List<String> notes) {
+                   List<Coordinate> indices, Map<Label,Solution> solutions,
+                   IdentityHashMap<Solution,List<Solution>> xref,
+                   Map<Label,String> clues, List<String> notes) {
         super(Cell.class);
 
         this.parent = parent;
         this.headers = headers;
         this.indices = indices;
         this.solutions = solutions;
+        this.xref = xref;
         this.clues = clues;
         this.notes = notes;
     }
@@ -399,16 +417,14 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
         return (parent == null || (get(coordinate) != parent.get(coordinate)));
     }
 
-    private SortedMap<Coordinate,Cell> changed() {
-        SortedMap<Coordinate,Cell> map =
+    private Map<Coordinate,Cell> changed() {
+        Map<Coordinate,Cell> map =
             entrySet()
             .stream()
             .filter(t -> parent != null)
             .filter(t -> t.getValue() != parent.get(t.getKey()))
-            .collect(Collectors.toMap(Map.Entry::getKey,
-                                      Map.Entry::getValue,
-                                      (v0, v1) -> v0,
-                                      TreeMap::new));
+            .collect(toMap(Map.Entry::getKey, Map.Entry::getValue,
+                           (v0, v1) -> v0, TreeMap::new));
 
         return map;
     }
@@ -447,7 +463,7 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
                 new BufferedReader(new InputStreamReader(in, UTF_8))
                 .lines()
                 .map(t -> t.trim())
-                .collect(Collectors.toList());
+                .collect(toList());
             TreeMap<Integer,List<String>> sections = new TreeMap<>();
             List<String> BOUNDARY = Arrays.asList(EMPTY, EMPTY);
 
@@ -525,7 +541,7 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
             return (stream()
                     .map(t -> puzzle.get(t))
                     .map(Object::toString)
-                    .collect(Collectors.joining()));
+                    .collect(joining()));
         }
 
         private void setSolution(Puzzle puzzle, CharSequence solution) {
@@ -559,7 +575,7 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
         private List<Coordinate> unsolved(Puzzle puzzle) {
             return (stream()
                     .filter(t -> (! puzzle.get(t).isSolved()))
-                    .collect(Collectors.toList()));
+                    .collect(toList()));
         }
     }
 
@@ -592,13 +608,13 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
                 List<CharSequence> sequences =
                     dictionary.stream()
                     .filter(t -> pattern.matcher(t).matches())
-                    .collect(Collectors.toList());
+                    .collect(toList());
 
                 for (CharSequence sequence : sequences) {
                     Puzzle child = new Puzzle(parent, solution, sequence);
                     Set<Coordinate> changed = child.changed().keySet();
                     boolean verified =
-                        child.solutions().values()
+                        child.xref.get(solution)
                         .stream()
                         .filter(t -> (! Collections.disjoint(t, changed)))
                         .filter(t -> t.isSolved(child))
