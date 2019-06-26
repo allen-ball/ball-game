@@ -7,6 +7,7 @@ package ball.game.crossword;
 
 import ball.util.Coordinate;
 import ball.util.CoordinateMap;
+import ball.util.DispatchSpliterator;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,17 +23,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.SortedMap;
+import java.util.Spliterator;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.function.Supplier;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
@@ -47,7 +54,7 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
  * @version $Revision$
  */
 public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
-    private static final long serialVersionUID = 300642562107408340L;
+    private static final long serialVersionUID = -986536680348801165L;
 
     private static final List<String> BOUNDARY = Arrays.asList(EMPTY, EMPTY);
 
@@ -55,6 +62,7 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
     private static final String DOT = ".";
     private static final String TILDE = "~";
 
+    private final Puzzle parent;
     /** @serial */
     private final Map<String,String> headers;
     /** @serial */
@@ -69,20 +77,41 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
     /**
      * Private constructor for {@link #clone()}.
      *
-     * @param   headers         The source {@link Puzzle}.
+     * @param   parent          The source {@link Puzzle}.
+     * @param   solution        The {@link Solution} to update.
+     * @param   sequence        The {@link CharSequence} for the
+     *                          {@link Solution}.
      */
-    private Puzzle(Puzzle puzzle) {
+    private Puzzle(Puzzle parent, Solution solution, CharSequence sequence) {
+        this(parent);
+
+        try {
+            for (Coordinate coordinate : solution) {
+                put(coordinate, parent.get(coordinate).clone());
+            }
+
+            solution.setSolution(this, sequence);
+        } catch (Exception exception) {
+            throw new ExceptionInInitializerError(exception);
+        }
+    }
+
+    /**
+     * Private constructor for {@link #clone()}.
+     *
+     * @param   parent          The source {@link Puzzle}.
+     */
+    private Puzzle(Puzzle parent) {
         super(Cell.class);
 
-        this.headers = puzzle.headers;
-        this.indices = puzzle.indices;
-        this.solutions = puzzle.solutions;
-        this.clues = puzzle.clues;
-        this.notes = puzzle.notes;
+        this.parent = parent;
+        this.headers = parent.headers;
+        this.indices = parent.indices;
+        this.solutions = parent.solutions;
+        this.clues = parent.clues;
+        this.notes = parent.notes;
 
-        puzzle.entrySet()
-            .stream()
-            .forEach(t -> put(t.getKey(), t.getValue()));
+        this.putAll(parent);
     }
 
     /**
@@ -97,6 +126,8 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
     private Puzzle(List<String> headers, List<String> grid,
                    List<String> clues, List<String> notes) {
         super(Cell.class);
+
+        this.parent = null;
 
         this.headers =
             headers.stream()
@@ -232,7 +263,9 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
             cell.setSolution(character);
         } else {
             if (! character.equals(cell.getSolution())) {
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException(coordinate.toString() + ": "
+                                                   + cell.toString()
+                                                   + " -> " + character.toString());
             }
         }
     }
@@ -337,32 +370,25 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
      * @return  A {@link Stream} of possible solutions.
      */
     public Stream<Puzzle> solve(Set<CharSequence> dictionary) {
-        return Stream.of(this);
+        return StreamSupport.stream(new Solver(this, dictionary), false);
     }
 
-    private Supplier<Puzzle> supplierFor(Solution solution,
-                                         CharSequence sequence) {
-        return () -> newPuzzle(solution, sequence);
+    private boolean isChanged(Coordinate coordinate) {
+        return (parent == null || (get(coordinate) != parent.get(coordinate)));
     }
 
-    private Puzzle newPuzzle(Solution solution, CharSequence sequence) {
-        Puzzle puzzle = null;
+    private SortedMap<Coordinate,Cell> changed() {
+        SortedMap<Coordinate,Cell> map =
+            entrySet()
+            .stream()
+            .filter(t -> parent != null)
+            .filter(t -> t.getValue() != parent.get(t.getKey()))
+            .collect(Collectors.toMap(Map.Entry::getKey,
+                                      Map.Entry::getValue,
+                                      (v0, v1) -> v0,
+                                      TreeMap::new));
 
-        try {
-            puzzle = clone();
-
-            for (int i = 0; i < solution.size(); i += 1) {
-                put(solution.get(i), get(solution.get(i)).clone());
-            }
-
-            solution.setSolution(this, sequence);
-        } catch (RuntimeException exception) {
-            throw exception;
-        } catch (Exception exception) {
-            throw new IllegalStateException(exception);
-        }
-
-        return puzzle;
+        return map;
     }
 
     @Override
@@ -451,18 +477,8 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
      * {@link Puzzle} {@link Solution}
      */
     public static class Solution extends ArrayList<Coordinate> {
-        private static final long serialVersionUID = 2078254299867235881L;
 
-        /**
-         * Sole constructor.
-         *
-         * @param       collection
-         *                      The {@link Collection} of
-         *                      {@link Coordinate}s
-         *                      where {@link.this} {@link Solution} is
-         *                      located in a {@link Puzzle}.
-         */
-        protected Solution(Collection<Coordinate> collection) {
+        private Solution(Collection<Coordinate> collection) {
             super(collection);
         }
 
@@ -480,14 +496,7 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
                     .collect(Collectors.joining()));
         }
 
-        /**
-         * Method to set the {@link Solution} in a {@link Puzzle}.
-         *
-         * @param       puzzle  The {@link Puzzle}.
-         * @param       solution
-         *                      The solution {@link CharSequence}.
-         */
-        public void setSolution(Puzzle puzzle, CharSequence solution) {
+        private void setSolution(Puzzle puzzle, CharSequence solution) {
             if (solution.length() != size()) {
                 throw new IllegalArgumentException();
             }
@@ -509,17 +518,74 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
             return stream().map(t -> puzzle.get(t)).allMatch(Cell::isSolved);
         }
 
-        /**
-         * Method to determine if {@link.this} {@link Solution} is partially
-         * solved.
-         *
-         * @param       puzzle  The {@link Puzzle}.
-         *
-         * @return      {@code true} if the {@link Solution} is partially
-         *              complete; {@code false} otherwise.
-         */
-        public boolean isPartial(Puzzle puzzle) {
-            return stream().map(t -> puzzle.get(t)).anyMatch(Cell::isSolved);
+        private Pattern asPattern(Puzzle puzzle) {
+            String pattern = getSolution(puzzle).toString().toUpperCase();
+
+            return Pattern.compile(pattern);
         }
+
+        private List<Coordinate> unsolved(Puzzle puzzle) {
+            return (stream()
+                    .filter(t -> (! puzzle.get(t).isSolved()))
+                    .collect(Collectors.toList()));
+        }
+    }
+
+    private static class Solver extends DispatchSpliterator<Puzzle> {
+        private final Puzzle puzzle;
+        private final Set<CharSequence> dictionary;
+
+        public Solver(Puzzle puzzle, Set<CharSequence> dictionary) {
+            super(Integer.MAX_VALUE, Spliterator.NONNULL);
+
+            this.puzzle = Objects.requireNonNull(puzzle);
+            this.dictionary = Objects.requireNonNull(dictionary);
+        }
+
+        @Override
+        protected Spliterator<Supplier<Spliterator<Puzzle>>> spliterators() {
+            List<Supplier<Spliterator<Puzzle>>> list = new LinkedList<>();
+            Solution solution =
+                puzzle.solutions().values()
+                .stream()
+                .filter(t -> (! t.isSolved(puzzle)))
+                .sorted(Comparator
+                        .<Solution>comparingInt(t -> t.stream().map(c -> puzzle.get(c)).anyMatch(Cell::isSolved) ? +1 : -1)
+                        .thenComparingInt(t -> t.unsolved(puzzle).size())
+                        .thenComparingInt(Solution::size).reversed())
+                .findFirst().orElse(null);
+
+            if (solution != null) {
+                Pattern pattern = solution.asPattern(puzzle);
+                List<CharSequence> sequences =
+                    dictionary.stream()
+                    .filter(t -> pattern.matcher(t).matches())
+                    .collect(Collectors.toList());
+
+                for (CharSequence sequence : sequences) {
+                    Puzzle child = new Puzzle(puzzle, solution, sequence);
+                    Set<Coordinate> changed = child.changed().keySet();
+                    boolean verified =
+                        child.solutions().values()
+                        .stream()
+                        .filter(t -> (! Collections.disjoint(t, changed)))
+                        .filter(t -> t.isSolved(child))
+                        .allMatch(t -> dictionary.contains(t.getSolution(child)));
+
+                    if (verified) {
+                        list.add(() -> new Solver(child, dictionary));
+                    }
+                }
+            }
+
+            if (list.isEmpty()) {
+                list.add(() -> Stream.of(puzzle).spliterator());
+            }
+
+            return list.spliterator();
+        }
+
+        @Override
+        public String toString() { return super.toString(); }
     }
 }
