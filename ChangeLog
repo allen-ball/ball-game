@@ -3,14 +3,7 @@
 	* src/main/java/ball/game/crossword/Puzzle.java:
 	Interim check-in for solve(Set<CharSequence>) implementation.
 
-2019-06-25  Allen D. Ball  <ball@sol.local>
-
 	* Added <xd-solve/> build target and Ant Task.
-
-2019-06-23  Allen D. Ball  <ball@sol.local>
-
-	* src/main/java/ball/game/crossword/Puzzle.java:
-	Added copy() method to create a shallow copy.
 
 2019-06-19  Allen D. Ball  <ball@sol.local>
 

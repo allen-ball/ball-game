@@ -5,6 +5,7 @@
  */
 package ball.game.crossword;
 
+import ball.util.CoordinateMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -36,15 +37,42 @@ public enum Direction {
      * Static method to parse a {@link String} consistent with
      * {@link #name()} and {@link #toString()} to a {@link Direction}.
      *
-     * @param       string  The {@link String} to parse.
+     * @param   string          The {@link String} to parse.
      *
-     * @return      The {@link Direction}.
+     * @return  The {@link Direction}.
      */
     public static Direction parse(String string) {
         Direction direction = MAP.get(string);
 
         if (direction == null) {
             direction = Enum.valueOf(Direction.class, string);
+        }
+
+        return direction;
+    }
+
+    /**
+     * Static method to analyze {@link CoordinateMap} to determine a
+     * {@link Direction}.
+     *
+     * @param   map             The {@link CoordinateMap} to analyze.
+     *
+     * @return  The {@link Direction}.
+     *
+     * @throws  IllegalArgumentException
+     *                          If both {@link CoordinateMap#getRowCount()}
+     *                          and {@link CoordinateMap#getColumnCount()}
+     *                          are not equal to {@code 1}.
+     */
+    public static Direction of(CoordinateMap<?> map) {
+        Direction direction = null;
+
+        if (map.getRowCount() > 1) {
+            direction = Direction.DOWN;
+        } else if (map.getColumnCount() > 1) {
+            direction = Direction.ACROSS;
+        } else {
+            throw new IllegalArgumentException();
         }
 
         return direction;
