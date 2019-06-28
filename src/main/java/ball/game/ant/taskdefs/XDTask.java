@@ -130,7 +130,7 @@ public abstract class XDTask extends Task implements AnnotatedAntTask,
         }
 
         private Set<CharSequence> getWordList() {
-            return new ball.game.scrabble.Game().getWordList();
+            return new ball.game.scrabble.TWL06();
         }
     }
 }

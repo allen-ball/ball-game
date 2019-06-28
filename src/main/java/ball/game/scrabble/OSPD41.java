@@ -1,13 +1,12 @@
 /*
  * $Id$
  *
- * Copyright 2016 Allen D. Ball.  All rights reserved.
+ * Copyright 2016 - 2019 Allen D. Ball.  All rights reserved.
  */
 package ball.game.scrabble;
 
 import ball.game.WordList;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 /**
  * Scrabble {@link OSPD41} {@link WordList}.
@@ -21,14 +20,5 @@ public class OSPD41 extends WordList {
     /**
      * Sole constructor.
      */
-    public OSPD41() {
-        super(Locale.ENGLISH);
-
-        ResourceBundle bundle =
-            ResourceBundle.getBundle(getClass().getName(), getLocale());
-
-        for (String key : bundle.keySet()) {
-            add(key.split("[\\p{Space}]+", 2)[0]);
-        }
-    }
+    public OSPD41() { super(Locale.ENGLISH); }
 }

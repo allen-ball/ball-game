@@ -7,6 +7,7 @@ package ball.game;
 
 import java.beans.ConstructorProperties;
 import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.TreeSet;
 
 import static java.util.Comparator.comparing;
@@ -33,6 +34,14 @@ public abstract class WordList extends TreeSet<CharSequence> {
         super(comparing(t -> t.toString(), String.CASE_INSENSITIVE_ORDER));
 
         this.locale = requireNonNull(locale, "locale");
+
+        ResourceBundle bundle =
+            ResourceBundle.getBundle(getClass().getName(), getLocale());
+
+        bundle.keySet()
+            .stream()
+            .map(t -> t.toUpperCase())
+            .forEach(t -> this.add(t));
     }
 
     /**

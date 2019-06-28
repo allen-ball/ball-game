@@ -1,13 +1,12 @@
 /*
  * $Id$
  *
- * Copyright 2010 - 2014 Allen D. Ball.  All rights reserved.
+ * Copyright 2010 - 2019 Allen D. Ball.  All rights reserved.
  */
 package ball.game.scrabble;
 
 import ball.game.WordList;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 /**
  * Scrabble Official {@link WordList} ({@link OWL}).
@@ -21,12 +20,5 @@ public class OWL extends WordList {
     /**
      * Sole constructor.
      */
-    public OWL() {
-        super(Locale.ENGLISH);
-
-        ResourceBundle bundle =
-            ResourceBundle.getBundle(getClass().getName(), getLocale());
-
-        addAll(bundle.keySet());
-    }
+    public OWL() { super(Locale.ENGLISH); }
 }
