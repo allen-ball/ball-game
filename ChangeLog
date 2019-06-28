@@ -1,3 +1,8 @@
+2019-06-28  Allen D. Ball  <ball@sol.local>
+
+	* Moved WordList from ball.game to ball.game.scrabble and placed
+	implementation classes ball.game.scrabble.wordlist.
+
 2019-06-27  Allen D. Ball  <ball@sol.local>
 
 	* src/main/java/ball/game/scrabble/SOWPODS.java,

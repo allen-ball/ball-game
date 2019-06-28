@@ -3,7 +3,7 @@
  *
  * Copyright 2014 - 2019 Allen D. Ball.  All rights reserved.
  */
-package ball.game;
+package ball.game.scrabble;
 
 import java.beans.ConstructorProperties;
 import java.util.Locale;
@@ -20,7 +20,7 @@ import static java.util.Objects.requireNonNull;
  * @version $Revision$
  */
 public abstract class WordList extends TreeSet<CharSequence> {
-    private static final long serialVersionUID = -7167327382151879649L;
+    private static final long serialVersionUID = 9123060041133450168L;
 
     /** @serial */ private final Locale locale;
 
@@ -33,7 +33,7 @@ public abstract class WordList extends TreeSet<CharSequence> {
     protected WordList(Locale locale) {
         super(comparing(t -> t.toString(), String.CASE_INSENSITIVE_ORDER));
 
-        this.locale = requireNonNull(locale, "locale");
+        this.locale = requireNonNull(locale);
 
         ResourceBundle bundle =
             ResourceBundle.getBundle(getClass().getName(), getLocale());

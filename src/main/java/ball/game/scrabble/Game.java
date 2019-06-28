@@ -5,6 +5,7 @@
  */
 package ball.game.scrabble;
 
+import ball.game.scrabble.wordlist.OWL;
 import java.util.Collections;
 import java.util.SortedSet;
 import lombok.NoArgsConstructor;

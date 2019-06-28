@@ -1,13 +1,12 @@
 /*
  * $Id$
  *
- * Copyright 2016 Allen D. Ball.  All rights reserved.
+ * Copyright 2016 - 2019 Allen D. Ball.  All rights reserved.
  */
 package ball.game.boggle;
 
-import ball.game.WordList;
+import ball.game.scrabble.WordList;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 /**
  * {@link.uri https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/dotnetperls-controls/enable1.txt Public domain}
@@ -22,14 +21,5 @@ public class ENABLE extends WordList {
     /**
      * Sole constructor.
      */
-    public ENABLE() {
-        super(Locale.ENGLISH);
-
-        ResourceBundle bundle =
-            ResourceBundle.getBundle(getClass().getName(), getLocale());
-
-        for (String key : bundle.keySet()) {
-            add(key.split("[\\p{Space}]+", 2)[0]);
-        }
-    }
+    public ENABLE() { super(Locale.ENGLISH); }
 }

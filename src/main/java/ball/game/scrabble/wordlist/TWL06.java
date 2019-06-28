@@ -3,9 +3,9 @@
  *
  * Copyright 2019 Allen D. Ball.  All rights reserved.
  */
-package ball.game.scrabble;
+package ball.game.scrabble.wordlist;
 
-import ball.game.WordList;
+import ball.game.scrabble.WordList;
 import java.util.Locale;
 
 /**
@@ -15,7 +15,7 @@ import java.util.Locale;
  * @version $Revision$
  */
 public class TWL06 extends WordList {
-    private static final long serialVersionUID = 3793420365485216541L;
+    private static final long serialVersionUID = -3236174270784996984L;
 
     /**
      * Sole constructor.
