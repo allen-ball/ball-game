@@ -12,6 +12,7 @@ import java.util.TreeSet;
 
 import static java.util.Comparator.comparing;
 import static java.util.Objects.requireNonNull;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 /**
  * Abstract Word List base class.
@@ -40,7 +41,10 @@ public abstract class WordList extends TreeSet<CharSequence> {
 
         bundle.keySet()
             .stream()
-            .map(t -> t.toUpperCase())
+            .map(t -> t.split("#", 2)[0])
+            .map(t -> t.split(" ", 2)[0])
+            .filter(t -> isNotBlank(t))
+            .map(t -> t.trim().toUpperCase())
             .forEach(t -> this.add(t));
     }
 
