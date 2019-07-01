@@ -1,3 +1,8 @@
+2019-07-01  Allen D. Ball  <ball@sol.local>
+
+	* src/main/java/ball/game/scrabble/Bag.java:
+	Use SortedMap for method return values.
+
 2019-06-28  Allen D. Ball  <ball@sol.local>
 
 	* Moved WordList from ball.game to ball.game.scrabble and placed

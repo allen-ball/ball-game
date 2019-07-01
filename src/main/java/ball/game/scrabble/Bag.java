@@ -1,17 +1,17 @@
 /*
  * $Id$
  *
- * Copyright 2010 - 2018 Allen D. Ball.  All rights reserved.
+ * Copyright 2010 - 2019 Allen D. Ball.  All rights reserved.
  */
 package ball.game.scrabble;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.SortedMap;
 import java.util.TreeMap;
 
+import static java.util.Collections.unmodifiableSortedMap;
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -23,11 +23,11 @@ import static java.util.Objects.requireNonNull;
  * @version $Revision$
  */
 public class Bag extends ArrayList<Tile> implements Cloneable {
-    private static final long serialVersionUID = -3705287411834404262L;
+    private static final long serialVersionUID = -1363859449887620815L;
 
     /** @serial */ private final Locale locale;
-    /** @serial */ private final Map<Character,Integer> frequencies;
-    /** @serial */ private final Map<Character,Integer> points;
+    /** @serial */ private final SortedMap<Character,Integer> frequencies;
+    /** @serial */ private final SortedMap<Character,Integer> points;
 
     /**
      * No-argument constructor.
@@ -44,8 +44,8 @@ public class Bag extends ArrayList<Tile> implements Cloneable {
 
         this.locale = requireNonNull(locale, "locale");
 
-        frequencies = Collections.unmodifiableMap(new Frequencies());
-        points = Collections.unmodifiableMap(new Points());
+        frequencies = unmodifiableSortedMap(new Frequencies());
+        points = unmodifiableSortedMap(new Points());
 
         for (Character key : frequencies.keySet()) {
             for (int i = 0, n = frequencies.get(key); i < n; i += 1) {
@@ -62,18 +62,18 @@ public class Bag extends ArrayList<Tile> implements Cloneable {
     public Locale getLocale() { return locale; }
 
     /**
-     * Method to get the frequency {@link Map} for this {@link Bag}.
+     * Method to get the frequency {@link SortedMap} for this {@link Bag}.
      *
-     * @return  The frequency {@link Map} for this {@link Bag}.
+     * @return  The frequency {@link SortedMap} for this {@link Bag}.
      */
-    public Map<Character,Integer> frequencies() { return frequencies; }
+    public SortedMap<Character,Integer> frequencies() { return frequencies; }
 
     /**
-     * Method to get the points {@link Map} for this {@link Bag}.
+     * Method to get the points {@link SortedMap} for this {@link Bag}.
      *
-     * @return  The points {@link Map} for this {@link Bag}.
+     * @return  The points {@link SortedMap} for this {@link Bag}.
      */
-    public Map<Character,Integer> points() { return points; }
+    public SortedMap<Character,Integer> points() { return points; }
 
     /**
      * Method to draw the next {@link Tile} in the {@link Bag}.
@@ -112,10 +112,10 @@ public class Bag extends ArrayList<Tile> implements Cloneable {
     @Override
     public Bag clone() { return (Bag) super.clone(); }
 
-    private abstract class TreeMapImpl extends TreeMap<Character,Integer> {
-        private static final long serialVersionUID = -1088953797198915674L;
+    private abstract class MapImpl extends TreeMap<Character,Integer> {
+        private static final long serialVersionUID = -9083183924608405152L;
 
-        protected TreeMapImpl() { super(); }
+        protected MapImpl() { super(); }
 
         protected void load(String name) {
             ResourceBundle bundle =
@@ -127,7 +127,7 @@ public class Bag extends ArrayList<Tile> implements Cloneable {
         }
     }
 
-    private class Frequencies extends TreeMapImpl implements Cloneable {
+    private class Frequencies extends MapImpl implements Cloneable {
         private static final long serialVersionUID = -5133821366028022851L;
 
         public Frequencies() {
@@ -140,7 +140,7 @@ public class Bag extends ArrayList<Tile> implements Cloneable {
         public Frequencies clone() { return (Frequencies) super.clone(); }
     }
 
-    private class Points extends TreeMapImpl implements Cloneable {
+    private class Points extends MapImpl implements Cloneable {
         private static final long serialVersionUID = 6515810713447725344L;
 
         public Points() {
