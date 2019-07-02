@@ -28,6 +28,7 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.util.ClasspathUtils;
 
+import static java.util.stream.Collectors.toCollection;
 import static lombok.AccessLevel.PROTECTED;
 
 /**
@@ -86,11 +87,10 @@ public abstract class ScrabbleTask extends Task
 
                 log(String.valueOf(player.getRack()));
 
-                LinkedHashSet<String> set = new LinkedHashSet<>();
-
-                for (List<Tile> list : player.getRack().combinations()) {
-                    set.add(Tile.toString(list));
-                }
+                LinkedHashSet<String> set =
+                    player.getRack().combinations()
+                    .map(t -> Tile.toString(t))
+                    .collect(toCollection(LinkedHashSet::new));
 
                 set.retainAll(game.getWordList());
 

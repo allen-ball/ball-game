@@ -6,10 +6,9 @@
 package ball.game.scrabble;
 
 import ball.util.stream.Combinations;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.util.Objects.requireNonNull;
 
@@ -21,15 +20,15 @@ import static java.util.Objects.requireNonNull;
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
-public class Rack extends ArrayList<Tile> implements Cloneable {
-    private static final long serialVersionUID = 5205845897527835056L;
+public class Rack extends LinkedList<Tile> implements Cloneable {
+    private static final long serialVersionUID = -888967675416820573L;
 
     private static final int CAPACITY = 7;
 
     /**
      * Sole constructor.
      */
-    public Rack() { super(CAPACITY); }
+    public Rack() { super(); }
 
     /**
      * Method to determine if the {@link Rack} has any remaining capacity
@@ -56,20 +55,19 @@ public class Rack extends ArrayList<Tile> implements Cloneable {
             }
         }
 
-        return new ArrayList<Tile>(subList(from, size()));
+        return new LinkedList<Tile>(subList(from, size()));
     }
 
     /**
-     * Method to get the {@link Collection} of all possible combinations.
+     * Method to get the {@link Stream} of all possible combinations.
      *
-     * @return  The {@link Collection} of combinations (each a {@link List}
+     * @return  The {@link Stream} of combinations (each a {@link List}
      *          of {@link Tile}s).
      *
      * @see Combinations
      */
-    public Collection<List<Tile>> combinations() {
-        return (Combinations.of(size(), 1, null, this)
-                .collect(Collectors.toList()));
+    public Stream<List<Tile>> combinations() {
+        return Combinations.of(size(), 1, null, this);
     }
 
     @Override
@@ -78,7 +76,7 @@ public class Rack extends ArrayList<Tile> implements Cloneable {
             throw new IllegalStateException();
         }
 
-        requireNonNull(tile, "tile");
+        requireNonNull(tile);
 
         return super.add(tile);
     }

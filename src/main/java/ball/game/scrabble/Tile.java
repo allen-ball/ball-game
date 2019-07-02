@@ -1,13 +1,14 @@
 /*
  * $Id$
  *
- * Copyright 2014 - 2016 Allen D. Ball.  All rights reserved.
+ * Copyright 2014 - 2019 Allen D. Ball.  All rights reserved.
  */
 package ball.game.scrabble;
 
 import java.beans.ConstructorProperties;
-import java.nio.CharBuffer;
 import java.util.Collection;
+
+import static java.util.stream.Collectors.joining;
 
 /**
  * Scrabble {@link Tile}.
@@ -55,12 +56,6 @@ public class Tile {
      * @return  The {@link String} representation.
      */
     public static String toString(Collection<Tile> collection) {
-        CharBuffer buffer = CharBuffer.allocate(collection.size());
-
-        for (Tile tile : collection) {
-            buffer.put(tile.getLetter());
-        }
-
-        return buffer.flip().toString();
+        return collection.stream().map(t -> t.toString()).collect(joining());
     }
 }
