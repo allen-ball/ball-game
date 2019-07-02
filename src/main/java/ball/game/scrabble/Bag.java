@@ -5,7 +5,7 @@
  */
 package ball.game.scrabble;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.SortedMap;
@@ -22,7 +22,7 @@ import static java.util.Objects.requireNonNull;
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
-public class Bag extends ArrayList<Tile> implements Cloneable {
+public class Bag extends LinkedList<Tile> implements Cloneable {
     private static final long serialVersionUID = -1363859449887620815L;
 
     /** @serial */ private final Locale locale;
@@ -40,7 +40,7 @@ public class Bag extends ArrayList<Tile> implements Cloneable {
     public Bag(String language) { this(new Locale(language)); }
 
     private Bag(Locale locale) {
-        super(100);
+        super();
 
         this.locale = requireNonNull(locale, "locale");
 
@@ -80,16 +80,17 @@ public class Bag extends ArrayList<Tile> implements Cloneable {
      *
      * @return  The next {@link Tile}.
      *
-     * @see #remove(int)
+     * @see #pollFirst()
      */
-    public Tile draw() { return remove(0); }
+    public Tile draw() { return pollFirst(); }
 
     /**
      * Method to draw a specific {@link Tile} from the {@link Bag}.
      *
      * @param   letter          The name of the requested {@link Tile}.
      *
-     * @return  The request {@link Tile}; {@code null} if none available..
+     * @return  The requested {@link Tile}; {@code null} if no matching
+     *          {@link Tile} is available.
      *
      * @see #remove(int)
      */

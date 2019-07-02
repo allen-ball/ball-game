@@ -1,16 +1,17 @@
 /*
  * $Id$
  *
- * Copyright 2011 - 2016 Allen D. Ball.  All rights reserved.
+ * Copyright 2011 - 2019 Allen D. Ball.  All rights reserved.
  */
 package ball.game.scrabble;
 
 import ball.util.CoordinateMap;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
+
+import static java.util.Collections.copy;
 
 /**
  * Scrabble {@link Board}.
@@ -34,7 +35,7 @@ public class Board extends CoordinateMap<SQ> {
     private Board(ResourceBundleMap map) {
         super(SQ.class, map.size(), map.size());
 
-        Collections.copy(asList(), squares(map));
+        copy(asList(), squares(map));
     }
 
     private static List<? extends SQ> squares(ResourceBundleMap map) {
