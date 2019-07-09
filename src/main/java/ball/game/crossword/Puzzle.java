@@ -536,7 +536,7 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
     }
 
     /**
-     * {@link Puzzle} {@link Solution}
+     * {@link Puzzle} {@link Solution Solution}
      */
     public static class Solution extends ArrayList<Coordinate> {
         private static final long serialVersionUID = -2690303459401584784L;
@@ -546,7 +546,8 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
         }
 
         /**
-         * Method to get the {@link Solution} in a {@link Puzzle}.
+         * Method to get the {@link CharSequence} of a {@link Puzzle}
+         * {@link Solution Solution}. 
          *
          * @param       puzzle  The {@link Puzzle}.
          *
@@ -570,7 +571,8 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
         }
 
         /**
-         * Method to determine if {@link.this} {@link Solution} is solved.
+         * Method to determine if {@link.this} {@link Solution Solution} is
+         * solved.
          *
          * @param       puzzle  The {@link Puzzle}.
          *
