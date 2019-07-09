@@ -156,11 +156,11 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
          * Find the Coordinate groups that represent solutions.
          */
         List<CoordinateMap<Cell>> groups = new LinkedList<>();
+        Stream<CoordinateMap<Cell>> stream =
+            Stream.concat(rows().stream(), columns().stream());
 
         for (CoordinateMap<Cell> line :
-                 Stream.concat(rows().stream(),
-                               columns().stream())
-                 .collect(toList())) {
+                 (Iterable<CoordinateMap<Cell>>) stream::iterator) {
             groups.add(new CoordinateMap<Cell>(Cell.class));
 
             for (Map.Entry<Coordinate,Cell> entry : line.entrySet()) {
@@ -188,8 +188,10 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
          */
         TreeMap<Label,Solution> solutions =
             groups.stream()
-            .collect(toMap(k -> labelFor(k), v -> new Solution(v.keySet()),
-                           (v0, v1) -> v0, TreeMap::new));
+            .collect(toMap(k -> labelFor(k),
+                           v -> new Solution(v.keySet()),
+                           (v0, v1) -> v0,
+                           TreeMap::new));
 
         this.solutions.putAll(solutions);
 
@@ -441,8 +443,10 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
             .stream()
             .filter(t -> parent != null)
             .filter(t -> t.getValue() != parent.get(t.getKey()))
-            .collect(toMap(Map.Entry::getKey, Map.Entry::getValue,
-                           (v0, v1) -> v0, TreeMap::new));
+            .collect(toMap(Map.Entry::getKey,
+                           Map.Entry::getValue,
+                           (v0, v1) -> v0,
+                           TreeMap::new));
 
         return map;
     }
