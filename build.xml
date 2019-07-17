@@ -66,12 +66,20 @@
     <xd-solve file="${file}"/>
   </target>
 
+  <target name="list-providers"
+          description="--> Invokes &lt;list-providers/&gt; task."
+          depends="jar-classes">
+    <taskdef classpathref="build.classpath"
+             resource="ball/persistence/ant/defaults.properties"/>
+    <list-providers classpathref="runtime.classpath"/>
+  </target>
+
   <target name="generate-schema"
           description="--> Invokes &lt;generate-schema/&gt; task."
           depends="jar-classes">
     <taskdef classpathref="build.classpath"
              resource="ball/persistence/ant/defaults.properties"/>
-    <generate-schema classpathref="build.classpath"/>
+    <generate-schema classpathref="runtime.classpath"/>
   </target>
 
   <target name="bean-info-for"
