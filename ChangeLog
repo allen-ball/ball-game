@@ -1,3 +1,7 @@
+2019-07-17  Allen D. Ball  <ball@sol.local>
+
+	* ball.game.crossword.entity: Initial writing.
+
 2019-07-01  Allen D. Ball  <ball@sol.local>
 
 	* src/main/java/ball/game/scrabble/Bag.java:

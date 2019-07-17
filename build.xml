@@ -66,6 +66,14 @@
     <xd-solve file="${file}"/>
   </target>
 
+  <target name="generate-schema"
+          description="--> Invokes &lt;generate-schema/&gt; task."
+          depends="jar-classes">
+    <taskdef classpathref="build.classpath"
+             resource="ball/persistence/ant/defaults.properties"/>
+    <generate-schema classpathref="build.classpath"/>
+  </target>
+
   <target name="bean-info-for"
           description="--> Invokes &lt;bean-info-for/&gt; task."
           depends="jar-classes">

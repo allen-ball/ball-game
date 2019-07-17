@@ -22,7 +22,16 @@
   <dependencies verbose="true">
     <dependency>
       <groupId>ball</groupId>
+      <artifactId>ball-persistence</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>ball</groupId>
       <artifactId>ball-util</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <scope>runtime</scope>
     </dependency>
   </dependencies>
 </project>
