@@ -23,6 +23,7 @@ import static java.util.Collections.indexOfSubList;
 import static java.util.Collections.reverse;
 import static java.util.Collections.unmodifiableList;
 import static java.util.Collections.unmodifiableMap;
+import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 /**
  * Playing {@link Card}.
@@ -335,7 +336,7 @@ public class Card implements Comparable<Card> {
         private final Color color;
         private final String string;
 
-        @ConstructorProperties( { "color", "" } )
+        @ConstructorProperties({ "color", EMPTY })
         private Suit(Color color, String string) {
             this.color = color;
             this.string = string;

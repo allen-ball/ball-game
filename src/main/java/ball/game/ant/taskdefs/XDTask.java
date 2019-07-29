@@ -114,7 +114,7 @@ public abstract class XDTask extends Task implements AnnotatedAntTask,
                 Iterator<Puzzle> iterator = stream.iterator();
 
                 while (iterator.hasNext()) {
-                    log("");
+                    log(EMPTY);
 
                     Puzzle solution = iterator.next();
 
