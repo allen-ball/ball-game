@@ -99,7 +99,7 @@ public class Card implements Comparable<Card> {
 
     @Override
     public int compareTo(Card that) {
-        return COMPARATOR.compare(this, that);
+        return Objects.compare(this, that, COMPARATOR);
     }
 
     @Override
