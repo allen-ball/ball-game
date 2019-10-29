@@ -66,7 +66,7 @@ public enum Ranking implements Predicate<List<Card>> {
      *                          evaluate.
      *
      * @return  The best sorted hand as a {@link List} of {@link Card}s if
-     *          a combination mathiching {@link.this} {@link Ranking} is
+     *          a combination matching {@link.this} {@link Ranking} is
      *          found; the empty {@link List} otherwise.
      */
     public List<Card> find(Collection<Card> collection) {
