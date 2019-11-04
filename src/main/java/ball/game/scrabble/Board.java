@@ -33,7 +33,7 @@ public class Board extends CoordinateMap<SQ> {
     public Board() { this(MAP); }
 
     private Board(ResourceBundleMap map) {
-        super(SQ.class, map.size(), map.size());
+        super(map.size(), map.size());
 
         copy(asList(), squares(map));
     }

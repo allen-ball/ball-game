@@ -161,14 +161,14 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
 
         for (CoordinateMap<Cell> line :
                  (Iterable<CoordinateMap<Cell>>) stream::iterator) {
-            groups.add(new CoordinateMap<Cell>(Cell.class));
+            groups.add(new CoordinateMap<Cell>());
 
             for (Map.Entry<Coordinate,Cell> entry : line.entrySet()) {
                 if (! entry.getValue().isBlock()) {
                     groups.get(groups.size() - 1)
                         .put(entry.getKey(), entry.getValue());
                 } else {
-                    groups.add(new CoordinateMap<Cell>(Cell.class));
+                    groups.add(new CoordinateMap<Cell>());
                 }
             }
         }
@@ -249,7 +249,7 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
                    List<Coordinate> indices, Map<Label,Solution> solutions,
                    IdentityHashMap<Solution,List<Solution>> xref,
                    Map<Label,String> clues, List<String> notes) {
-        super(Cell.class);
+        super();
 
         this.parent = parent;
         this.headers = headers;
@@ -543,7 +543,7 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
      * {@link Puzzle} {@link Solution Solution}
      */
     public static class Solution extends ArrayList<Coordinate> {
-        private static final long serialVersionUID = -2690303459401584784L;
+        private static final long serialVersionUID = -146821930642639986L;
 
         private Solution(Collection<Coordinate> collection) {
             super(collection);
