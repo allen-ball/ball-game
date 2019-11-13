@@ -16,13 +16,14 @@ import java.util.TreeMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.indexOfSubList;
 import static java.util.Collections.reverse;
 import static java.util.Collections.unmodifiableList;
 import static java.util.Collections.unmodifiableMap;
+import static java.util.stream.Collectors.toList;
+import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 /**
  * Playing {@link Card}.
@@ -48,7 +49,7 @@ public class Card implements Comparable<Card> {
      * @param   suit            The {@link Card} {@link Suit}.
      * @param   rank            The {@link Card} {@link Rank}.
      */
-    @ConstructorProperties( { "suit", "rank" } )
+    @ConstructorProperties({ "suit", "rank" })
     protected Card(Suit suit, Rank rank) {
         this.rank = rank;
         this.suit = suit;
@@ -98,7 +99,7 @@ public class Card implements Comparable<Card> {
 
     @Override
     public int compareTo(Card that) {
-        return COMPARATOR.compare(this, that);
+        return Objects.compare(this, that, COMPARATOR);
     }
 
     @Override
@@ -147,7 +148,7 @@ public class Card implements Comparable<Card> {
 
     private static <T,R> List<R> listOf(Collection<T> collection,
                                         Function<T,R> mapper) {
-        return collection.stream().map(mapper).collect(Collectors.toList());
+        return collection.stream().map(mapper).collect(toList());
     }
 
     /**
@@ -335,7 +336,7 @@ public class Card implements Comparable<Card> {
         private final Color color;
         private final String string;
 
-        @ConstructorProperties( { "color", "" } )
+        @ConstructorProperties({ "color", EMPTY })
         private Suit(Color color, String string) {
             this.color = color;
             this.string = string;

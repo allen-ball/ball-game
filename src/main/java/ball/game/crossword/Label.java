@@ -37,7 +37,9 @@ public class Label implements Comparable<Label> {
     public int getIndex() { return index; }
 
     @Override
-    public int compareTo(Label that) { return COMPARATOR.compare(this, that); }
+    public int compareTo(Label that) {
+        return Objects.compare(this, that, COMPARATOR);
+    }
 
     @Override
     public boolean equals(Object object) {

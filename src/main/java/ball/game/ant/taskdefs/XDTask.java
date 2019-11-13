@@ -34,7 +34,7 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
  *
  * {@bean.info}
  *
- * @author {@link.uri mailto:ball@iprotium.com Allen D. Ball}
+ * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
 @NoArgsConstructor(access = PROTECTED)
@@ -114,7 +114,7 @@ public abstract class XDTask extends Task implements AnnotatedAntTask,
                 Iterator<Puzzle> iterator = stream.iterator();
 
                 while (iterator.hasNext()) {
-                    log("");
+                    log(EMPTY);
 
                     Puzzle solution = iterator.next();
 
