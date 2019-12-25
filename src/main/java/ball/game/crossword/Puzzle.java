@@ -618,7 +618,8 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
                                               .map(c -> parent.get(c))
                                               .anyMatch(Cell::isSolved) ? +1 : -1))
                 .thenComparingInt(t -> t.unsolved(parent).size())
-                .thenComparingInt(Solution::size).reversed();
+                .thenComparingInt(Solution::size)
+                .reversed();
 
             return comparator;
         }
