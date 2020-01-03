@@ -31,7 +31,7 @@ public class Evaluator implements Predicate<List<Card>>, Consumer<List<Card>> {
      * {@link Card} {@link Comparator}
      */
     public static final Comparator<Card> CARD =
-        Comparator.comparing(t -> t.getRank(),
+        Comparator.comparing(Card::getRank,
                              Comparators.orderedBy(Rank.ACE_HIGH));
 
     /**
