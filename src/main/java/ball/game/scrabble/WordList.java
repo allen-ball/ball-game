@@ -32,7 +32,7 @@ public abstract class WordList extends TreeSet<CharSequence> {
      */
     @ConstructorProperties({ "locale" })
     protected WordList(Locale locale) {
-        super(comparing(t -> t.toString(), String.CASE_INSENSITIVE_ORDER));
+        super(comparing(CharSequence::toString, String.CASE_INSENSITIVE_ORDER));
 
         this.locale = requireNonNull(locale);
 
