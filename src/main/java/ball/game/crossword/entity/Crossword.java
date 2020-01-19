@@ -36,26 +36,24 @@ import static javax.persistence.GenerationType.IDENTITY;
  */
 @Entity
 @Table(catalog = "crossword", name = "crossword")
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-@ToString
+@NoArgsConstructor @EqualsAndHashCode(callSuper = false) @ToString
 public class Crossword extends AbstractEntity {
     @Id @GeneratedValue(strategy = IDENTITY)
     private long id = -1;
 
-    @Getter @Setter
     @OneToMany(mappedBy = "crossword", cascade = ALL)
+    @Getter @Setter
     private List<Header> headers = new ArrayList<>();
 
-    @Getter @Setter
     @ManyToOne(fetch = LAZY)
+    @Getter @Setter
     private Grid grid = null;
 
-    @Getter @Setter
     @OneToMany(mappedBy = "crossword", cascade = ALL)
+    @Getter @Setter
     private List<Clue> clues = new ArrayList<>();
 
-    @Getter @Setter
     @Column @Lob
+    @Getter @Setter
     private String notes = null;
 }

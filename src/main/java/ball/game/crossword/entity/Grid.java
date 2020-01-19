@@ -34,29 +34,25 @@ import static javax.persistence.CascadeType.ALL;
 @Entity
 @Table(catalog = "crossword", name = "grid")
 @IdClass(Grid.PK.class)
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-@ToString
+@NoArgsConstructor @EqualsAndHashCode(callSuper = false) @ToString
 public class Grid extends AbstractEntity {
-    @Getter @Setter
     @Id @Column(nullable = false)
+    @Getter @Setter
     private int height = -1;
 
-    @Getter @Setter
     @Id @Column(nullable = false)
+    @Getter @Setter
     private int width = -1;
 
-    @Getter @Setter
     @Id @Column @Lob
+    @Getter @Setter
     private String string = null;
 
-    @Getter @Setter
     @OneToMany(mappedBy = "grid", cascade = ALL)
+    @Getter @Setter
     private List<Crossword> crosswords = new ArrayList<>();
 
-    @NoArgsConstructor
-    @EqualsAndHashCode(callSuper = false)
-    @ToString
+    @NoArgsConstructor @EqualsAndHashCode(callSuper = false) @ToString
     public static class PK {
         @Getter @Setter private int height = -1;
         @Getter @Setter private int width = -1;

@@ -32,25 +32,21 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Table(catalog = "crossword", name = "header")
 @IdClass(Header.PK.class)
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-@ToString
+@NoArgsConstructor @EqualsAndHashCode(callSuper = false) @ToString
 public class Header extends AbstractEntity {
-    @Getter @Setter
     @Id @ManyToOne(fetch = LAZY)
+    @Getter @Setter
     private Crossword crossword = null;
 
-    @Getter @Setter
     @Id @Column
+    @Getter @Setter
     private String name = null;
 
-    @Getter @Setter
     @Column @Lob
+    @Getter @Setter
     private String value = null;
 
-    @NoArgsConstructor
-    @EqualsAndHashCode(callSuper = false)
-    @ToString
+    @NoArgsConstructor @EqualsAndHashCode(callSuper = false) @ToString
     public static class PK {
         @Getter @Setter private Crossword crossword = null;
         @Getter @Setter private String name = null;

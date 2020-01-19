@@ -35,33 +35,29 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Table(catalog = "crossword", name = "clue")
 @IdClass(Clue.PK.class)
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
-@ToString
+@NoArgsConstructor @EqualsAndHashCode(callSuper = false) @ToString
 public class Clue extends AbstractEntity {
-    @Getter @Setter
     @Id @ManyToOne(fetch = LAZY)
+    @Getter @Setter
     private Crossword crossword = null;
 
-    @Getter @Setter
     @Id @Column(length = 6) @Enumerated(EnumType.STRING)
+    @Getter @Setter
     private Direction direction = null;
 
-    @Getter @Setter
     @Id @Column
+    @Getter @Setter
     private int index = -1;
 
-    @Getter @Setter
     @Column @Lob
+    @Getter @Setter
     private String text = null;
 
-    @Getter @Setter
     @Column
+    @Getter @Setter
     private String answer = null;
 
-    @NoArgsConstructor
-    @EqualsAndHashCode(callSuper = false)
-    @ToString
+    @NoArgsConstructor @EqualsAndHashCode(callSuper = false) @ToString
     public static class PK {
         @Getter @Setter private Crossword crossword = null;
         @Getter @Setter private Direction direction = null;
