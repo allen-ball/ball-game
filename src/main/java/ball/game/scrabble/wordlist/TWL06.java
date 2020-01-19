@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2019 Allen D. Ball.  All rights reserved.
+ * Copyright 2019, 2020 Allen D. Ball.  All rights reserved.
  */
 package ball.game.scrabble.wordlist;
 
@@ -9,7 +9,7 @@ import ball.game.scrabble.WordList;
 import java.util.Locale;
 
 /**
- * {@link.uri https://www.wordgamedictionary.com/twl06/download/twl06.txt TWL06 Scrabble Word List}
+ * {@link.uri https://www.wordgamedictionary.com/twl06/download/twl06.txt TWL06 Scrabble Word List}.
  *
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$

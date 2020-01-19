@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2019 Allen D. Ball.  All rights reserved.
+ * Copyright 2019, 2020 Allen D. Ball.  All rights reserved.
  */
 package ball.game.card.poker;
 
@@ -20,7 +20,7 @@ import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 /**
- * Poker hand {@link Evaluator}
+ * Poker hand {@link Evaluator}.
  *
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$

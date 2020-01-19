@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2019 Allen D. Ball.  All rights reserved.
+ * Copyright 2019, 2020 Allen D. Ball.  All rights reserved.
  */
 package ball.game.crossword.entity;
 
@@ -25,6 +25,8 @@ import lombok.ToString;
 import static javax.persistence.FetchType.LAZY;
 
 /**
+ * {@link Clue} {@link Entity}.
+ *
  * {@bean.info}
  *
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
