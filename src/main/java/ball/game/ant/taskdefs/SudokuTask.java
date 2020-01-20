@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2012 - 2019 Allen D. Ball.  All rights reserved.
+ * Copyright 2012 - 2020 Allen D. Ball.  All rights reserved.
  */
 package ball.game.ant.taskdefs;
 
@@ -120,7 +120,7 @@ public class SudokuTask extends Task implements AnnotatedAntTask,
         boolean modified = rule.applyTo(puzzle);
 
         if (modified) {
-            log(EMPTY);
+            log();
             log(rule.getClass().getCanonicalName());
             log(puzzle);
         }

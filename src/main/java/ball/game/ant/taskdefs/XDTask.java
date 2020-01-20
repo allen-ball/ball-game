@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2019 Allen D. Ball.  All rights reserved.
+ * Copyright 2019, 2020 Allen D. Ball.  All rights reserved.
  */
 package ball.game.ant.taskdefs;
 
@@ -12,6 +12,7 @@ import ball.util.ant.taskdefs.AntTask;
 import ball.util.ant.taskdefs.ClasspathDelegateAntTask;
 import ball.util.ant.taskdefs.ConfigurableAntTask;
 import ball.util.ant.taskdefs.NotNull;
+import java.io.BufferedReader;
 import java.io.File;
 import java.util.Iterator;
 import java.util.Set;
@@ -26,7 +27,6 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.util.ClasspathUtils;
 
 import static lombok.AccessLevel.PROTECTED;
-import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 /**
  * Abstract XD {@link.uri http://ant.apache.org/ Ant} {@link Task}
@@ -84,7 +84,9 @@ public abstract class XDTask extends Task implements AnnotatedAntTask,
 
                 puzzle.writeTo(ds.getPrintWriter());
 
-                log(ds);
+                try (BufferedReader reader = ds.getBufferedReader()) {
+                    log(reader.lines());
+                }
             } catch (BuildException exception) {
                 throw exception;
             } catch (Throwable throwable) {
@@ -114,7 +116,7 @@ public abstract class XDTask extends Task implements AnnotatedAntTask,
                 Iterator<Puzzle> iterator = stream.iterator();
 
                 while (iterator.hasNext()) {
-                    log(EMPTY);
+                    log();
 
                     Puzzle solution = iterator.next();
 

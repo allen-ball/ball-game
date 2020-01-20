@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2010 - 2019 Allen D. Ball.  All rights reserved.
+ * Copyright 2010 - 2020 Allen D. Ball.  All rights reserved.
  */
 package ball.game.ant.taskdefs;
 
@@ -93,7 +93,7 @@ public class LifeTask extends Task implements AnnotatedAntTask,
             Board board = new Board(game);
 
             for (;;) {
-                log(EMPTY);
+                log();
                 log("Generation #" + String.valueOf(game.size() - 1));
                 log(board);
 
