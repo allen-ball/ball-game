@@ -1,13 +1,14 @@
 /*
  * $Id$
  *
- * Copyright 2019 Allen D. Ball.  All rights reserved.
+ * Copyright 2019, 2020 Allen D. Ball.  All rights reserved.
  */
 package ball.game.crossword;
 
 import ball.util.CoordinateMap;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Stream;
 
 import static java.util.Collections.unmodifiableMap;
 
@@ -26,9 +27,8 @@ public enum Direction {
         TreeMap<String,Direction> map =
             new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
-        for (Direction direction : values()) {
-            map.put(direction.name().substring(0, 1), direction);
-        }
+        Stream.of(values())
+            .forEach(t -> map.put(t.name().substring(0, 1), t));
 
         MAP = unmodifiableMap(map);
     }

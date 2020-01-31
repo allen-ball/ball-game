@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2019 Allen D. Ball.  All rights reserved.
+ * Copyright 2019, 2020 Allen D. Ball.  All rights reserved.
  */
 package ball.game.crossword;
 
@@ -9,7 +9,7 @@ import java.util.Comparator;
 import java.util.Objects;
 
 /**
- * Crossword clue {@link Label}
+ * Crossword clue {@link Label}.
  *
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
@@ -18,7 +18,7 @@ public class Label implements Comparable<Label> {
     private static final Comparator<? super Label> COMPARATOR =
         Comparator
         .<Label>comparingInt(t -> t.direction.ordinal())
-        .thenComparingInt(t -> t.index);
+        .thenComparingInt(Label::getIndex);
 
     private final Direction direction;
     private final int index;

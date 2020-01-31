@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2019 Allen D. Ball.  All rights reserved.
+ * Copyright 2019, 2020 Allen D. Ball.  All rights reserved.
  */
 package ball.game.crossword;
 
@@ -540,7 +540,7 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
     }
 
     /**
-     * {@link Puzzle} {@link Solution Solution}
+     * {@link Puzzle} {@link Solution Solution}.
      */
     public static class Solution extends ArrayList<Coordinate> {
         private static final long serialVersionUID = -146821930642639986L;

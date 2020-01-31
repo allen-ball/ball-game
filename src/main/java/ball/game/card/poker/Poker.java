@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright 2019 Allen D. Ball.  All rights reserved.
+ * Copyright 2019, 2020 Allen D. Ball.  All rights reserved.
  */
 package ball.game.card.poker;
 
@@ -15,7 +15,7 @@ import static ball.game.card.Card.Suit.SPADES;
 import static ball.game.card.Card.Suit.DIAMONDS;
 
 /**
- * Poker-specific static fields and methods
+ * Poker-specific static fields and methods.
  *
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
