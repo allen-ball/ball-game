@@ -1,9 +1,3 @@
-/**
- * Classes for playing/analyzing chess.
- *
- * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
- */
-@Manifest.Section
 package ball.game.chess;
 /*-
  * ##########################################################################
@@ -26,4 +20,39 @@ package ball.game.chess;
  * limitations under the License.
  * ##########################################################################
  */
-import ball.annotation.Manifest;
+import lombok.Data;
+import lombok.NonNull;
+
+/**
+ * Chess {@link Piece}.
+ *
+ * {@bean.info}
+ *
+ * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
+ * @version $Revision$
+ */
+@Data
+public class Piece {
+    private static final String[][] UNICODE = {
+        /*         White,    Black   */
+        /* K */ { "\u2654", "\u265a" },
+        /* Q */ { "\u2655", "\u265b" },
+        /* R */ { "\u2656", "\u265c" },
+        /* B */ { "\u2657", "\u265d" },
+        /* N */ { "\u2658", "\u265e" },
+        /* P */ { "\u2659", "\u265f" }
+    };
+
+    @NonNull private final Rank rank;
+    @NonNull private final Color color;
+
+    @Override
+    public String toString() {
+        return UNICODE[rank.ordinal()][color.ordinal()];
+    }
+
+    /**
+     * {@link Piece} {@link Rank}.
+     */
+    public enum Rank { K, Q, R, B, N, P; }
+}

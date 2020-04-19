@@ -1,9 +1,3 @@
-/**
- * Classes for playing/analyzing chess.
- *
- * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
- */
-@Manifest.Section
 package ball.game.chess;
 /*-
  * ##########################################################################
@@ -26,4 +20,19 @@ package ball.game.chess;
  * limitations under the License.
  * ##########################################################################
  */
-import ball.annotation.Manifest;
+import ball.util.CoordinateMap;
+
+/**
+ * Chess {@link Board}.
+ *
+ * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
+ * @version $Revision$
+ */
+public class Board extends CoordinateMap<Object> {
+    private static final long serialVersionUID = -2028052224821804625L;
+
+    /**
+     * Sole public constructor.
+     */
+    public Board() { super(8, 8); }
+}
