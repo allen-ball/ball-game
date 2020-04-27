@@ -24,8 +24,7 @@ import ball.annotation.ServiceProviderFor;
 import ball.annotation.processing.AbstractAnnotationProcessor;
 import ball.annotation.processing.For;
 import java.lang.annotation.Annotation;
-import java.util.HashSet;
-import java.util.List;
+import java.util.Set;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
@@ -34,6 +33,7 @@ import javax.lang.model.element.TypeElement;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import static java.util.stream.Collectors.toSet;
 import static javax.lang.model.element.Modifier.ABSTRACT;
 import static javax.lang.model.element.Modifier.PUBLIC;
 import static javax.tools.Diagnostic.Kind.ERROR;
@@ -64,7 +64,7 @@ public class PremiumProcessor extends AbstractAnnotationProcessor {
         super.init(processingEnv);
 
         try {
-            supertype = getTypeElementFor(SQ.class);
+            supertype = asTypeElement(SQ.class);
         } catch (Exception exception) {
             print(ERROR, null, exception);
         }
@@ -76,17 +76,15 @@ public class PremiumProcessor extends AbstractAnnotationProcessor {
                         Element element) throws Exception {
         switch (element.getKind()) {
         case CLASS:
-            if (isAssignable(element.asType(), supertype.asType())) {
+            if (types.isAssignable(element.asType(), supertype.asType())) {
                 if (! element.getModifiers().contains(ABSTRACT)) {
                     if (hasPublicNoArgumentConstructor(element)) {
-                        HashSet<TypeElement> set = new HashSet<>();
-
-                        for (Class<? extends Annotation> type :
-                                 getSupportedAnnotationTypeList()) {
-                            if (element.getAnnotation(type) != null) {
-                                set.add(getTypeElementFor(type));
-                            }
-                        }
+                        Set<TypeElement> set =
+                            getSupportedAnnotationTypeList()
+                            .stream()
+                            .filter(t -> element.getAnnotation(t) != null)
+                            .map(t -> asTypeElement(t))
+                            .collect(toSet());
 
                         set.remove(annotation);
 
@@ -94,15 +92,15 @@ public class PremiumProcessor extends AbstractAnnotationProcessor {
                             print(ERROR,
                                   element,
                                   element.getKind() + " annotated with "
-                                  + AT + annotation.getSimpleName()
+                                  + "@" + annotation.getSimpleName()
                                   + " but is also annotated with "
-                                  + AT + set.iterator().next().getSimpleName());
+                                  + "@" + set.iterator().next().getSimpleName());
                         }
                     } else {
                         print(ERROR,
                               element,
                               element.getKind() + " annotated with "
-                              + AT + annotation.getSimpleName()
+                              + "@" + annotation.getSimpleName()
                               + " but does not have a " + PUBLIC
                               + " no-argument constructor");
                     }
@@ -110,14 +108,14 @@ public class PremiumProcessor extends AbstractAnnotationProcessor {
                     print(ERROR,
                           element,
                           element.getKind() + " annotated with "
-                          + AT + annotation.getSimpleName()
+                          + "@" + annotation.getSimpleName()
                           + " but is " + ABSTRACT);
                 }
             } else {
                 print(ERROR,
                       element,
                       element.getKind() + " annotated with "
-                      + AT + annotation.getSimpleName()
+                      + "@" + annotation.getSimpleName()
                       + " but is not a subclass of "
                       + supertype.getQualifiedName());
             }
