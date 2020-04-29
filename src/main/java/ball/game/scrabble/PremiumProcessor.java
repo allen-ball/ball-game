@@ -89,35 +89,29 @@ public class PremiumProcessor extends AbstractAnnotationProcessor {
                         set.remove(annotation);
 
                         if (! set.isEmpty()) {
-                            print(ERROR,
-                                  element,
-                                  element.getKind() + " annotated with "
-                                  + "@" + annotation.getSimpleName()
-                                  + " but is also annotated with "
-                                  + "@" + set.iterator().next().getSimpleName());
+                            print(ERROR, element,
+                                  "%s annotated with @%s but is also annotated with @%s",
+                                  element.getKind(),
+                                  annotation.getSimpleName(),
+                                  set.iterator().next().getSimpleName());
                         }
                     } else {
-                        print(ERROR,
-                              element,
-                              element.getKind() + " annotated with "
-                              + "@" + annotation.getSimpleName()
-                              + " but does not have a " + PUBLIC
-                              + " no-argument constructor");
+                        print(ERROR, element,
+                              "%s annotated with @%s but does not have a %s no-argument constructor",
+                              element.getKind(),
+                              annotation.getSimpleName(), PUBLIC);
                     }
                 } else {
-                    print(ERROR,
-                          element,
-                          element.getKind() + " annotated with "
-                          + "@" + annotation.getSimpleName()
-                          + " but is " + ABSTRACT);
+                    print(ERROR, element,
+                          "%s annotated with @%s but is %s",
+                          element.getKind(),
+                          annotation.getSimpleName(), ABSTRACT);
                 }
             } else {
-                print(ERROR,
-                      element,
-                      element.getKind() + " annotated with "
-                      + "@" + annotation.getSimpleName()
-                      + " but is not a subclass of "
-                      + supertype.getQualifiedName());
+                print(ERROR, element,
+                      "%s annotated with @%s but is not a subclass of %s",
+                      element.getKind(), annotation.getSimpleName(),
+                      supertype.getQualifiedName());
             }
             break;
 
