@@ -72,8 +72,7 @@ public class PremiumProcessor extends AbstractAnnotationProcessor {
 
     @Override
     public void process(RoundEnvironment roundEnv,
-                        TypeElement annotation,
-                        Element element) throws Exception {
+                        TypeElement annotation, Element element) {
         switch (element.getKind()) {
         case CLASS:
             if (types.isAssignable(element.asType(), supertype.asType())) {
