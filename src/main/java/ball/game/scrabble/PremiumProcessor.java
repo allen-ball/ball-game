@@ -23,9 +23,7 @@ package ball.game.scrabble;
 import ball.annotation.ServiceProviderFor;
 import ball.annotation.processing.AbstractAnnotationProcessor;
 import ball.annotation.processing.For;
-import java.lang.annotation.Annotation;
 import java.util.Set;
-import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Element;
@@ -35,7 +33,6 @@ import lombok.ToString;
 
 import static java.util.stream.Collectors.toSet;
 import static javax.lang.model.element.Modifier.ABSTRACT;
-import static javax.lang.model.element.Modifier.PUBLIC;
 import static javax.tools.Diagnostic.Kind.ERROR;
 
 /**
@@ -57,60 +54,33 @@ import static javax.tools.Diagnostic.Kind.ERROR;
 @For({ LetterPremium.class, WordPremium.class })
 @NoArgsConstructor @ToString
 public class PremiumProcessor extends AbstractAnnotationProcessor {
-    private TypeElement supertype = null;
-
-    @Override
-    public void init(ProcessingEnvironment processingEnv) {
-        super.init(processingEnv);
-
-        try {
-            supertype = asTypeElement(SQ.class);
-        } catch (Exception exception) {
-            print(ERROR, null, exception);
-        }
-    }
-
     @Override
     public void process(RoundEnvironment roundEnv,
                         TypeElement annotation, Element element) {
         switch (element.getKind()) {
         case CLASS:
-            if (types.isAssignable(element.asType(), supertype.asType())) {
-                if (! element.getModifiers().contains(ABSTRACT)) {
-                    if (hasPublicNoArgumentConstructor(element)) {
-                        Set<TypeElement> set =
-                            getSupportedAnnotationTypeList()
-                            .stream()
-                            .filter(t -> element.getAnnotation(t) != null)
-                            .map(t -> asTypeElement(t))
-                            .collect(toSet());
+            if (! element.getModifiers().contains(ABSTRACT)) {
+                Set<TypeElement> set =
+                    getSupportedAnnotationTypeList()
+                    .stream()
+                    .filter(t -> element.getAnnotation(t) != null)
+                    .map(t -> asTypeElement(t))
+                    .collect(toSet());
 
-                        set.remove(annotation);
+                set.remove(annotation);
 
-                        if (! set.isEmpty()) {
-                            print(ERROR, element,
-                                  "%s annotated with @%s but is also annotated with @%s",
-                                  element.getKind(),
-                                  annotation.getSimpleName(),
-                                  set.iterator().next().getSimpleName());
-                        }
-                    } else {
-                        print(ERROR, element,
-                              "%s annotated with @%s but does not have a %s no-argument constructor",
-                              element.getKind(),
-                              annotation.getSimpleName(), PUBLIC);
-                    }
-                } else {
+                if (! set.isEmpty()) {
                     print(ERROR, element,
-                          "%s annotated with @%s but is %s",
+                          "%s annotated with @%s but is also annotated with @%s",
                           element.getKind(),
-                          annotation.getSimpleName(), ABSTRACT);
+                          annotation.getSimpleName(),
+                          set.iterator().next().getSimpleName());
                 }
             } else {
                 print(ERROR, element,
-                      "%s annotated with @%s but is not a subclass of %s",
-                      element.getKind(), annotation.getSimpleName(),
-                      supertype.getQualifiedName());
+                      "%s annotated with @%s but is %s",
+                      element.getKind(),
+                      annotation.getSimpleName(), ABSTRACT);
             }
             break;
 

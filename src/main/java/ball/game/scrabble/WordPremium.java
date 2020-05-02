@@ -20,6 +20,8 @@ package ball.game.scrabble;
  * limitations under the License.
  * ##########################################################################
  */
+import ball.annotation.processing.MustExtend;
+import ball.annotation.processing.MustHaveNoArgsConstructor;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -36,6 +38,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Documented
 @Retention(RUNTIME)
 @Target({ TYPE })
+@MustExtend(SQ.class) @MustHaveNoArgsConstructor
 public @interface WordPremium {
     int value() default 1;
 }
