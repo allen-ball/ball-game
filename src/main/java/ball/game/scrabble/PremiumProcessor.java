@@ -57,6 +57,8 @@ public class PremiumProcessor extends AnnotatedProcessor {
     @Override
     public void process(RoundEnvironment roundEnv,
                         TypeElement annotation, Element element) {
+        super.process(roundEnv, annotation, element);
+
         switch (element.getKind()) {
         case CLASS:
             if (! element.getModifiers().contains(ABSTRACT)) {
