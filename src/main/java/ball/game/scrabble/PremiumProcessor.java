@@ -80,9 +80,8 @@ public class PremiumProcessor extends AnnotatedProcessor {
                 }
             } else {
                 print(ERROR, element,
-                      "%s annotated with @%s but is %s",
-                      element.getKind(),
-                      annotation.getSimpleName(), ABSTRACT);
+                      "@%s: %s is %s",
+                      annotation.getSimpleName(), element.getKind(), ABSTRACT);
             }
             break;
 
