@@ -61,7 +61,7 @@ public class PremiumProcessor extends AnnotatedProcessor {
 
         switch (element.getKind()) {
         case CLASS:
-            if (! element.getModifiers().contains(ABSTRACT)) {
+            if (withoutModifiers(ABSTRACT).test(element)) {
                 Set<TypeElement> set =
                     getSupportedAnnotationTypeList()
                     .stream()

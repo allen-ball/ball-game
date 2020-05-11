@@ -21,13 +21,14 @@ package ball.game.scrabble;
  * ##########################################################################
  */
 import ball.annotation.processing.AnnotatedTypeMustExtend;
-import ball.annotation.processing.AnnotatedTypeMustHaveNoArgsConstructor;
+import ball.annotation.processing.AnnotatedTypeMustHaveConstructor;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import static javax.lang.model.element.Modifier.PUBLIC;
 
 /**
  * {@link java.lang.annotation.Annotation} to mark premium {@link SQ}s.
@@ -38,7 +39,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Documented
 @Retention(RUNTIME)
 @Target({ TYPE })
-@AnnotatedTypeMustExtend(SQ.class) @AnnotatedTypeMustHaveNoArgsConstructor
+@AnnotatedTypeMustExtend(SQ.class)
+@AnnotatedTypeMustHaveConstructor(PUBLIC)
 public @interface LetterPremium {
     int value() default 1;
 }
