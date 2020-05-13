@@ -21,12 +21,9 @@ package ball.game.scrabble;
  * ##########################################################################
  */
 import ball.annotation.ServiceProviderFor;
-import ball.annotation.processing.AbstractAnnotationProcessor;
+import ball.annotation.processing.AnnotatedProcessor;
 import ball.annotation.processing.For;
-import java.lang.annotation.Annotation;
-import java.util.HashSet;
-import java.util.List;
-import javax.annotation.processing.ProcessingEnvironment;
+import java.util.Set;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Element;
@@ -34,8 +31,8 @@ import javax.lang.model.element.TypeElement;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import static java.util.stream.Collectors.toSet;
 import static javax.lang.model.element.Modifier.ABSTRACT;
-import static javax.lang.model.element.Modifier.PUBLIC;
 import static javax.tools.Diagnostic.Kind.ERROR;
 
 /**
@@ -56,70 +53,35 @@ import static javax.tools.Diagnostic.Kind.ERROR;
 @ServiceProviderFor({ Processor.class })
 @For({ LetterPremium.class, WordPremium.class })
 @NoArgsConstructor @ToString
-public class PremiumProcessor extends AbstractAnnotationProcessor {
-    private TypeElement supertype = null;
-
-    @Override
-    public void init(ProcessingEnvironment processingEnv) {
-        super.init(processingEnv);
-
-        try {
-            supertype = getTypeElementFor(SQ.class);
-        } catch (Exception exception) {
-            print(ERROR, null, exception);
-        }
-    }
-
+public class PremiumProcessor extends AnnotatedProcessor {
     @Override
     public void process(RoundEnvironment roundEnv,
-                        TypeElement annotation,
-                        Element element) throws Exception {
+                        TypeElement annotation, Element element) {
+        super.process(roundEnv, annotation, element);
+
         switch (element.getKind()) {
         case CLASS:
-            if (isAssignable(element.asType(), supertype.asType())) {
-                if (! element.getModifiers().contains(ABSTRACT)) {
-                    if (hasPublicNoArgumentConstructor(element)) {
-                        HashSet<TypeElement> set = new HashSet<>();
+            if (withoutModifiers(ABSTRACT).test(element)) {
+                Set<TypeElement> set =
+                    getSupportedAnnotationTypeList()
+                    .stream()
+                    .filter(t -> element.getAnnotation(t) != null)
+                    .map(t -> asTypeElement(t))
+                    .collect(toSet());
 
-                        for (Class<? extends Annotation> type :
-                                 getSupportedAnnotationTypeList()) {
-                            if (element.getAnnotation(type) != null) {
-                                set.add(getTypeElementFor(type));
-                            }
-                        }
+                set.remove(annotation);
 
-                        set.remove(annotation);
-
-                        if (! set.isEmpty()) {
-                            print(ERROR,
-                                  element,
-                                  element.getKind() + " annotated with "
-                                  + AT + annotation.getSimpleName()
-                                  + " but is also annotated with "
-                                  + AT + set.iterator().next().getSimpleName());
-                        }
-                    } else {
-                        print(ERROR,
-                              element,
-                              element.getKind() + " annotated with "
-                              + AT + annotation.getSimpleName()
-                              + " but does not have a " + PUBLIC
-                              + " no-argument constructor");
-                    }
-                } else {
-                    print(ERROR,
-                          element,
-                          element.getKind() + " annotated with "
-                          + AT + annotation.getSimpleName()
-                          + " but is " + ABSTRACT);
+                if (! set.isEmpty()) {
+                    print(ERROR, element,
+                          "%s annotated with @%s but is also annotated with @%s",
+                          element.getKind(),
+                          annotation.getSimpleName(),
+                          set.iterator().next().getSimpleName());
                 }
             } else {
-                print(ERROR,
-                      element,
-                      element.getKind() + " annotated with "
-                      + AT + annotation.getSimpleName()
-                      + " but is not a subclass of "
-                      + supertype.getQualifiedName());
+                print(ERROR, element,
+                      "@%s: %s is %s",
+                      annotation.getSimpleName(), element.getKind(), ABSTRACT);
             }
             break;
 
