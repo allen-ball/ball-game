@@ -28,12 +28,12 @@
   <description></description>
   <groupId>ball</groupId>
   <artifactId>ball-game</artifactId>
-  <version>1.5.0</version>
+  <version>1.6-SNAPSHOT</version>
   <packaging>jar</packaging>
   <parent>
     <groupId>ball</groupId>
     <artifactId>parent</artifactId>
-    <version>20200513.0</version>
+    <version>20200514-SNAPSHOT</version>
     <relativePath>../ball/parent/pom.xml</relativePath>
   </parent>
   <inceptionYear>2010</inceptionYear>
@@ -62,4 +62,22 @@
       <scope>runtime</scope>
     </dependency>
   </dependencies>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>ball</groupId>
+          <artifactId>ball-license-maven-plugin</artifactId>
+          <configuration>
+            <selections>
+              <selection>
+                <artifact>mysql:mysql-connector-java</artifact>
+                <license>GPL-2.0 WITH Universal-FOSS-exception-1.0</license>
+              </selection>
+            </selections>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
 </project>
