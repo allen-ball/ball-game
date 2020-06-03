@@ -20,8 +20,8 @@ package ball.game.scrabble;
  * limitations under the License.
  * ##########################################################################
  */
-import ball.annotation.processing.AnnotatedTypeMustExtend;
-import ball.annotation.processing.AnnotatedTypeMustHaveConstructor;
+import ball.annotation.processing.TargetMustExtend;
+import ball.annotation.processing.TargetMustHaveConstructor;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -39,8 +39,8 @@ import static javax.lang.model.element.Modifier.PUBLIC;
 @Documented
 @Retention(RUNTIME)
 @Target({ TYPE })
-@AnnotatedTypeMustExtend(SQ.class)
-@AnnotatedTypeMustHaveConstructor(PUBLIC)
+@TargetMustExtend(SQ.class)
+@TargetMustHaveConstructor(PUBLIC)
 public @interface LetterPremium {
     int value() default 1;
 }
