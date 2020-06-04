@@ -42,7 +42,7 @@
           description="--> Invokes &lt;life/&gt; task."
           depends="jar-classes">
     <taskdef classpathref="build.classpath"
-             resource="ball/game/ant/defaults.properties"/>
+             resource="ball/game/ant/antlib.xml"/>
     <life height="${height}" width="${width}" state0="${state0}"/>
   </target>
 
@@ -50,7 +50,7 @@
           description="--> Invokes &lt;poker-hand-evaluate/&gt; task."
           depends="jar-classes">
     <taskdef classpathref="build.classpath"
-             resource="ball/game/ant/defaults.properties"/>
+             resource="ball/game/ant/antlib.xml"/>
     <poker-hand-evaluate cards="${cards}"/>
   </target>
 
@@ -58,7 +58,7 @@
           description="--> Invokes &lt;scrabble-words-for/&gt; task."
           depends="jar-classes">
     <taskdef classpathref="build.classpath"
-             resource="ball/game/ant/defaults.properties"/>
+             resource="ball/game/ant/antlib.xml"/>
     <scrabble-words-for rack="${rack}"/>
   </target>
 
@@ -66,7 +66,7 @@
           description="--> Invokes &lt;sudoku/&gt; task."
           depends="jar-classes">
     <taskdef classpathref="build.classpath"
-             resource="ball/game/ant/defaults.properties"/>
+             resource="ball/game/ant/antlib.xml"/>
     <sudoku puzzle="${puzzle}"/>
   </target>
 
@@ -74,7 +74,7 @@
           description="--> Invokes &lt;xd-load/&gt; task."
           depends="jar-classes">
     <taskdef classpathref="build.classpath"
-             resource="ball/game/ant/defaults.properties"/>
+             resource="ball/game/ant/antlib.xml"/>
     <xd-load file="${file}"/>
   </target>
 
@@ -82,7 +82,7 @@
           description="--> Invokes &lt;xd-solve/&gt; task."
           depends="jar-classes">
     <taskdef classpathref="build.classpath"
-             resource="ball/game/ant/defaults.properties"/>
+             resource="ball/game/ant/antlib.xml"/>
     <xd-solve file="${file}"/>
   </target>
 
@@ -90,7 +90,7 @@
           description="--> Invokes &lt;list-providers/&gt; task."
           depends="jar-classes">
     <taskdef classpathref="build.classpath"
-             resource="ball/persistence/ant/defaults.properties"/>
+             resource="ball/persistence/ant/antlib.xml"/>
     <list-providers classpathref="runtime.classpath"/>
   </target>
 
@@ -98,7 +98,7 @@
           description="--> Invokes &lt;generate-schema/&gt; task."
           depends="jar-classes">
     <taskdef classpathref="build.classpath"
-             resource="ball/persistence/ant/defaults.properties"/>
+             resource="ball/persistence/ant/antlib.xml"/>
     <generate-schema classpathref="runtime.classpath"/>
   </target>
 
