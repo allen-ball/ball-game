@@ -53,6 +53,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
+import lombok.ToString;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Collections.copy;
@@ -75,6 +76,7 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
+@ToString
 public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
     private static final long serialVersionUID = 5580701146811926874L;
 
@@ -471,9 +473,6 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
         return new Puzzle(this);
     }
 
-    @Override
-    public String toString() { return super.toString(); }
-
     /**
      * Static method to load an
      * {@link.uri https://github.com/century-arcade/xd target=newtab .xd}
@@ -615,6 +614,7 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
         }
     }
 
+    @ToString
     private static class Solver extends DispatchSpliterator<Puzzle> {
         private final Puzzle parent;
         private final Set<CharSequence> dictionary;
@@ -686,8 +686,5 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
 
             return list.spliterator();
         }
-
-        @Override
-        public String toString() { return super.toString(); }
     }
 }

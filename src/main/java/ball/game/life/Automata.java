@@ -22,6 +22,7 @@ package ball.game.life;
  */
 import java.beans.ConstructorProperties;
 import java.math.BigInteger;
+import lombok.ToString;
 
 /**
  * Life {@link Automata}.
@@ -29,6 +30,7 @@ import java.math.BigInteger;
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
+@ToString
 public class Automata {
     private final int height;
     private final int width;
@@ -132,7 +134,4 @@ public class Automata {
         return ((0 <= y && y < height && 0 <= x && x < width)
                 && state.testBit(y * width + x));
     }
-
-    @Override
-    public String toString() { return super.toString(); }
 }
