@@ -70,7 +70,7 @@ public class Board extends CoordinateMap<SQ> {
                     String name = pkg + "." + names[i];
 
                     try {
-                        list.add((SQ) Class.forName(name).newInstance());
+                        list.add((SQ) Class.forName(name).getDeclaredConstructor().newInstance());
                     } catch (Exception exception) {
                         list.add(new SQ());
                     }
