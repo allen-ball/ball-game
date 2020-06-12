@@ -20,14 +20,17 @@ package ball.game.scrabble;
  * limitations under the License.
  * ##########################################################################
  */
-import java.beans.ConstructorProperties;
+import ball.annotation.CompileTimeCheck;
+import java.text.Collator;
+import java.util.LinkedHashSet;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.TreeSet;
-
-import static java.util.Comparator.comparing;
-import static java.util.Objects.requireNonNull;
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Abstract Word List base class.
@@ -35,41 +38,51 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
-public abstract class WordList extends TreeSet<CharSequence> {
-    private static final long serialVersionUID = 9123060041133450168L;
+public abstract class WordList extends TreeMap<CharSequence,Set<String>> {
+    private static final long serialVersionUID = -2777411476474325653L;
 
-    /** @serial */ private final Locale locale;
+    @CompileTimeCheck
+    private static final Pattern BRACKETED = Pattern.compile("\\[[^]]+\\]");
+    @CompileTimeCheck
+    private static final Pattern ALTERNATIVES = Pattern.compile("-?[\\p{Upper}]+");
 
     /**
      * Sole constructor.
      *
      * @param   locale          The {@link Locale}.
      */
-    @ConstructorProperties({ "locale" })
     protected WordList(Locale locale) {
-        super(comparing(CharSequence::toString, String.CASE_INSENSITIVE_ORDER));
-
-        this.locale = requireNonNull(locale);
+        super(Collator.getInstance(locale));
 
         ResourceBundle bundle =
-            ResourceBundle.getBundle(getClass().getName(), getLocale());
+            ResourceBundle.getBundle(getClass().getName(), locale);
 
-        bundle.keySet()
-            .stream()
-            .map(t -> t.split("#", 2)[0])
-            .map(t -> t.split(" ", 2)[0])
-            .filter(t -> isNotBlank(t))
-            .map(t -> t.trim().toUpperCase())
-            .forEach(t -> this.add(t));
+        for (String key : bundle.keySet()) {
+            String value = bundle.getString(key);
+            String root = key.toUpperCase();
+            String line = String.join(" ", root, value).trim();
+
+            add(root, line);
+
+            Matcher bracketed = BRACKETED.matcher(value);
+
+            while (bracketed.find()) {
+                Matcher alternatives = ALTERNATIVES.matcher(bracketed.group());
+
+                while (alternatives.find()) {
+                    String word = alternatives.group();
+
+                    if (word.startsWith("-")) {
+                        word = root + word.replace("-", "");
+                    }
+
+                    add(word, line);
+                }
+            }
+        }
     }
 
-    /**
-     * Method to get the {@link Locale} for this {@link WordList}.
-     *
-     * @return  The {@link Locale} for this {@link WordList}.
-     */
-    public Locale getLocale() { return locale; }
-
-    @Override
-    public CharSequence[] toArray() { return toArray(new CharSequence[] { }); }
+    private void add(String word, String source) {
+        computeIfAbsent(word, k -> new LinkedHashSet<>()).add(source);
+    }
 }

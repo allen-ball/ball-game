@@ -22,7 +22,7 @@ package ball.game.scrabble;
  */
 import ball.game.scrabble.wordlist.OWL;
 import java.util.Collections;
-import java.util.SortedSet;
+import java.util.Set;
 import lombok.NoArgsConstructor;
 
 /**
@@ -35,12 +35,12 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor
 public class Game {
-    private SortedSet<CharSequence> wordList =
-        Collections.unmodifiableSortedSet(new OWL());
+    private Set<CharSequence> wordList =
+        Collections.unmodifiableSet(new OWL().keySet());
     private Board board = new Board();
     private Bag bag = new Bag();
 
-    public SortedSet<CharSequence> getWordList() { return wordList; }
+    public Set<CharSequence> getWordList() { return wordList; }
     public Board getBoard() { return board; }
     public Bag getBag() { return bag; }
 
