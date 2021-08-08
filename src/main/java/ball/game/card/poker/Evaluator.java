@@ -25,7 +25,6 @@ import ball.game.card.Card;
 import ball.util.Comparators;
 import ball.util.stream.Combinations;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -46,8 +45,7 @@ public class Evaluator implements Predicate<List<Card>>, Consumer<List<Card>> {
      * {@link Card} {@link Comparator}
      */
     public static final Comparator<Card> CARD =
-        Comparator.comparing(Card::getRank,
-                             Comparators.orderedBy(Rank.ACE_HIGH));
+        Comparator.comparing(Card::getRank, Comparators.orderedBy(Rank.ACE_HIGH));
 
     /**
      * Hand ({@link Card} {@link List}) {@link Comparator}
@@ -61,7 +59,7 @@ public class Evaluator implements Predicate<List<Card>>, Consumer<List<Card>> {
     private final List<Card> hand;
     private final List<Ranking> orBetter;
     private Ranking ranking = Ranking.Empty;
-    private List<Card> scoring = Collections.emptyList();
+    private List<Card> scoring = List.of();
 
     /**
      * Sole public constructor.
@@ -84,10 +82,10 @@ public class Evaluator implements Predicate<List<Card>>, Consumer<List<Card>> {
         hand = new ArrayList<>(collection);
         hand.sort(CARD.reversed());
 
-        orBetter = new ArrayList<>(Arrays.asList(rankings));
+        orBetter = new ArrayList<>(List.of(rankings));
         Collections.reverse(orBetter);
 
-        int size = Math.min(5, hand.size());
+        var size = Math.min(5, hand.size());
 
         orBetter.removeIf(t -> t.required() > size);
 
@@ -128,25 +126,24 @@ public class Evaluator implements Predicate<List<Card>>, Consumer<List<Card>> {
 
     @Override
     public boolean test(List<Card> prefix) {
-        return (orBetter.stream()
-                .anyMatch(t -> t.possible().test(prefix)));
+        return orBetter.stream().anyMatch(t -> t.possible().test(prefix));
     }
 
     @Override
     public void accept(List<Card> list) {
-        Ranking ranking =
+        var ranking =
             orBetter.stream()
             .filter(t -> t.test(list))
             .findFirst().orElse(Ranking.Empty);
 
-        List<Card> scoring = list.subList(0, ranking.required());
-        int comparison = Ranking.COMPARATOR.compare(ranking, this.ranking);
+        var scoring = list.subList(0, ranking.required());
+        var comparison = Ranking.COMPARATOR.compare(ranking, this.ranking);
 
         if (comparison > 0) {
             this.ranking = ranking;
             this.scoring = scoring;
 
-            int index = orBetter.indexOf(ranking);
+            var index = orBetter.indexOf(ranking);
 
             if (! (index < 0)) {
                 orBetter.subList(index + 1, orBetter.size()).clear();

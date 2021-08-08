@@ -96,7 +96,7 @@ public abstract class CardTask extends Task
             super.execute();
 
             try {
-                Evaluator evaluator = new EvaluatorImpl(getCards());
+                var evaluator = new EvaluatorImpl(getCards());
 
                 log(String.valueOf(evaluator.getRanking())
                     + ": " + String.valueOf(evaluator.getHand()));

@@ -49,7 +49,7 @@ public class Board extends AbstractTableModelImpl {
 
     @Override
     public String getValueAt(int y, int x) {
-        Game game = game();
+        var game = game();
 
         return game.automata().get(game.getLast(), y, x) ? "+" : "-";
     }

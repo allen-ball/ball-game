@@ -42,15 +42,14 @@ public abstract class Deck extends ArrayList<Card> implements Cloneable {
         super(Card.Suit.values().length * Card.Rank.values().length);
 
         try {
-            ResourceBundle bundle =
-                ResourceBundle.getBundle(getClass().getName());
+            var bundle = ResourceBundle.getBundle(getClass().getName());
 
-            for (String key : bundle.keySet()) {
-                String value = bundle.getString(key);
+            for (var key : bundle.keySet()) {
+                var value = bundle.getString(key);
 
                 if (! StringUtils.isEmpty(value)) {
-                    for (String suit : key.split(Pattern.quote(","))) {
-                        for (String rank : value.split(Pattern.quote(","))) {
+                    for (var suit : key.split(Pattern.quote(","))) {
+                        for (var rank : value.split(Pattern.quote(","))) {
                             add(new Card(Card.Suit.parse(suit),
                                          Card.Rank.parse(rank)));
                         }

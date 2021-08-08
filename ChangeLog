@@ -1,3 +1,7 @@
+2021-08-07  Allen D. Ball  <ball@hcf.dev>
+
+	* Use Java 11 features.
+
 2021-08-03  Allen D. Ball  <ball@hcf.dev>
 
 	* pom.xml:

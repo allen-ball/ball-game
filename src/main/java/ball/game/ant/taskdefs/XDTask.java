@@ -94,12 +94,11 @@ public abstract class XDTask extends Task implements AnnotatedAntTask,
             try {
                 puzzle = Puzzle.load(getFile().getAbsolutePath());
 
-                ReaderWriterDataSource ds =
-                    new ReaderWriterDataSource(null, null);
+                var ds = new ReaderWriterDataSource(null, null);
 
                 puzzle.writeTo(ds.getPrintWriter());
 
-                try (BufferedReader reader = ds.getBufferedReader()) {
+                try (var reader = ds.getBufferedReader()) {
                     log(reader.lines());
                 }
             } catch (BuildException exception) {

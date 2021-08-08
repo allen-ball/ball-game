@@ -20,6 +20,12 @@ package ball.game.scrabble;
  * limitations under the License.
  * ##########################################################################
  */
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import static lombok.AccessLevel.PROTECTED;
+
 /**
  * Scrabble {@link Player} abstract base class.
  *
@@ -28,19 +34,10 @@ package ball.game.scrabble;
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
+@NoArgsConstructor(access = PROTECTED) @Getter @Setter
 public abstract class Player {
+    private final Rack rack = new Rack();
     private String name = getClass().getSimpleName();
-    private Rack rack = new Rack();
-
-    /**
-     * Sole constructor.
-     */
-    protected Player() { }
-
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-
-    public Rack getRack() { return rack; }
 
     @Override
     public String toString() { return rack.toString(); }

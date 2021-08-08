@@ -20,12 +20,15 @@ package ball.game.sudoku;
  * limitations under the License.
  * ##########################################################################
  */
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.stream.IntStream;
 import lombok.NoArgsConstructor;
+
+import static java.util.stream.Collectors.toCollection;
 
 /**
  * Sudoku {@link Digits}.
@@ -38,20 +41,14 @@ public class Digits extends TreeSet<Integer> {
     private static final long serialVersionUID = 3540373718233836695L;
 
     protected static final SortedSet<Integer> ALL;
-    protected static final int SUM;
 
     static {
-        TreeSet<Integer> digits = new TreeSet<>();
-        int sum = 0;
+        var all = IntStream.rangeClosed(1, 9).boxed().collect(toCollection(TreeSet::new));
 
-        for (int i = 1; i <= 9; i += 1) {
-            digits.add(i);
-            sum += i;
-        }
-
-        ALL = Collections.unmodifiableSortedSet(digits);
-        SUM = sum;
+        ALL = Collections.unmodifiableSortedSet(all);
     }
+
+    protected static final int SUM = ALL.stream().mapToInt(Integer::intValue).sum();
 
     /**
      * See {@link #addAll(Collection)}.
@@ -74,7 +71,7 @@ public class Digits extends TreeSet<Integer> {
      *          {@code false} otherwise.
      */
     public boolean removeAll(Integer... digits) {
-        return removeAll(Arrays.asList(digits));
+        return removeAll(List.of(digits));
     }
 
     /**
@@ -86,7 +83,7 @@ public class Digits extends TreeSet<Integer> {
      *          {@code false} otherwise.
      */
     public boolean retainAll(Integer... digits) {
-        return retainAll(Arrays.asList(digits));
+        return retainAll(List.of(digits));
     }
 
     @Override

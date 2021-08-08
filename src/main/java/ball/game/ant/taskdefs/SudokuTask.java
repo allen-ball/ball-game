@@ -93,9 +93,8 @@ public class SudokuTask extends Task implements AnnotatedAntTask,
         super.execute();
         AnnotatedAntTask.super.execute();
 
-        ServiceLoader<Rule> loader =
-            ServiceLoader.load(Rule.class, getClassLoader());
-        Puzzle puzzle = getPuzzle();
+        var loader = ServiceLoader.load(Rule.class, getClassLoader());
+        var puzzle = getPuzzle();
 
         try {
             log(puzzle);
@@ -105,9 +104,9 @@ public class SudokuTask extends Task implements AnnotatedAntTask,
             }
 
             while (! puzzle.isSolved()) {
-                boolean modified = false;
+                var  modified = false;
 
-                for (Rule rule : loader) {
+                for (var rule : loader) {
                     modified |= apply(rule, puzzle);
 
                     if (puzzle.isSolved()) {
@@ -132,7 +131,7 @@ public class SudokuTask extends Task implements AnnotatedAntTask,
             throw new BuildException("Illegal puzzle");
         }
 
-        boolean modified = rule.applyTo(puzzle);
+        var modified = rule.applyTo(puzzle);
 
         if (modified) {
             log();

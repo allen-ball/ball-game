@@ -85,8 +85,8 @@ public enum Ranking implements Predicate<List<Card>> {
      *          found; the empty {@link List} otherwise.
      */
     public List<Card> find(Collection<Card> collection) {
-        Evaluator evaluator = new Evaluator(collection, this);
-        List<Card> hand =
+        var evaluator = new Evaluator(collection, this);
+        var hand =
             evaluator.getScoring().isEmpty()
                 ? evaluator.getScoring()
                 : evaluator.getHand();
@@ -116,8 +116,7 @@ public enum Ranking implements Predicate<List<Card>> {
 
     @Override
     public boolean test(List<Card> list) {
-        return (list.size() >= required()
-                && is.test(subListTo(list, required())));
+        return (list.size() >= required() && is.test(subListTo(list, required())));
     }
 
     private Predicate<List<Card>> with(Predicate<List<Card>> that) {
@@ -138,8 +137,7 @@ public enum Ranking implements Predicate<List<Card>> {
     private static <T> Predicate<List<T>> holding(List<Predicate<T>> list) {
         return t -> ((list.isEmpty() || t.isEmpty())
                      || (list.get(0).test(t.get(0))
-                         && (holding(subListFrom(list, 1))
-                             .test(subListFrom(t, 1)))));
+                         && (holding(subListFrom(list, 1)).test(subListFrom(t, 1)))));
     }
 
     private static <T> List<T> subListTo(List<T> list, int to) {

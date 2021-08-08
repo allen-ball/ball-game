@@ -76,11 +76,11 @@ public class Automata {
      * @return  The next {@code state}.
      */
     public BigInteger next(BigInteger current) {
-        BigInteger next = BigInteger.ZERO;
+        var next = BigInteger.ZERO;
 
-        for (int y = 0; y < height; y += 1) {
-            for (int x = 0; x < width; x += 1) {
-                int count = 0;
+        for (var y = 0; y < height; y += 1) {
+            for (var x = 0; x < width; x += 1) {
+                var count = 0;
 
                 count += get(current, y - 1, x - 1) ? 1 : 0;
                 count += get(current, y - 1, x)     ? 1 : 0;
@@ -131,7 +131,6 @@ public class Automata {
      *          if the specified cell is "alive;" {@code false} otherwise.
      */
     public boolean get(BigInteger state, int y, int x) {
-        return ((0 <= y && y < height && 0 <= x && x < width)
-                && state.testBit(y * width + x));
+        return ((0 <= y && y < height && 0 <= x && x < width) && state.testBit(y * width + x));
     }
 }

@@ -22,12 +22,14 @@ package ball.game.scrabble;
  */
 import ball.annotation.processing.TargetMustExtend;
 import ball.annotation.processing.TargetMustHaveConstructor;
+import ball.annotation.processing.TargetMustNotHaveModifiers;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import static javax.lang.model.element.Modifier.ABSTRACT;
 import static javax.lang.model.element.Modifier.PUBLIC;
 
 /**
@@ -40,6 +42,7 @@ import static javax.lang.model.element.Modifier.PUBLIC;
 @Retention(RUNTIME)
 @Target({ TYPE })
 @TargetMustExtend(SQ.class)
+@TargetMustNotHaveModifiers({ ABSTRACT })
 @TargetMustHaveConstructor(PUBLIC)
 public @interface LetterPremium {
     int value() default 1;

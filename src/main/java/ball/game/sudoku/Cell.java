@@ -85,9 +85,9 @@ public class Cell extends Digits {
      *          {@code false} otherwise.
      */
     public boolean isIn(Iterable<?> iterable) {
-        boolean isContained = false;
+        var isContained = false;
 
-        for (Object object : iterable) {
+        for (var object : iterable) {
             isContained |= (this == object);
 
             if (isContained) {
@@ -104,7 +104,7 @@ public class Cell extends Digits {
     }
 
     private String toString(Cell cell) {
-        StringBuilder buffer = new StringBuilder();
+        var buffer = new StringBuilder();
 
         if (cell.size() == ALL.size()) {
             buffer.append(".");

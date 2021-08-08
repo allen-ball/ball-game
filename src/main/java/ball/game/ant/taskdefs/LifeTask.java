@@ -104,15 +104,15 @@ public class LifeTask extends Task implements AnnotatedAntTask,
         AnnotatedAntTask.super.execute();
 
         try {
-            Game game = new Game(getHeight(), getWidth(), getState0());
-            Board board = new Board(game);
+            var game = new Game(getHeight(), getWidth(), getState0());
+            var board = new Board(game);
 
             for (;;) {
                 log();
                 log("Generation #" + String.valueOf(game.size() - 1));
                 log(board);
 
-                BigInteger state = game.automata().next(game.getLast());
+                var state = game.automata().next(game.getLast());
 
                 if (! game.contains(state)) {
                     game.addLast(state);

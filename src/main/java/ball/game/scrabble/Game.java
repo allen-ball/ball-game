@@ -24,6 +24,8 @@ import ball.game.scrabble.wordlist.OWL;
 import java.util.Collections;
 import java.util.Set;
 import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Scrabble {@link Game}.
@@ -33,16 +35,11 @@ import lombok.NoArgsConstructor;
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
-@NoArgsConstructor
+@NoArgsConstructor @Getter @Setter
 public class Game {
-    private Set<CharSequence> wordList =
-        Collections.unmodifiableSet(new OWL().keySet());
-    private Board board = new Board();
-    private Bag bag = new Bag();
-
-    public Set<CharSequence> getWordList() { return wordList; }
-    public Board getBoard() { return board; }
-    public Bag getBag() { return bag; }
+    private final Set<CharSequence> wordList = Collections.unmodifiableSet(new OWL().keySet());
+    private final Board board = new Board();
+    private final Bag bag = new Bag();
 
     @Override
     public String toString() { return board.toString(); }

@@ -24,8 +24,10 @@ import ball.util.stream.Combinations;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Stream;
+import lombok.NoArgsConstructor;
 
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.toList;
 
 /**
  * Scrabble {@link Rack}.
@@ -35,15 +37,11 @@ import static java.util.Objects.requireNonNull;
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
  * @version $Revision$
  */
+@NoArgsConstructor
 public class Rack extends LinkedList<Tile> implements Cloneable {
     private static final long serialVersionUID = -888967675416820573L;
 
     private static final int CAPACITY = 7;
-
-    /**
-     * Sole constructor.
-     */
-    public Rack() { super(); }
 
     /**
      * Method to determine if the {@link Rack} has any remaining capacity
@@ -70,7 +68,7 @@ public class Rack extends LinkedList<Tile> implements Cloneable {
             }
         }
 
-        return new LinkedList<Tile>(subList(from, size()));
+        return subList(from, size()).stream().collect(toList());
     }
 
     /**

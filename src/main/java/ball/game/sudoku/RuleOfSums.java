@@ -21,8 +21,6 @@ package ball.game.sudoku;
  * ##########################################################################
  */
 import ball.annotation.ServiceProviderFor;
-import ball.util.CoordinateMap;
-import java.util.SortedSet;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -39,7 +37,7 @@ import lombok.ToString;
 public class RuleOfSums extends RuleOfElimination {
     @Override
     public boolean applyTo(Puzzle puzzle) {
-        boolean modified = false;
+        var modified = false;
 
         for (;;) {
             if (iterate(puzzle)) {
@@ -54,17 +52,17 @@ public class RuleOfSums extends RuleOfElimination {
     }
 
     private boolean iterate(Puzzle puzzle) {
-        boolean modified = false;
+        var modified = false;
 
-        for (Cell cell : puzzle.values()) {
+        for (var cell : puzzle.values()) {
             if (! cell.isSolved()) {
-                int max = cell.last();
+                var max = cell.last();
 
-                for (CoordinateMap<Cell> map : puzzle.subMapsOf(cell)) {
+                for (var map : puzzle.subMapsOf(cell)) {
                     max = Math.min(max, max(map.values()));
                 }
 
-                SortedSet<Integer> set = cell.tailSet(max, false);
+                var set = cell.tailSet(max, false);
 
                 modified |= (! set.isEmpty());
                 set.clear();
@@ -75,7 +73,6 @@ public class RuleOfSums extends RuleOfElimination {
     }
 
     protected int max(Iterable<Cell> iterable) {
-        return ((Digits.SUM - sum(iterable))
-                - (Digits.ALL.size() - (count(iterable) + 1)));
+        return ((Digits.SUM - sum(iterable)) - (Digits.ALL.size() - (count(iterable) + 1)));
     }
 }

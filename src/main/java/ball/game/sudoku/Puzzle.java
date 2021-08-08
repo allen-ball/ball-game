@@ -43,7 +43,7 @@ public class Puzzle extends CoordinateMap<Cell> {
     public Puzzle() {
         super();
 
-        for (Coordinate key : Coordinate.range(0, 0, 9, 9)) {
+        for (var key : Coordinate.range(0, 0, 9, 9)) {
             put(key, new Cell());
         }
 
@@ -100,7 +100,7 @@ public class Puzzle extends CoordinateMap<Cell> {
     public List<CoordinateMap<Cell>> subMapsOf(Cell cell) {
         ArrayList<CoordinateMap<Cell>> list = new ArrayList<>();
 
-        for (CoordinateMap<Cell> map : subMaps()) {
+        for (var map : subMaps()) {
             if (cell.isIn(map.values())) {
                 list.add(map);
             }
@@ -117,9 +117,9 @@ public class Puzzle extends CoordinateMap<Cell> {
      *          {@code false} otherwise.
      */
     public boolean isLegal() {
-        boolean legal = true;
+        var legal = true;
 
-        for (CoordinateMap<Cell> grid : subMaps()) {
+        for (var grid : subMaps()) {
             legal &= isLegal(grid);
         }
 
@@ -127,10 +127,10 @@ public class Puzzle extends CoordinateMap<Cell> {
     }
 
     private boolean isLegal(CoordinateMap<Cell> map) {
-        boolean legal = true;
-        Digits digits = new Digits();
+        var legal = true;
+        var digits = new Digits();
 
-        for (Cell cell : map.values()) {
+        for (var cell : map.values()) {
             if (cell.isSolved()) {
                 legal &= digits.addAll(cell);
 
@@ -151,9 +151,9 @@ public class Puzzle extends CoordinateMap<Cell> {
      *          {@code false} otherwise.
      */
     public boolean isSolved() {
-        boolean solved = isLegal();
+        var solved = isLegal();
 
-        for (Cell cell : values()) {
+        for (var cell : values()) {
             solved &= cell.isSolved();
 
             if (! solved) {

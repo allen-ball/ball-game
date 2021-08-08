@@ -20,10 +20,9 @@ package ball.game.sudoku;
  * limitations under the License.
  * ##########################################################################
  */
+import ball.annotation.ServiceProviderFor;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import ball.annotation.ServiceProviderFor;
-import ball.util.CoordinateMap;
 
 /**
  * Sudoku "rule-of-elimination" {@link Rule} implementation.  If a digit is
@@ -38,7 +37,7 @@ import ball.util.CoordinateMap;
 public class RuleOfElimination extends Rule {
     @Override
     public boolean applyTo(Puzzle puzzle) {
-        boolean modified = false;
+        var modified = false;
 
         for (;;) {
             if (iterate(puzzle)) {
@@ -52,12 +51,12 @@ public class RuleOfElimination extends Rule {
     }
 
     private boolean iterate(Puzzle puzzle) {
-        boolean modified = false;
+        var modified = false;
 
-        for (Cell cell : puzzle.values()) {
+        for (var cell : puzzle.values()) {
             if (cell.isSolved()) {
-                for (CoordinateMap<Cell> map : puzzle.subMapsOf(cell)) {
-                    for (Cell other : map.values()) {
+                for (var map : puzzle.subMapsOf(cell)) {
+                    for (var other : map.values()) {
                         if (other != cell) {
                             modified |= other.removeAll(cell);
                         }

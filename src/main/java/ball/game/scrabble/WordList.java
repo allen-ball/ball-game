@@ -24,13 +24,10 @@ import ball.annotation.CompileTimeCheck;
 import java.text.Collator;
 import java.util.LinkedHashSet;
 import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * Abstract Word List base class.
@@ -54,23 +51,22 @@ public abstract class WordList extends TreeMap<CharSequence,Set<String>> {
     protected WordList(Locale locale) {
         super(Collator.getInstance(locale));
 
-        ResourceBundle bundle =
-            ResourceBundle.getBundle(getClass().getName(), locale);
+        var bundle = ResourceBundle.getBundle(getClass().getName(), locale);
 
-        for (String key : bundle.keySet()) {
-            String value = bundle.getString(key);
-            String root = key.toUpperCase();
-            String line = String.join(" ", root, value).trim();
+        for (var key : bundle.keySet()) {
+            var value = bundle.getString(key);
+            var root = key.toUpperCase();
+            var line = String.join(" ", root, value).trim();
 
             add(root, line);
 
-            Matcher bracketed = BRACKETED.matcher(value);
+            var bracketed = BRACKETED.matcher(value);
 
             while (bracketed.find()) {
-                Matcher alternatives = ALTERNATIVES.matcher(bracketed.group());
+                var alternatives = ALTERNATIVES.matcher(bracketed.group());
 
                 while (alternatives.find()) {
-                    String word = alternatives.group();
+                    var word = alternatives.group();
 
                     if (word.startsWith("-")) {
                         word = root + word.replace("-", "");

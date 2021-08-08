@@ -142,7 +142,7 @@ public class Card implements Comparable<Card> {
         Card card = null;
 
         try {
-            String[] substrings = string.split(Pattern.quote("-"), 2);
+            var substrings = string.split(Pattern.quote("-"), 2);
 
             card =
                 new Card((substrings.length > 1)
@@ -157,12 +157,10 @@ public class Card implements Comparable<Card> {
     }
 
     private static <T> Predicate<List<T>> same(Function<T,Predicate<T>> mapper) {
-        return t -> ((! t.isEmpty())
-                     && t.stream().allMatch(mapper.apply(t.get(0))));
+        return t -> ((! t.isEmpty()) && t.stream().allMatch(mapper.apply(t.get(0))));
     }
 
-    private static <T,R> List<R> listOf(Collection<T> collection,
-                                        Function<T,R> mapper) {
+    private static <T,R> List<R> listOf(Collection<T> collection, Function<T,R> mapper) {
         return collection.stream().map(mapper).collect(toList());
     }
 
@@ -228,7 +226,7 @@ public class Card implements Comparable<Card> {
             TreeMap<String,Rank> map =
                 new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
-            for (Rank rank : values()) {
+            for (var rank : values()) {
                 map.put(rank.name(), rank);
                 map.put(rank.toString(), rank);
             }
@@ -284,7 +282,7 @@ public class Card implements Comparable<Card> {
          * @return      The {@link Rank}.
          */
         public static Rank parse(String string) {
-            Rank rank = MAP.get(string);
+            var rank = MAP.get(string);
 
             if (rank == null) {
                 rank = Enum.valueOf(Rank.class, string);
@@ -339,7 +337,7 @@ public class Card implements Comparable<Card> {
             TreeMap<String,Suit> map =
                 new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
-            for (Suit suit : values()) {
+            for (var suit : values()) {
                 map.put(suit.name(), suit);
                 map.put(suit.name().substring(0, 1), suit);
                 map.put(suit.toString(), suit);
@@ -399,7 +397,7 @@ public class Card implements Comparable<Card> {
          * @return      The {@link Suit}.
          */
         public static Suit parse(String string) {
-            Suit suit = MAP.get(string);
+            var suit = MAP.get(string);
 
             if (suit == null) {
                 suit = Enum.valueOf(Suit.class, string);

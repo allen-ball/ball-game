@@ -57,7 +57,7 @@ public enum Direction {
      * @return  The {@link Direction}.
      */
     public static Direction parse(String string) {
-        Direction direction = MAP.get(string);
+        var direction = MAP.get(string);
 
         if (direction == null) {
             direction = Enum.valueOf(Direction.class, string);

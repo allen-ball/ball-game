@@ -39,27 +39,22 @@ public enum Position {
      * @return  The {@link Position} to the left.
      */
     public static Position leftOf(Position right) {
-        Position left = null;
+        var values = values();
 
-        switch (right) {
-        case SOUTH:
-        default:
-            left = WEST;
-            break;
+        return values[(right.ordinal() + 1) % values.length];
+    }
 
-        case WEST:
-            left = NORTH;
-            break;
+    /**
+     * Method to determine the {@link Position} to the right of the argument
+     * {@link Position}.
+     *
+     * @param   left            The left {@link Position}.
+     *
+     * @return  The {@link Position} to the left.
+     */
+    public static Position rightOf(Position left) {
+        var values = values();
 
-        case NORTH:
-            left = EAST;
-            break;
-
-        case EAST:
-            left = SOUTH;
-            break;
-        }
-
-        return left;
+        return values[(left.ordinal() + values.length - 1) % values.length];
     }
 }

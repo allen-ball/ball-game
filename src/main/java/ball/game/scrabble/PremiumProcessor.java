@@ -23,7 +23,6 @@ package ball.game.scrabble;
 import ball.annotation.ServiceProviderFor;
 import ball.annotation.processing.AnnotatedProcessor;
 import ball.annotation.processing.For;
-import java.util.Set;
 import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Element;
@@ -32,7 +31,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import static java.util.stream.Collectors.toSet;
-import static javax.lang.model.element.Modifier.ABSTRACT;
 import static javax.tools.Diagnostic.Kind.ERROR;
 
 /**
@@ -61,27 +59,20 @@ public class PremiumProcessor extends AnnotatedProcessor {
 
         switch (element.getKind()) {
         case CLASS:
-            if (withoutModifiers(ABSTRACT).test(element)) {
-                Set<TypeElement> set =
-                    getSupportedAnnotationTypeList()
-                    .stream()
-                    .filter(t -> element.getAnnotation(t) != null)
-                    .map(t -> asTypeElement(t))
-                    .collect(toSet());
+            var set =
+                getSupportedAnnotationTypeList().stream()
+                .filter(t -> element.getAnnotation(t) != null)
+                .map(t -> asTypeElement(t))
+                .collect(toSet());
 
-                set.remove(annotation);
+            set.remove(annotation);
 
-                if (! set.isEmpty()) {
-                    print(ERROR, element,
-                          "%s annotated with @%s but is also annotated with @%s",
-                          element.getKind(),
-                          annotation.getSimpleName(),
-                          set.iterator().next().getSimpleName());
-                }
-            } else {
+            if (! set.isEmpty()) {
                 print(ERROR, element,
-                      "@%s: %s is %s",
-                      annotation.getSimpleName(), element.getKind(), ABSTRACT);
+                      "%s annotated with @%s but is also annotated with @%s",
+                      element.getKind(),
+                      annotation.getSimpleName(),
+                      set.iterator().next().getSimpleName());
             }
             break;
 

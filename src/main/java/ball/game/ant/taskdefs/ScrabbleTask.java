@@ -93,16 +93,16 @@ public abstract class ScrabbleTask extends Task
             super.execute();
 
             try {
-                Game game = new Game();
-                Player player = new AI();
+                var game = new Game();
+                var player = new AI();
 
-                for (char letter : getRack().toUpperCase().toCharArray()) {
+                for (var letter : getRack().toUpperCase().toCharArray()) {
                     player.getRack().add(game.getBag().draw(letter));
                 }
 
                 log(String.valueOf(player.getRack()));
 
-                LinkedHashSet<String> set =
+                var set =
                     player.getRack().combinations()
                     .map(t -> Tile.toString(t))
                     .collect(toCollection(LinkedHashSet::new));

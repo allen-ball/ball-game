@@ -40,7 +40,7 @@ import lombok.ToString;
 public class RuleOfUniqueness extends RuleOfElimination {
     @Override
     public boolean applyTo(Puzzle puzzle) {
-        boolean modified = false;
+        var modified = false;
 
         for (;;) {
             if (iterate(puzzle)) {
@@ -55,16 +55,16 @@ public class RuleOfUniqueness extends RuleOfElimination {
     }
 
     private boolean iterate(Puzzle puzzle) {
-        boolean modified = false;
+        var modified = false;
 
-        for (Cell cell : puzzle.values()) {
+        for (var cell : puzzle.values()) {
             if (! cell.isSolved()) {
                 TreeSet<Integer> set = new TreeSet<>();
 
                 for (CoordinateMap<Cell> map : puzzle.subMapsOf(cell)) {
                     TreeSet<Integer> subset = new TreeSet<>(cell);
 
-                    for (Cell other : map.values()) {
+                    for (var other : map.values()) {
                         if (other != cell) {
                             subset.removeAll(other);
                         }

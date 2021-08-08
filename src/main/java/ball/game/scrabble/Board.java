@@ -39,8 +39,7 @@ import static java.util.Collections.copy;
 public class Board extends CoordinateMap<SQ> {
     private static final long serialVersionUID = -399826193477575690L;
 
-    private static final ResourceBundleMap MAP =
-        new ResourceBundleMap(Board.class);
+    private static final ResourceBundleMap MAP = new ResourceBundleMap(Board.class);
 
     /**
      * Sole public constructor.
@@ -57,17 +56,17 @@ public class Board extends CoordinateMap<SQ> {
         ArrayList<SQ> list = null;
 
         try {
-            int n = map.size();
+            var n = map.size();
 
             list = new ArrayList<SQ>(n * n);
 
-            String pkg = SQ.class.getPackage().getName();
+            var pkg = SQ.class.getPackage().getName();
 
             for (String value : map.values()) {
-                String[] names = value.split("[\\p{Space}]+", n);
+                var names = value.split("[\\p{Space}]+", n);
 
                 for (int i = 0; i < n; i += 1) {
-                    String name = pkg + "." + names[i];
+                    var name = pkg + "." + names[i];
 
                     try {
                         list.add((SQ) Class.forName(name).getDeclaredConstructor().newInstance());

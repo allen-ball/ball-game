@@ -52,9 +52,9 @@ public abstract class Rule {
      * @return  The count of solved {@link Cell}s.
      */
     protected int count(Iterable<Cell> iterable) {
-        int count = 0;
+        var count = 0;
 
-        for (Cell cell : iterable) {
+        for (var cell : iterable) {
             if (cell.isSolved()) {
                 count += 1;
             }
@@ -71,9 +71,9 @@ public abstract class Rule {
      * @return  The sum of solved {@link Cell}s.
      */
     protected int sum(Iterable<Cell> iterable) {
-        int sum = 0;
+        var sum = 0;
 
-        for (Cell cell : iterable) {
+        for (var cell : iterable) {
             if (cell.isSolved()) {
                 sum += cell.solution();
             }
@@ -90,11 +90,11 @@ public abstract class Rule {
      * @return  The solved {@link Digits}.
      */
     protected Digits solved(Iterable<Cell> iterable) {
-        Digits digits = new Digits();
+        var digits = new Digits();
 
         digits.clear();
 
-        for (Cell cell : iterable) {
+        for (var cell : iterable) {
             if (cell.isSolved()) {
                 digits.addAll(cell);
             }

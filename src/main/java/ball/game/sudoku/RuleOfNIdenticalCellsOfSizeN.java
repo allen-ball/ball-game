@@ -21,7 +21,6 @@ package ball.game.sudoku;
  * ##########################################################################
  */
 import ball.annotation.ServiceProviderFor;
-import ball.util.CoordinateMap;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -60,13 +59,13 @@ public class RuleOfNIdenticalCellsOfSizeN extends RuleOfElimination {
     }
 
     private boolean iterate(Puzzle puzzle) {
-        boolean modified = false;
+        var modified = false;
 
-        for (Cell cell : puzzle.values()) {
+        for (var cell : puzzle.values()) {
             if (! cell.isSolved()) {
-                for (CoordinateMap<Cell> map : puzzle.subMapsOf(cell)) {
+                for (var map : puzzle.subMapsOf(cell)) {
                     if (frequency(map.values(), cell) == cell.size()) {
-                        for (Cell other : map.values()) {
+                        for (var other : map.values()) {
                             if (! other.equals(cell)) {
                                 modified |= other.removeAll(cell);
                             }

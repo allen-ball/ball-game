@@ -62,7 +62,7 @@ public class Bag extends LinkedList<Tile> implements Cloneable {
         frequencies = unmodifiableSortedMap(new Frequencies());
         points = unmodifiableSortedMap(new Points());
 
-        for (Character key : frequencies.keySet()) {
+        for (var key : frequencies.keySet()) {
             for (int i = 0, n = frequencies.get(key); i < n; i += 1) {
                 add(new Tile(key, points.get(key)));
             }
@@ -134,10 +134,9 @@ public class Bag extends LinkedList<Tile> implements Cloneable {
         protected MapImpl() { super(); }
 
         protected void load(String name) {
-            ResourceBundle bundle =
-                ResourceBundle.getBundle(name, getLocale());
+            var bundle = ResourceBundle.getBundle(name, getLocale());
 
-            for (String key : bundle.keySet()) {
+            for (var key : bundle.keySet()) {
                 put(key.charAt(0), Integer.valueOf(bundle.getString(key)));
             }
         }
