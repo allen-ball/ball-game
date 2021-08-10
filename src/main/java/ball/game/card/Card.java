@@ -32,7 +32,6 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
-import static java.util.Arrays.asList;
 import static java.util.Collections.indexOfSubList;
 import static java.util.Collections.reverse;
 import static java.util.Collections.unmodifiableList;
@@ -208,23 +207,21 @@ public class Card implements Comparable<Card> {
          * {@include #ACE_HIGH}
          */
         public static final List<Rank> ACE_HIGH  =
-            unmodifiableList(asList(JOKER,
-                                    TWO, THREE, FOUR, FIVE,
-                                    SIX, SEVEN, EIGHT, NINE,
-                                    TEN, JACK, QUEEN, KING, ACE));
+            List.of(JOKER,
+                    TWO, THREE, FOUR, FIVE,
+                    SIX, SEVEN, EIGHT, NINE,
+                    TEN, JACK, QUEEN, KING, ACE);
 
         /**
          * {@include #ACE_LOW}
          */
-        public static final List<Rank> ACE_LOW =
-            unmodifiableList(asList(values()));
+        public static final List<Rank> ACE_LOW = List.of(values());
 
         private static final Map<String,Rank> MAP;
         private static final List<List<Rank>> SEQUENCES;
 
         static {
-            TreeMap<String,Rank> map =
-                new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+            var map = new TreeMap<String,Rank>(String.CASE_INSENSITIVE_ORDER);
 
             for (var rank : values()) {
                 map.put(rank.name(), rank);
@@ -233,15 +230,13 @@ public class Card implements Comparable<Card> {
 
             MAP = unmodifiableMap(map);
 
-            List<Rank> high = new ArrayList<>(Rank.ACE_HIGH);
-            List<Rank> low = new ArrayList<>(Rank.ACE_LOW);
+            var high = new ArrayList<Rank>(Rank.ACE_HIGH);
+            var low = new ArrayList<Rank>(Rank.ACE_LOW);
 
             reverse(high);
             reverse(low);
 
-            SEQUENCES =
-                unmodifiableList(asList(unmodifiableList(high),
-                                        unmodifiableList(low)));
+            SEQUENCES = List.of(unmodifiableList(high), unmodifiableList(low));
         }
 
         /**
@@ -257,8 +252,7 @@ public class Card implements Comparable<Card> {
             t -> ((! t.isEmpty()) && sequence(listOf(t, Card::getRank)));
 
         private static boolean sequence(List<Rank> list) {
-            return (SEQUENCES.stream()
-                    .anyMatch(t -> indexOfSubList(t, list) >= 0));
+            return SEQUENCES.stream().anyMatch(t -> indexOfSubList(t, list) >= 0);
         }
 
         /**
@@ -334,8 +328,7 @@ public class Card implements Comparable<Card> {
         private static final Map<String,Suit> MAP;
 
         static {
-            TreeMap<String,Suit> map =
-                new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+            var map = new TreeMap<String,Suit>(String.CASE_INSENSITIVE_ORDER);
 
             for (var suit : values()) {
                 map.put(suit.name(), suit);
