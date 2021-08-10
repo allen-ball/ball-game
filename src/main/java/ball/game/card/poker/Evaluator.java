@@ -21,8 +21,9 @@ package ball.game.card.poker;
  * ##########################################################################
  */
 import ball.game.card.Card.Rank;
+import ball.game.card.Card.Suit;
 import ball.game.card.Card;
-import ball.util.Comparators;
+import ball.util.ListOrderComparator;
 import ball.util.stream.Combinations;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,13 +43,15 @@ import java.util.stream.IntStream;
 public class Evaluator implements Predicate<List<Card>>, Consumer<List<Card>> {
 
     /**
-     * {@link Card} {@link Comparator}
+     * {@link Card} {@link Comparator}.
      */
     public static final Comparator<Card> CARD =
-        Comparator.comparing(Card::getRank, Comparators.orderedBy(Rank.ACE_HIGH));
+        Comparator
+        .comparing(Card::getRank, new ListOrderComparator<>(Rank.ACE_HIGH))
+        .thenComparing(Card::getSuit, new ListOrderComparator<>(Suit.values()));
 
     /**
-     * Hand ({@link Card} {@link List}) {@link Comparator}
+     * Hand ({@link Card} {@link List}) {@link Comparator}.
      */
     public static final Comparator<List<Card>> HAND =
         (l, r) -> (IntStream.range(0, Math.min(l.size(), r.size()))

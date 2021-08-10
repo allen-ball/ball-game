@@ -24,7 +24,7 @@ import ball.game.card.Card.Rank;
 import ball.game.card.Card.Suit;
 import ball.game.card.Card;
 import ball.util.Comparators;
-import java.util.Arrays;
+import ball.util.ListOrderComparator;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -152,6 +152,5 @@ public enum Ranking implements Predicate<List<Card>> {
      * {@link Comparator} that orders {@link Ranking}s weakest to
      * strongest.
      */
-    public static Comparator<Ranking> COMPARATOR =
-        Comparators.orderedBy(Arrays.asList(values()));
+    public static Comparator<Ranking> COMPARATOR = new ListOrderComparator<>(values());
 }
