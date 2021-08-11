@@ -468,7 +468,7 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
     /**
      * Static method to load an
      * {@link.uri https://github.com/century-arcade/xd target=newtab .xd}
-     * resource or {@link File} into a {@link Puzzle}.
+     * resource or {@link FileInputStream File} into a {@link Puzzle}.
      *
      * @param   path            The resource path.
      *
