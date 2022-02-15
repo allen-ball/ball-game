@@ -2,10 +2,8 @@ package ball.game.card;
 /*-
  * ##########################################################################
  * Game Applications and Utilities
- * $Id$
- * $HeadURL$
  * %%
- * Copyright (C) 2010 - 2021 Allen D. Ball
+ * Copyright (C) 2010 - 2022 Allen D. Ball
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,7 +43,6 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
  * {@bean.info}
  *
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
- * @version $Revision$
  */
 public class Card implements Comparable<Card> {
     private static final Comparator<? super Card> COMPARATOR =
@@ -70,8 +67,7 @@ public class Card implements Comparable<Card> {
 
         if (rank.equals(Rank.JOKER)) {
             if (suit != null) {
-                throw new IllegalArgumentException("suit=" + suit +
-                                                   ",rank=" + rank);
+                throw new IllegalArgumentException("suit=" + suit + ",rank=" + rank);
             }
         }
 
@@ -118,9 +114,7 @@ public class Card implements Comparable<Card> {
 
     @Override
     public boolean equals(Object object) {
-        return ((object instanceof Card)
-                    ? (this.compareTo((Card) object) == 0)
-                    : super.equals(object));
+        return ((object instanceof Card) ? (this.compareTo((Card) object) == 0) : super.equals(object));
     }
 
     @Override
@@ -144,9 +138,7 @@ public class Card implements Comparable<Card> {
             var substrings = string.split(Pattern.quote("-"), 2);
 
             card =
-                new Card((substrings.length > 1)
-                             ? Suit.parse(substrings[1])
-                             : null,
+                new Card((substrings.length > 1) ? Suit.parse(substrings[1]) : null,
                          Rank.parse(substrings[0]));
         } catch (Exception exception) {
             throw new IllegalArgumentException(string, exception);

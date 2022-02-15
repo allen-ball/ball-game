@@ -2,10 +2,8 @@ package ball.game.crossword;
 /*-
  * ##########################################################################
  * Game Applications and Utilities
- * $Id$
- * $HeadURL$
  * %%
- * Copyright (C) 2010 - 2021 Allen D. Ball
+ * Copyright (C) 2010 - 2022 Allen D. Ball
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +31,6 @@ import static java.lang.Character.toUpperCase;
  * Crossword {@link Puzzle} {@link Cell}.
  *
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
- * @version $Revision$
  */
 public class Cell implements Cloneable {
     private static final Block BLOCK = new Block();
@@ -102,8 +99,7 @@ public class Cell implements Cloneable {
 
         default:
             if (isLetter(character)) {
-                cell =
-                    new Cell(isLowerCase(character), toUpperCase(character));
+                cell = new Cell(isLowerCase(character), toUpperCase(character));
             } else if (isDigit(character)) {
                 cell = new Cell(false, character);
             } else {

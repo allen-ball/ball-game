@@ -2,10 +2,8 @@ package ball.game.crossword;
 /*-
  * ##########################################################################
  * Game Applications and Utilities
- * $Id$
- * $HeadURL$
  * %%
- * Copyright (C) 2010 - 2021 Allen D. Ball
+ * Copyright (C) 2010 - 2022 Allen D. Ball
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +25,6 @@ import java.util.Objects;
  * Crossword clue {@link Label}.
  *
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
- * @version $Revision$
  */
 public class Label implements Comparable<Label> {
     private static final Comparator<? super Label> COMPARATOR =
@@ -58,9 +55,7 @@ public class Label implements Comparable<Label> {
 
     @Override
     public boolean equals(Object object) {
-        return ((object instanceof Label)
-                ? (this.compareTo((Label) object) == 0)
-                : super.equals(object));
+        return ((object instanceof Label) ? (this.compareTo((Label) object) == 0) : super.equals(object));
     }
 
     @Override
@@ -68,12 +63,10 @@ public class Label implements Comparable<Label> {
 
     @Override
     public String toString() {
-        return (getDirection().toString().substring(0, 1)
-                + String.valueOf(index));
+        return (getDirection().toString().substring(0, 1) + String.valueOf(index));
     }
 
     public static Label parse(String string) {
-        return new Label(Direction.parse(string.substring(0, 1)),
-                         Integer.parseInt(string.substring(1)));
+        return new Label(Direction.parse(string.substring(0, 1)), Integer.parseInt(string.substring(1)));
     }
 }

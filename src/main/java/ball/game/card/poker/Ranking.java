@@ -2,10 +2,8 @@ package ball.game.card.poker;
 /*-
  * ##########################################################################
  * Game Applications and Utilities
- * $Id$
- * $HeadURL$
  * %%
- * Copyright (C) 2010 - 2021 Allen D. Ball
+ * Copyright (C) 2010 - 2022 Allen D. Ball
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,7 +40,6 @@ import static ball.game.card.Card.Rank.SEQUENCE;
  * Poker hand {@link Ranking} {@link Enum} and {@link Predicate}.
  *
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
- * @version $Revision$
  */
 public enum Ranking implements Predicate<List<Card>> {
     Empty(0, null, Collection::isEmpty),
@@ -66,8 +63,7 @@ public enum Ranking implements Predicate<List<Card>> {
     private final Predicate<List<Card>> possible;
     private final Predicate<List<Card>> is;
 
-    private Ranking(int required,
-                    Predicate<List<Card>> possible, Predicate<List<Card>> is) {
+    private Ranking(int required, Predicate<List<Card>> possible, Predicate<List<Card>> is) {
         this.required = required;
         this.possible = possible;
         this.is = Objects.requireNonNull(is);
@@ -86,10 +82,7 @@ public enum Ranking implements Predicate<List<Card>> {
      */
     public List<Card> find(Collection<Card> collection) {
         var evaluator = new Evaluator(collection, this);
-        var hand =
-            evaluator.getScoring().isEmpty()
-                ? evaluator.getScoring()
-                : evaluator.getHand();
+        var hand = evaluator.getScoring().isEmpty() ? evaluator.getScoring() : evaluator.getHand();
 
         return hand;
     }
@@ -110,8 +103,7 @@ public enum Ranking implements Predicate<List<Card>> {
      *          otherwise.
      */
     public Predicate<List<Card>> possible() {
-        return t -> (possible == null
-                     || possible.test(subListTo(t, required())));
+        return t -> (possible == null || possible.test(subListTo(t, required())));
     }
 
     @Override
@@ -123,8 +115,7 @@ public enum Ranking implements Predicate<List<Card>> {
         return t -> test(t) && that.test(subListFrom(t, required()));
     }
 
-    private static <T> Predicate<List<T>> holding(int count,
-                                                  Predicate<List<T>> predicate) {
+    private static <T> Predicate<List<T>> holding(int count, Predicate<List<T>> predicate) {
         return t -> (t.isEmpty() || predicate.test(subListTo(t, count)));
     }
 
@@ -136,8 +127,7 @@ public enum Ranking implements Predicate<List<Card>> {
 
     private static <T> Predicate<List<T>> holding(List<Predicate<T>> list) {
         return t -> ((list.isEmpty() || t.isEmpty())
-                     || (list.get(0).test(t.get(0))
-                         && (holding(subListFrom(list, 1)).test(subListFrom(t, 1)))));
+                     || (list.get(0).test(t.get(0)) && (holding(subListFrom(list, 1)).test(subListFrom(t, 1)))));
     }
 
     private static <T> List<T> subListTo(List<T> list, int to) {

@@ -2,10 +2,8 @@ package ball.game.sudoku;
 /*-
  * ##########################################################################
  * Game Applications and Utilities
- * $Id$
- * $HeadURL$
  * %%
- * Copyright (C) 2010 - 2021 Allen D. Ball
+ * Copyright (C) 2010 - 2022 Allen D. Ball
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +28,6 @@ import java.util.List;
  * Sudoku {@link Puzzle}.
  *
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
- * @version $Revision$
  */
 public class Puzzle extends CoordinateMap<Cell> {
     private static final long serialVersionUID = -4650945638478115982L;

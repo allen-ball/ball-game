@@ -2,10 +2,8 @@ package ball.game.crossword;
 /*-
  * ##########################################################################
  * Game Applications and Utilities
- * $Id$
- * $HeadURL$
  * %%
- * Copyright (C) 2010 - 2021 Allen D. Ball
+ * Copyright (C) 2010 - 2022 Allen D. Ball
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -71,7 +69,6 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
  * Crossword {@link Puzzle}.
  *
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
- * @version $Revision$
  */
 @ToString
 public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
@@ -143,8 +140,7 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
      * @param   clues           The {@link List} of clue {@link String}s.
      * @param   notes           The {@link List} of note {@link String}s.
      */
-    private Puzzle(List<String> headers, List<String> grid,
-                   List<String> clues, List<String> notes) {
+    private Puzzle(List<String> headers, List<String> grid, List<String> clues, List<String> notes) {
         this(null,
              new OrderedHeaders(headers),
              new ArrayList<>(), new TreeMap<>(), new IdentityHashMap<>(),
@@ -157,9 +153,7 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
 
             if ((getColumnCount() * getRowCount()) > 0) {
                 if (getColumnCount() != row.size()) {
-                    throw new IllegalArgumentException(line + " does not have "
-                                                       + getColumnCount()
-                                                       + " columns");
+                    throw new IllegalArgumentException(line + " does not have " + getColumnCount() + " columns");
                 }
             }
 
@@ -200,10 +194,7 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
          */
         var solutions =
             groups.stream()
-            .collect(toMap(k -> labelFor(k),
-                           v -> new Solution(v.keySet()),
-                           (v0, v1) -> v0,
-                           TreeMap::new));
+            .collect(toMap(k -> labelFor(k), v -> new Solution(v.keySet()), (v0, v1) -> v0, TreeMap::new));
 
         this.solutions.putAll(solutions);
 
@@ -233,8 +224,7 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
         labels.removeAll(this.solutions.keySet());
 
         for (var label : labels) {
-            throw new IllegalArgumentException("`" + label
-                                               + "' not found in grid'");
+            throw new IllegalArgumentException("`" + label + "' not found in grid'");
         }
 
         for (Map.Entry<Label,String> entry : this.clues.entrySet()) {
@@ -244,23 +234,16 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
                 entry.setValue(strings[0].trim());
 
                 if (isNotBlank(strings[1])) {
-                    solutions
-                        .get(entry.getKey())
-                        .setSolution(this, strings[1].trim());
+                    solutions.get(entry.getKey()).setSolution(this, strings[1].trim());
                 }
             }
         }
 
-        this.solutions.keySet()
-            .stream()
+        this.solutions.keySet().stream()
             .forEach(t -> this.clues.computeIfAbsent(t, k -> "TBD"));
     }
 
-    private Puzzle(Puzzle parent,
-                   Map<String,String> headers,
-                   List<Coordinate> indices, Map<Label,Solution> solutions,
-                   IdentityHashMap<Solution,List<Solution>> xref,
-                   Map<Label,String> clues, List<String> notes) {
+    private Puzzle(Puzzle parent, Map<String,String> headers, List<Coordinate> indices, Map<Label,Solution> solutions, IdentityHashMap<Solution,List<Solution>> xref, Map<Label,String> clues, List<String> notes) {
         super();
 
         this.parent = parent;
@@ -273,8 +256,7 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
     }
 
     private Label labelFor(CoordinateMap<Cell> map) {
-        return new Label(Direction.of(map),
-                         indices.indexOf(map.firstKey()) + 1);
+        return new Label(Direction.of(map), indices.indexOf(map.firstKey()) + 1);
     }
 
     /**
@@ -333,11 +315,8 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
             cell.setSolution(character);
         } else {
             if (! character.equals(cell.getSolution())) {
-                throw new IllegalArgumentException(coordinate.toString()
-                                                   + ": "
-                                                   + cell.toString()
-                                                   + " -> "
-                                                   + character.toString());
+                throw new IllegalArgumentException(coordinate.toString() + ": " + cell.toString()
+                                                   + " -> " + character.toString());
             }
         }
     }
@@ -375,9 +354,7 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
      * @throws  IOException     If the {@link Puzzle} cannot be written.
      */
     public void writeTo(Writer out) throws IOException {
-        writeTo((out instanceof PrintWriter)
-                    ? ((PrintWriter) out)
-                    : new PrintWriter(out));
+        writeTo((out instanceof PrintWriter) ? ((PrintWriter) out) : new PrintWriter(out));
     }
 
     /**
@@ -418,10 +395,8 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
 
             last = entry.getKey().getDirection();
 
-            out.println(entry.getKey().toString() + DOT
-                        + SPACE + entry.getValue()
-                        + SPACE + TILDE + SPACE
-                        + solutions.get(entry.getKey()).getSolution(this));
+            out.println(entry.getKey().toString() + DOT + SPACE + entry.getValue()
+                        + SPACE + TILDE + SPACE + solutions.get(entry.getKey()).getSolution(this));
         }
 
         if (! notes.isEmpty()) {
@@ -452,10 +427,7 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
             entrySet().stream()
             .filter(t -> parent != null)
             .filter(t -> t.getValue() != parent.get(t.getKey()))
-            .collect(toMap(Map.Entry::getKey,
-                           Map.Entry::getValue,
-                           (v0, v1) -> v0,
-                           TreeMap::new));
+            .collect(toMap(Map.Entry::getKey, Map.Entry::getValue, (v0, v1) -> v0, TreeMap::new));
 
         return map;
     }
@@ -488,8 +460,7 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
             }
 
             var lines =
-                new BufferedReader(new InputStreamReader(in, UTF_8))
-                .lines()
+                new BufferedReader(new InputStreamReader(in, UTF_8)).lines()
                 .map(t -> t.trim())
                 .collect(toList());
             TreeMap<Integer,List<String>> sections = new TreeMap<>();
@@ -506,9 +477,7 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
                 }
             }
 
-            puzzle =
-                new Puzzle(sections.get(0), sections.get(1),
-                           sections.get(2), sections.get(3));
+            puzzle = new Puzzle(sections.get(0), sections.get(1), sections.get(2), sections.get(3));
         } catch (UncheckedIOException exception) {
             throw exception.getCause();
         } finally {
@@ -536,8 +505,7 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
                     .filter(t -> isNotBlank(t))
                     .map(t -> t.split(Pattern.quote(COLON), 2))
                     .filter(t -> isNotBlank(t[0]))
-                    .forEach(t -> put(t[0].trim(),
-                                      (t.length > 1) ? t[1].trim() : EMPTY));
+                    .forEach(t -> put(t[0].trim(), (t.length > 1) ? t[1].trim() : EMPTY));
             }
 
             values().removeIf(t -> isBlank(t));
@@ -556,7 +524,7 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
 
         /**
          * Method to get the {@link CharSequence} of a {@link Puzzle}
-         * {@link Solution Solution}. 
+         * {@link Solution Solution}.
          *
          * @param       puzzle  The {@link Puzzle}.
          *
@@ -634,8 +602,7 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
         protected Spliterator<Supplier<Spliterator<Puzzle>>> spliterators() {
             List<Supplier<Spliterator<Puzzle>>> list = new LinkedList<>();
             var solution =
-                parent.solutions().values()
-                .stream()
+                parent.solutions().values().stream()
                 .filter(t -> (! t.isSolved(parent)))
                 .sorted(prioritization())
                 .findFirst().orElse(null);
@@ -647,8 +614,7 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
                     .filter(t -> pattern.matcher(t).matches())
                     .collect(toList());
                 var used =
-                    parent.solutions().values()
-                    .stream()
+                    parent.solutions().values().stream()
                     .filter(t -> t.isSolved(parent))
                     .map(t -> t.getSolution(parent))
                     .collect(toList());
@@ -659,8 +625,7 @@ public class Puzzle extends CoordinateMap<Cell> implements Cloneable {
                     var child = new Puzzle(parent, solution, sequence);
                     var changed = child.changed().keySet();
                     var verified =
-                        child.xref.get(solution)
-                        .stream()
+                        child.xref.get(solution).stream()
                         .filter(t -> (! disjoint(t, changed)))
                         .filter(t -> t.isSolved(child))
                         .allMatch(t -> dictionary.contains(t.getSolution(child)));

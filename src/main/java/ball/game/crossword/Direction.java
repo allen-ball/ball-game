@@ -2,10 +2,8 @@ package ball.game.crossword;
 /*-
  * ##########################################################################
  * Game Applications and Utilities
- * $Id$
- * $HeadURL$
  * %%
- * Copyright (C) 2010 - 2021 Allen D. Ball
+ * Copyright (C) 2010 - 2022 Allen D. Ball
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +29,6 @@ import static java.util.Collections.unmodifiableMap;
  * Crossword clue {@link Direction}.
  *
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
- * @version $Revision$
  */
 public enum Direction {
     ACROSS, DOWN;
@@ -39,8 +36,7 @@ public enum Direction {
     private static final Map<String,Direction> MAP;
 
     static {
-        TreeMap<String,Direction> map =
-            new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+        TreeMap<String,Direction> map = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
         Stream.of(values())
             .forEach(t -> map.put(t.name().substring(0, 1), t));

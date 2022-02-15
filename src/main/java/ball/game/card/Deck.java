@@ -2,10 +2,8 @@ package ball.game.card;
 /*-
  * ##########################################################################
  * Game Applications and Utilities
- * $Id$
- * $HeadURL$
  * %%
- * Copyright (C) 2010 - 2021 Allen D. Ball
+ * Copyright (C) 2010 - 2022 Allen D. Ball
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +28,6 @@ import org.apache.commons.lang3.StringUtils;
  * {@link Card} deck.
  *
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
- * @version $Revision$
  */
 public abstract class Deck extends ArrayList<Card> implements Cloneable {
     private static final long serialVersionUID = -1376087186450102030L;
@@ -50,8 +47,7 @@ public abstract class Deck extends ArrayList<Card> implements Cloneable {
                 if (! StringUtils.isEmpty(value)) {
                     for (var suit : key.split(Pattern.quote(","))) {
                         for (var rank : value.split(Pattern.quote(","))) {
-                            add(new Card(Card.Suit.parse(suit),
-                                         Card.Rank.parse(rank)));
+                            add(new Card(Card.Suit.parse(suit), Card.Rank.parse(rank)));
                         }
                     }
                 } else {

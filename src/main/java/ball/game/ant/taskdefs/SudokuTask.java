@@ -2,10 +2,8 @@ package ball.game.ant.taskdefs;
 /*-
  * ##########################################################################
  * Game Applications and Utilities
- * $Id$
- * $HeadURL$
  * %%
- * Copyright (C) 2010 - 2021 Allen D. Ball
+ * Copyright (C) 2010 - 2022 Allen D. Ball
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,13 +44,10 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
  * {@ant.task}
  *
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
- * @version $Revision$
  */
 @AntTask("sudoku")
 @NoArgsConstructor @ToString
-public class SudokuTask extends Task implements AnnotatedAntTask,
-                                                ClasspathDelegateAntTask,
-                                                ConfigurableAntTask {
+public class SudokuTask extends Task implements AnnotatedAntTask, ClasspathDelegateAntTask, ConfigurableAntTask {
     @Getter @Setter @Accessors(chain = true, fluent = true)
     private ClasspathUtils.Delegate delegate = null;
     private final Puzzle puzzle = new Puzzle();

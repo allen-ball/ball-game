@@ -2,10 +2,8 @@ package ball.game.scrabble;
 /*-
  * ##########################################################################
  * Game Applications and Utilities
- * $Id$
- * $HeadURL$
  * %%
- * Copyright (C) 2010 - 2021 Allen D. Ball
+ * Copyright (C) 2010 - 2022 Allen D. Ball
  * %%
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +26,6 @@ import static java.util.Objects.requireNonNull;
  * {@bean.info}
  *
  * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}
- * @version $Revision$
  */
 public class SQ {
     private final int letterPremium;
@@ -51,8 +48,7 @@ public class SQ {
      */
     protected SQ(String string) {
         if (getClass().getAnnotation(LetterPremium.class) != null) {
-            letterPremium =
-                getClass().getAnnotation(LetterPremium.class).value();
+            letterPremium = getClass().getAnnotation(LetterPremium.class).value();
         } else {
             letterPremium = 0;
         }
