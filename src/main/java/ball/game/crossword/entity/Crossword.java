@@ -18,7 +18,6 @@ package ball.game.crossword.entity;
  * limitations under the License.
  * ##########################################################################
  */
-import ball.persistence.entity.AbstractEntity;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;

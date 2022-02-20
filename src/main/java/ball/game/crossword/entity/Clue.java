@@ -19,7 +19,6 @@ package ball.game.crossword.entity;
  * ##########################################################################
  */
 import ball.game.crossword.Direction;
-import ball.persistence.entity.AbstractEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
