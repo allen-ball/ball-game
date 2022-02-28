@@ -26,12 +26,12 @@
   <description></description>
   <groupId>ball</groupId>
   <artifactId>ball-game</artifactId>
-  <version>3.0.1-SNAPSHOT</version>
+  <version>3.0.1.20220227</version>
   <packaging>jar</packaging>
   <parent>
     <groupId>ball</groupId>
     <artifactId>parent</artifactId>
-    <version>2022.0.0-SNAPSHOT</version>
+    <version>2022.0.0</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <inceptionYear>2010</inceptionYear>
