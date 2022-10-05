@@ -22,7 +22,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                              http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>ball</groupId>
+  <groupId>dev.hcf.ball</groupId>
   <artifactId>ball-game</artifactId>
   <version>3.0.3-SNAPSHOT</version>
   <packaging>jar</packaging>
@@ -30,7 +30,7 @@
   <description>Game Applications and Utilities</description>
   <url>https://github.com/allen-ball/ball-game</url>
   <parent>
-    <groupId>ball</groupId>
+    <groupId>dev.hcf.ball</groupId>
     <artifactId>parent</artifactId>
     <version>2022.1.2-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
@@ -51,11 +51,11 @@
   </properties>
   <dependencies verbose="true">
     <dependency>
-      <groupId>ball</groupId>
+      <groupId>dev.hcf.ball</groupId>
       <artifactId>ball-databind</artifactId>
     </dependency>
     <dependency>
-      <groupId>ball</groupId>
+      <groupId>dev.hcf.ball</groupId>
       <artifactId>ball-util</artifactId>
     </dependency>
     <dependency>
@@ -72,7 +72,7 @@
     <pluginManagement>
       <plugins>
         <plugin>
-          <groupId>ball</groupId>
+          <groupId>${ball.groupId}</groupId>
           <artifactId>ball-license-maven-plugin</artifactId>
           <configuration>
             <selections>
