@@ -7,6 +7,8 @@ Description
 
 A collection of classes for modeling games.
 
+Javadoc is published at <https://allen-ball.github.io/ball-game/>.
+
 
 License
 -------
