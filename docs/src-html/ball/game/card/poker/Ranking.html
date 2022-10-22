@@ -1,0 +1,220 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<main role="main">
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span><a id="line.1">package ball.game.card.poker;</a>
+<span class="sourceLineNo">002</span><a id="line.2">/*-</a>
+<span class="sourceLineNo">003</span><a id="line.3"> * ##########################################################################</a>
+<span class="sourceLineNo">004</span><a id="line.4"> * Game Applications and Utilities</a>
+<span class="sourceLineNo">005</span><a id="line.5"> * %%</a>
+<span class="sourceLineNo">006</span><a id="line.6"> * Copyright (C) 2010 - 2022 Allen D. Ball</a>
+<span class="sourceLineNo">007</span><a id="line.7"> * %%</a>
+<span class="sourceLineNo">008</span><a id="line.8"> * Licensed under the Apache License, Version 2.0 (the "License");</a>
+<span class="sourceLineNo">009</span><a id="line.9"> * you may not use this file except in compliance with the License.</a>
+<span class="sourceLineNo">010</span><a id="line.10"> * You may obtain a copy of the License at</a>
+<span class="sourceLineNo">011</span><a id="line.11"> *</a>
+<span class="sourceLineNo">012</span><a id="line.12"> *      http://www.apache.org/licenses/LICENSE-2.0</a>
+<span class="sourceLineNo">013</span><a id="line.13"> *</a>
+<span class="sourceLineNo">014</span><a id="line.14"> * Unless required by applicable law or agreed to in writing, software</a>
+<span class="sourceLineNo">015</span><a id="line.15"> * distributed under the License is distributed on an "AS IS" BASIS,</a>
+<span class="sourceLineNo">016</span><a id="line.16"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</a>
+<span class="sourceLineNo">017</span><a id="line.17"> * See the License for the specific language governing permissions and</a>
+<span class="sourceLineNo">018</span><a id="line.18"> * limitations under the License.</a>
+<span class="sourceLineNo">019</span><a id="line.19"> * ##########################################################################</a>
+<span class="sourceLineNo">020</span><a id="line.20"> */</a>
+<span class="sourceLineNo">021</span><a id="line.21">import ball.game.card.Card.Rank;</a>
+<span class="sourceLineNo">022</span><a id="line.22">import ball.game.card.Card.Suit;</a>
+<span class="sourceLineNo">023</span><a id="line.23">import ball.game.card.Card;</a>
+<span class="sourceLineNo">024</span><a id="line.24">import ball.util.Comparators;</a>
+<span class="sourceLineNo">025</span><a id="line.25">import ball.util.ListOrderComparator;</a>
+<span class="sourceLineNo">026</span><a id="line.26">import java.util.Collection;</a>
+<span class="sourceLineNo">027</span><a id="line.27">import java.util.Comparator;</a>
+<span class="sourceLineNo">028</span><a id="line.28">import java.util.List;</a>
+<span class="sourceLineNo">029</span><a id="line.29">import java.util.Map;</a>
+<span class="sourceLineNo">030</span><a id="line.30">import java.util.Objects;</a>
+<span class="sourceLineNo">031</span><a id="line.31">import java.util.function.Predicate;</a>
+<span class="sourceLineNo">032</span><a id="line.32">import java.util.stream.Collectors;</a>
+<span class="sourceLineNo">033</span><a id="line.33">import java.util.stream.Stream;</a>
+<span class="sourceLineNo">034</span><a id="line.34"></a>
+<span class="sourceLineNo">035</span><a id="line.35">import static ball.game.card.Card.Rank.ACE;</a>
+<span class="sourceLineNo">036</span><a id="line.36">import static ball.game.card.Card.Rank.KING;</a>
+<span class="sourceLineNo">037</span><a id="line.37">import static ball.game.card.Card.Rank.SEQUENCE;</a>
+<span class="sourceLineNo">038</span><a id="line.38"></a>
+<span class="sourceLineNo">039</span><a id="line.39">/**</a>
+<span class="sourceLineNo">040</span><a id="line.40"> * Poker hand {@link Ranking} {@link Enum} and {@link Predicate}.</a>
+<span class="sourceLineNo">041</span><a id="line.41"> *</a>
+<span class="sourceLineNo">042</span><a id="line.42"> * @author {@link.uri mailto:ball@hcf.dev Allen D. Ball}</a>
+<span class="sourceLineNo">043</span><a id="line.43"> */</a>
+<span class="sourceLineNo">044</span><a id="line.44">public enum Ranking implements Predicate&lt;List&lt;Card&gt;&gt; {</a>
+<span class="sourceLineNo">045</span><a id="line.45">    Empty(0, null, Collection::isEmpty),</a>
+<span class="sourceLineNo">046</span><a id="line.46">        HighCard(1, t -&gt; true, t -&gt; true),</a>
+<span class="sourceLineNo">047</span><a id="line.47">        Pair(2, Rank.SAME, Rank.SAME),</a>
+<span class="sourceLineNo">048</span><a id="line.48">        TwoPair(4, holding(2, Rank.SAME), Pair.with(Pair)),</a>
+<span class="sourceLineNo">049</span><a id="line.49">        ThreeOfAKind(3, Rank.SAME, Rank.SAME),</a>
+<span class="sourceLineNo">050</span><a id="line.50">        Straight(5, SEQUENCE, SEQUENCE),</a>
+<span class="sourceLineNo">051</span><a id="line.51">        Flush(5, Suit.SAME, Suit.SAME),</a>
+<span class="sourceLineNo">052</span><a id="line.52">        FullHouse(5, holding(3, Rank.SAME), ThreeOfAKind.with(Pair)),</a>
+<span class="sourceLineNo">053</span><a id="line.53">        FourOfAKind(4, Rank.SAME, Rank.SAME),</a>
+<span class="sourceLineNo">054</span><a id="line.54">        StraightFlush(5,</a>
+<span class="sourceLineNo">055</span><a id="line.55">                      holding(ACE, KING).negate().and(SEQUENCE).and(Suit.SAME),</a>
+<span class="sourceLineNo">056</span><a id="line.56">                      holding(ACE, KING).negate().and(Straight).and(Flush)),</a>
+<span class="sourceLineNo">057</span><a id="line.57">        RoyalFlush(5,</a>
+<span class="sourceLineNo">058</span><a id="line.58">                   holding(ACE, KING).and(SEQUENCE).and(Suit.SAME),</a>
+<span class="sourceLineNo">059</span><a id="line.59">                   holding(ACE, KING).and(Straight).and(Flush)),</a>
+<span class="sourceLineNo">060</span><a id="line.60">        FiveOfAKind(5, Rank.SAME, Rank.SAME);</a>
+<span class="sourceLineNo">061</span><a id="line.61"></a>
+<span class="sourceLineNo">062</span><a id="line.62">    private final int required;</a>
+<span class="sourceLineNo">063</span><a id="line.63">    private final Predicate&lt;List&lt;Card&gt;&gt; possible;</a>
+<span class="sourceLineNo">064</span><a id="line.64">    private final Predicate&lt;List&lt;Card&gt;&gt; is;</a>
+<span class="sourceLineNo">065</span><a id="line.65"></a>
+<span class="sourceLineNo">066</span><a id="line.66">    private Ranking(int required, Predicate&lt;List&lt;Card&gt;&gt; possible, Predicate&lt;List&lt;Card&gt;&gt; is) {</a>
+<span class="sourceLineNo">067</span><a id="line.67">        this.required = required;</a>
+<span class="sourceLineNo">068</span><a id="line.68">        this.possible = possible;</a>
+<span class="sourceLineNo">069</span><a id="line.69">        this.is = Objects.requireNonNull(is);</a>
+<span class="sourceLineNo">070</span><a id="line.70">    }</a>
+<span class="sourceLineNo">071</span><a id="line.71"></a>
+<span class="sourceLineNo">072</span><a id="line.72">    /**</a>
+<span class="sourceLineNo">073</span><a id="line.73">     * Method to find the best possible {@link.this} {@link Ranking} hand in</a>
+<span class="sourceLineNo">074</span><a id="line.74">     * the {@link Collection}.</a>
+<span class="sourceLineNo">075</span><a id="line.75">     *</a>
+<span class="sourceLineNo">076</span><a id="line.76">     * @param   collection      The {@link Collection} of {@link Card}s to</a>
+<span class="sourceLineNo">077</span><a id="line.77">     *                          evaluate.</a>
+<span class="sourceLineNo">078</span><a id="line.78">     *</a>
+<span class="sourceLineNo">079</span><a id="line.79">     * @return  The best sorted hand as a {@link List} of {@link Card}s if</a>
+<span class="sourceLineNo">080</span><a id="line.80">     *          a combination matching {@link.this} {@link Ranking} is</a>
+<span class="sourceLineNo">081</span><a id="line.81">     *          found; the empty {@link List} otherwise.</a>
+<span class="sourceLineNo">082</span><a id="line.82">     */</a>
+<span class="sourceLineNo">083</span><a id="line.83">    public List&lt;Card&gt; find(Collection&lt;Card&gt; collection) {</a>
+<span class="sourceLineNo">084</span><a id="line.84">        var evaluator = new Evaluator(collection, this);</a>
+<span class="sourceLineNo">085</span><a id="line.85">        var hand = evaluator.getScoring().isEmpty() ? evaluator.getScoring() : evaluator.getHand();</a>
+<span class="sourceLineNo">086</span><a id="line.86"></a>
+<span class="sourceLineNo">087</span><a id="line.87">        return hand;</a>
+<span class="sourceLineNo">088</span><a id="line.88">    }</a>
+<span class="sourceLineNo">089</span><a id="line.89"></a>
+<span class="sourceLineNo">090</span><a id="line.90">    /**</a>
+<span class="sourceLineNo">091</span><a id="line.91">     * Returns the number of {@link Card} for {@link.this} {@link Ranking}.</a>
+<span class="sourceLineNo">092</span><a id="line.92">     *</a>
+<span class="sourceLineNo">093</span><a id="line.93">     * @return  The number of {@link Card}s required.</a>
+<span class="sourceLineNo">094</span><a id="line.94">     */</a>
+<span class="sourceLineNo">095</span><a id="line.95">    public int required() { return required; }</a>
+<span class="sourceLineNo">096</span><a id="line.96"></a>
+<span class="sourceLineNo">097</span><a id="line.97">    /**</a>
+<span class="sourceLineNo">098</span><a id="line.98">     * Method to return a {@link Predicate} to test if the {@link List} of</a>
+<span class="sourceLineNo">099</span><a id="line.99">     * {@link Card} is a possible {@link Ranking}.</a>
+<span class="sourceLineNo">100</span><a id="line.100">     *</a>
+<span class="sourceLineNo">101</span><a id="line.101">     * @return  A {@link Predicate} that returns {@code false} if the hand</a>
+<span class="sourceLineNo">102</span><a id="line.102">     *          cannot be {@link.this} {@link Ranking}; {@code true}</a>
+<span class="sourceLineNo">103</span><a id="line.103">     *          otherwise.</a>
+<span class="sourceLineNo">104</span><a id="line.104">     */</a>
+<span class="sourceLineNo">105</span><a id="line.105">    public Predicate&lt;List&lt;Card&gt;&gt; possible() {</a>
+<span class="sourceLineNo">106</span><a id="line.106">        return t -&gt; (possible == null || possible.test(subListTo(t, required())));</a>
+<span class="sourceLineNo">107</span><a id="line.107">    }</a>
+<span class="sourceLineNo">108</span><a id="line.108"></a>
+<span class="sourceLineNo">109</span><a id="line.109">    @Override</a>
+<span class="sourceLineNo">110</span><a id="line.110">    public boolean test(List&lt;Card&gt; list) {</a>
+<span class="sourceLineNo">111</span><a id="line.111">        return (list.size() &gt;= required() &amp;&amp; is.test(subListTo(list, required())));</a>
+<span class="sourceLineNo">112</span><a id="line.112">    }</a>
+<span class="sourceLineNo">113</span><a id="line.113"></a>
+<span class="sourceLineNo">114</span><a id="line.114">    private Predicate&lt;List&lt;Card&gt;&gt; with(Predicate&lt;List&lt;Card&gt;&gt; that) {</a>
+<span class="sourceLineNo">115</span><a id="line.115">        return t -&gt; test(t) &amp;&amp; that.test(subListFrom(t, required()));</a>
+<span class="sourceLineNo">116</span><a id="line.116">    }</a>
+<span class="sourceLineNo">117</span><a id="line.117"></a>
+<span class="sourceLineNo">118</span><a id="line.118">    private static &lt;T&gt; Predicate&lt;List&lt;T&gt;&gt; holding(int count, Predicate&lt;List&lt;T&gt;&gt; predicate) {</a>
+<span class="sourceLineNo">119</span><a id="line.119">        return t -&gt; (t.isEmpty() || predicate.test(subListTo(t, count)));</a>
+<span class="sourceLineNo">120</span><a id="line.120">    }</a>
+<span class="sourceLineNo">121</span><a id="line.121"></a>
+<span class="sourceLineNo">122</span><a id="line.122">    @SafeVarargs</a>
+<span class="sourceLineNo">123</span><a id="line.123">    @SuppressWarnings({ "varargs" })</a>
+<span class="sourceLineNo">124</span><a id="line.124">    private static &lt;T&gt; Predicate&lt;List&lt;T&gt;&gt; holding(Predicate&lt;T&gt;... array) {</a>
+<span class="sourceLineNo">125</span><a id="line.125">        return holding(Stream.of(array).collect(Collectors.toList()));</a>
+<span class="sourceLineNo">126</span><a id="line.126">    }</a>
+<span class="sourceLineNo">127</span><a id="line.127"></a>
+<span class="sourceLineNo">128</span><a id="line.128">    private static &lt;T&gt; Predicate&lt;List&lt;T&gt;&gt; holding(List&lt;Predicate&lt;T&gt;&gt; list) {</a>
+<span class="sourceLineNo">129</span><a id="line.129">        return t -&gt; ((list.isEmpty() || t.isEmpty())</a>
+<span class="sourceLineNo">130</span><a id="line.130">                     || (list.get(0).test(t.get(0)) &amp;&amp; (holding(subListFrom(list, 1)).test(subListFrom(t, 1)))));</a>
+<span class="sourceLineNo">131</span><a id="line.131">    }</a>
+<span class="sourceLineNo">132</span><a id="line.132"></a>
+<span class="sourceLineNo">133</span><a id="line.133">    private static &lt;T&gt; List&lt;T&gt; subListTo(List&lt;T&gt; list, int to) {</a>
+<span class="sourceLineNo">134</span><a id="line.134">        return list.subList(0, Math.min(to, list.size()));</a>
+<span class="sourceLineNo">135</span><a id="line.135">    }</a>
+<span class="sourceLineNo">136</span><a id="line.136"></a>
+<span class="sourceLineNo">137</span><a id="line.137">    private static &lt;T&gt; List&lt;T&gt; subListFrom(List&lt;T&gt; list, int from) {</a>
+<span class="sourceLineNo">138</span><a id="line.138">        return list.subList(from, list.size());</a>
+<span class="sourceLineNo">139</span><a id="line.139">    }</a>
+<span class="sourceLineNo">140</span><a id="line.140"></a>
+<span class="sourceLineNo">141</span><a id="line.141">    /**</a>
+<span class="sourceLineNo">142</span><a id="line.142">     * {@link Comparator} that orders {@link Ranking}s weakest to</a>
+<span class="sourceLineNo">143</span><a id="line.143">     * strongest.</a>
+<span class="sourceLineNo">144</span><a id="line.144">     */</a>
+<span class="sourceLineNo">145</span><a id="line.145">    public static Comparator&lt;Ranking&gt; COMPARATOR = new ListOrderComparator&lt;&gt;(values());</a>
+<span class="sourceLineNo">146</span><a id="line.146">}</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</main>
+</body>
+</html>
